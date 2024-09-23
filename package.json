@@ -1,6 +1,6 @@
 {
-  "name": "@nickderaj/ui",
-  "version": "1.0.4",
+  "name": "@sahasawatE/hokui",
+  "version": "1.0.0",
   "author": "Nicholas De Raj",
   "description": "A personalised UI Library.",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/nickderaj"
+    "registry": "https://npm.pkg.github.com/sahasawatE"
   },
   "babel": {
     "sourceType": "unambiguous",
