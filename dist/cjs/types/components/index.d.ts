@@ -35,5 +35,6 @@ export * from "./TimeField";
 export * from "./ToggleButton";
 export * from "./Tooltip";
 export * from "./tw/plugin";
+export * from "./utils";
 export * from "./hoc/withListData";
 export * from "./types/prop.type";

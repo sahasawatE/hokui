@@ -824,6 +824,44 @@ declare function hokTheme(config?: Theme): {
     config?: any;
 };
 
+declare const focusRing: tailwind_variants.TVReturnType<{
+    isFocusVisible: {
+        false: string;
+        true: string;
+    };
+}, undefined, "outline outline-primary forced-colors:outline-[Highlight] outline-offset-1", tailwind_variants_dist_config.TVConfig<{
+    isFocusVisible: {
+        false: string;
+        true: string;
+    };
+}, {
+    isFocusVisible: {
+        false: string;
+        true: string;
+    };
+}>, {
+    isFocusVisible: {
+        false: string;
+        true: string;
+    };
+}, undefined, tailwind_variants.TVReturnType<{
+    isFocusVisible: {
+        false: string;
+        true: string;
+    };
+}, undefined, "outline outline-primary forced-colors:outline-[Highlight] outline-offset-1", tailwind_variants_dist_config.TVConfig<{
+    isFocusVisible: {
+        false: string;
+        true: string;
+    };
+}, {
+    isFocusVisible: {
+        false: string;
+        true: string;
+    };
+}>, unknown, unknown, undefined>>;
+declare function composeTailwindRenderProps<T>(className: string | ((v: T) => string) | undefined, tw: string): string | ((v: T) => string);
+
 type WithListDataProps<T extends object> = {
     listData: ListData<T>;
 };
@@ -832,4 +870,4 @@ declare function WithListData<T extends {
     key: string;
 }, P extends WithListDataProps<T> = WithListDataProps<T>>(Component: React.ComponentType<P>): (props: Omit<P, keyof WithListDataProps<T>>) => react_jsx_runtime.JSX.Element;
 
-export { AlertDialog, type Alignment, Badge, type BadgeRounded, type BadgeVariant, Breadcrumbs, Button, type ButtonVariant, Calendar, CalendarGridHeader, CalendarHeader, Checkbox, CheckboxGroup, type ChipRounded, type ChipVariant, type Color, ComboBox, ComboBoxItem, ComboBoxSection, type DataTableProps, DateField, DateInput, DatePicker, DateRangePicker, Description, Dialog, DropdownItem, DropdownSection, FieldError, FieldGroup, type FontSize, type FontWeight, Form, GridList, GridListItem, Input, type InputVariant, Label, Link, type LinkVariant, ListBox, ListBoxItem, Menu, MenuItem, MenuSection, MenuSeparator, Meter, Modal, NumberField, Popover, type Position, ProgressBar, Radio, RadioGroup, RangeCalendar, type Rounded, SearchField, Select, SelectItem, SelectSection, type SelectionMode, Separator, type Size, Slider, Switch, Tab, TabList, TabPanel, Table, type TableVariant, Tabs, Tag, TagGroup, TextField, TimeField, type TimeFieldProps, ToggleButton, Tooltip, WithListData, type WithListDataProps, fieldBorderStyles, fieldGroupStyles, hokTheme };
+export { AlertDialog, type Alignment, Badge, type BadgeRounded, type BadgeVariant, Breadcrumbs, Button, type ButtonVariant, Calendar, CalendarGridHeader, CalendarHeader, Checkbox, CheckboxGroup, type ChipRounded, type ChipVariant, type Color, ComboBox, ComboBoxItem, ComboBoxSection, type DataTableProps, DateField, DateInput, DatePicker, DateRangePicker, Description, Dialog, DropdownItem, DropdownSection, FieldError, FieldGroup, type FontSize, type FontWeight, Form, GridList, GridListItem, Input, type InputVariant, Label, Link, type LinkVariant, ListBox, ListBoxItem, Menu, MenuItem, MenuSection, MenuSeparator, Meter, Modal, NumberField, Popover, type Position, ProgressBar, Radio, RadioGroup, RangeCalendar, type Rounded, SearchField, Select, SelectItem, SelectSection, type SelectionMode, Separator, type Size, Slider, Switch, Tab, TabList, TabPanel, Table, type TableVariant, Tabs, Tag, TagGroup, TextField, TimeField, type TimeFieldProps, ToggleButton, Tooltip, WithListData, type WithListDataProps, composeTailwindRenderProps, fieldBorderStyles, fieldGroupStyles, focusRing, hokTheme };

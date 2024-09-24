@@ -38,6 +38,7 @@ export * from "./Tooltip";
 
 // tailwind
 export * from "./tw/plugin";
+export * from "./utils";
 
 // HOC
 export * from "./hoc/withListData";
