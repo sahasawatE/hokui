@@ -1,5 +1,5 @@
 import { Check, Minus } from "lucide-react";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import {
   Checkbox as AriaCheckbox,
   CheckboxGroup as AriaCheckboxGroup,

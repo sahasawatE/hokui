@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FieldErrorProps,
   Group,
@@ -22,6 +21,8 @@ type customProps = {
   rounded?: Rounded;
   variant?: InputVariant;
 };
+
+export type FieldGroupProps = GroupProps & customProps;
 
 export function Label(props: LabelProps) {
   return (
@@ -116,7 +117,7 @@ export const fieldGroupStyles = tv({
   },
 });
 
-export function FieldGroup(props: GroupProps & customProps) {
+export function FieldGroup(props: FieldGroupProps) {
   return (
     <Group
       {...props}

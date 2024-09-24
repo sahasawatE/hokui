@@ -1,5 +1,4 @@
 import { CalendarIcon } from "lucide-react";
-import React from "react";
 import {
   DatePicker as AriaDatePicker,
   DatePickerProps as AriaDatePickerProps,

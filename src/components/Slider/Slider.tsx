@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Slider as AriaSlider,
   SliderProps as AriaSliderProps,

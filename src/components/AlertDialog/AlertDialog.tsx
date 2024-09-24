@@ -4,7 +4,7 @@ import { DialogProps, Heading } from "react-aria-components";
 import { Button } from "../Button";
 import { Dialog } from "../Dialog";
 
-interface AlertDialogProps extends Omit<DialogProps, "children"> {
+export interface AlertDialogProps extends Omit<DialogProps, "children"> {
   title: string;
   children: ReactNode;
   actionLabel: string;

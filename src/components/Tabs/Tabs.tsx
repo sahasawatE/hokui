@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Tab as RACTab,
   TabList as RACTabList,

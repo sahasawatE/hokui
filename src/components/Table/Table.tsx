@@ -1,6 +1,5 @@
 import { ArrowUp } from "lucide-react";
 import { GripVertical } from "lucide-react";
-import React from "react";
 import {
   Cell as AriaCell,
   Column as AriaColumn,
@@ -32,7 +31,7 @@ import type {
   Alignment,
 } from "../types/prop.type";
 
-interface TableCustomProps<
+export interface TableProp<
   T extends { [key: string]: any; key: string; title: string },
 > extends Omit<TableProps, "children" | "onSelectionChange">,
     DataTableProps<T> {
@@ -56,7 +55,7 @@ const TableStyle = tv({
 
 export function Table<
   T extends { [key: string]: any; key: string; title: string },
->(props: TableCustomProps<T>) {
+>(props: TableProp<T>) {
   const { dragAndDropHooks } = useDragAndDrop({
     isDisabled: !Boolean(props.allowDragAndDrop),
     getItems: (keys) =>

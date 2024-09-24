@@ -1,5 +1,4 @@
 import { AlertTriangle } from "lucide-react";
-import React from "react";
 import {
   Meter as AriaMeter,
   MeterProps as AriaMeterProps,

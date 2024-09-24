@@ -1,3 +1,6 @@
+// Lib
+export { I18nProvider } from "react-aria-components";
+
 // components
 export * from "./AlertDialog";
 export * from "./Badge";

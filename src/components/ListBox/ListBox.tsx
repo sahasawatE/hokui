@@ -21,7 +21,7 @@ type CustomProps = {
 
 const listBoxContext = createContext<CustomProps>({ color: "default" });
 
-interface ListBoxProps<T>
+export interface ListBoxProps<T>
   extends Omit<AriaListBoxProps<T>, "layout" | "orientation" | "children">,
     CustomProps {
   children?: (item: T) => React.ReactNode;

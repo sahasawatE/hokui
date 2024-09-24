@@ -14,7 +14,7 @@ import { Checkbox } from "../Checkbox";
 import { composeTailwindRenderProps, focusRing } from "../utils";
 import type { Color, InputVariant, Rounded } from "../types/prop.type";
 
-type customGridListProps<T> = {
+export type customGridListProps<T> = {
   items?: ListData<T>;
   color?: Color;
   rounded?: Rounded;
@@ -24,15 +24,10 @@ type customGridListProps<T> = {
   onSelect?: (value: string[]) => void;
 };
 
-type CustomGridListItemContext = {
+export type CustomGridListItemContext = {
   color?: Color;
   allowDragandDrop?: boolean;
 };
-
-const GridContext = createContext<CustomGridListItemContext>({
-  color: "default",
-  allowDragandDrop: false,
-});
 
 export type GridListP<T> = Omit<
   GridListProps<T>,
@@ -41,6 +36,11 @@ export type GridListP<T> = Omit<
   customGridListProps<T>;
 
 export type GridListItemP = GridListItemProps;
+
+const GridContext = createContext<CustomGridListItemContext>({
+  color: "default",
+  allowDragandDrop: false,
+});
 
 export function GridList<
   T extends { [k: string]: any; key: string; title: string },

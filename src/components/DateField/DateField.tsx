@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DateField as AriaDateField,
   DateFieldProps as AriaDateFieldProps,

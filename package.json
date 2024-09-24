@@ -1,8 +1,8 @@
 {
   "name": "@sahasawatE/hokui",
-  "version": "0.0.4",
-  "author": "Nicholas De Raj",
-  "description": "A personalised UI Library.",
+  "version": "0.0.5",
+  "author": "Sahasawat Uengwanitchphan",
+  "description": "A UI Library created by Hok.",
   "license": "MIT",
   "scripts": {
     "dev": "rollup -c --watch",

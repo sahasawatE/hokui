@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ToggleButton as RACToggleButton,
   ToggleButtonProps,
@@ -151,7 +150,9 @@ let styles = tv({
   ],
 });
 
-export function ToggleButton(props: ToggleButtonProps & CustomProps) {
+export type ToggleButtonProp = ToggleButtonProps & CustomProps;
+
+export function ToggleButton(props: ToggleButtonProp) {
   return (
     <RACToggleButton
       {...props}

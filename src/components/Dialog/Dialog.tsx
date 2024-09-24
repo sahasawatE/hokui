@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DialogProps,
   DialogTrigger,
@@ -8,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 import { Popover } from "../Popover";
 import type { Button } from "../Button";
 
-interface DialogProp extends DialogProps {
+export interface DialogProp extends DialogProps {
   activator?: () => ReturnType<typeof Button>;
   label?: string;
 }

@@ -1,5 +1,4 @@
 import { Check, ChevronRight } from "lucide-react";
-import React from "react";
 import {
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,

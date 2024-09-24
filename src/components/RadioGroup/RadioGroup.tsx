@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import {
   Radio as RACRadio,
   RadioGroup as RACRadioGroup,
@@ -16,7 +16,8 @@ type CustomProps = {
 };
 
 export interface RadioGroupProps<T>
-  extends Omit<RACRadioGroupProps, "children"> {
+  extends Omit<RACRadioGroupProps, "children">,
+    CustomProps {
   label?: string;
   children?: (option: T) => ReactNode;
   options: T[];
@@ -26,7 +27,7 @@ export interface RadioGroupProps<T>
 
 export function RadioGroup<
   T extends { [key: string]: any; value: string; title: string },
->(props: RadioGroupProps<T> & CustomProps) {
+>(props: RadioGroupProps<T>) {
   return (
     <RACRadioGroup
       {...props}

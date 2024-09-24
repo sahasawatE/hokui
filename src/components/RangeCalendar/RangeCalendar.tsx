@@ -1,4 +1,3 @@
-import React from "react";
 import {
   RangeCalendar as AriaRangeCalendar,
   RangeCalendarProps as AriaRangeCalendarProps,
