@@ -13,14 +13,14 @@ type ColorVariant = {
 };
 
 type ColorVariables = {
-  background: string;
-  default: ColorVariant | string;
-  primary: ColorVariant | string;
-  secondary: ColorVariant | string;
-  success: ColorVariant | string;
-  warning: ColorVariant | string;
-  danger: ColorVariant | string;
-  info: ColorVariant | string;
+  background?: string;
+  default?: ColorVariant | string;
+  primary?: ColorVariant | string;
+  secondary?: ColorVariant | string;
+  success?: ColorVariant | string;
+  warning?: ColorVariant | string;
+  danger?: ColorVariant | string;
+  info?: ColorVariant | string;
 };
 
 type Theme = {
