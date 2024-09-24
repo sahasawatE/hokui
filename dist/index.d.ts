@@ -4,6 +4,7 @@ import { DialogProps, BreadcrumbsProps, ButtonProps as ButtonProps$1, DateValue,
 import { ListData } from 'react-stately';
 import * as tailwind_variants from 'tailwind-variants';
 import * as tailwind_variants_dist_config from 'tailwind-variants/dist/config';
+import * as tailwindcss_types_config from 'tailwindcss/types/config';
 
 interface AlertDialogProps extends Omit<DialogProps, "children"> {
     title: string;
@@ -821,7 +822,7 @@ type Theme = {
 
 declare function hokTheme(config?: Theme): {
     handler: tailwindcss_types_config.PluginCreator;
-    config?: any;
+    config?: Partial<tailwindcss_types_config.Config>;
 };
 
 declare const focusRing: tailwind_variants.TVReturnType<{
