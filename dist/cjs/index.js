@@ -77090,10 +77090,13 @@ function GridList(props) {
             }
         },
         renderDragPreview: (items) => {
-            if (items.length === 1) {
-                return (jsxRuntimeExports.jsxs("div", { className: "w-28 h-10 flex flex-row items-center gap-2 bg-white p-2 rounded", children: [jsxRuntimeExports.jsx("span", { className: "w-2/3 overflow-hidden text-ellipsis", children: items[0]["text/plain"] }), jsxRuntimeExports.jsx("div", { className: "w-6 h-6 rounded-sm bg-default-200 text-center", children: items.length })] }));
+            if (items[0]) {
+                if (items.length === 1) {
+                    return (jsxRuntimeExports.jsxs("div", { className: "w-28 h-10 flex flex-row items-center gap-2 bg-white p-2 rounded", children: [jsxRuntimeExports.jsx("span", { className: "w-2/3 overflow-hidden text-ellipsis", children: items[0]["text/plain"] }), jsxRuntimeExports.jsx("div", { className: "w-6 h-6 rounded-sm bg-default-200 text-center", children: items.length })] }));
+                }
+                return (jsxRuntimeExports.jsxs("div", { className: "relative w-32 h-20", children: [jsxRuntimeExports.jsx("div", { className: "w-28 h-10 bg-white drop-shadow-lg absolute z-[1] rounded overflow-hidden translate-x-1/4 translate-y-1/2", children: jsxRuntimeExports.jsxs("div", { className: "flex flex-row items-center gap-2 bg-white p-2", children: [jsxRuntimeExports.jsx("span", { className: "w-2/3 overflow-hidden text-ellipsis", children: items[0]["text/plain"] }), jsxRuntimeExports.jsx("div", { className: "w-6 h-6 rounded-sm bg-default-200 text-center", children: items.length })] }) }), jsxRuntimeExports.jsx("div", { className: "w-28 h-10 bg-white absolute top-[0.3rem] left-[0.3rem] rounded-lg translate-x-1/4 translate-y-1/2" })] }));
             }
-            return (jsxRuntimeExports.jsxs("div", { className: "relative w-32 h-20", children: [jsxRuntimeExports.jsx("div", { className: "w-28 h-10 bg-white drop-shadow-lg absolute z-[1] rounded overflow-hidden translate-x-1/4 translate-y-1/2", children: jsxRuntimeExports.jsxs("div", { className: "flex flex-row items-center gap-2 bg-white p-2", children: [jsxRuntimeExports.jsx("span", { className: "w-2/3 overflow-hidden text-ellipsis", children: items[0]["text/plain"] }), jsxRuntimeExports.jsx("div", { className: "w-6 h-6 rounded-sm bg-default-200 text-center", children: items.length })] }) }), jsxRuntimeExports.jsx("div", { className: "w-28 h-10 bg-white absolute top-[0.3rem] left-[0.3rem] rounded-lg translate-x-1/4 translate-y-1/2" })] }));
+            return jsxRuntimeExports.jsx("div", {});
         },
     });
     return (jsxRuntimeExports.jsx(GridContext.Provider, { value: {
