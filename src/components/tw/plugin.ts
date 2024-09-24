@@ -100,7 +100,7 @@ const defaultLightTheme = {
 
 export function hokTheme(config?: Theme) {
   return createThemes(
-    { ...config, ...defaultLightTheme },
+    { ...defaultLightTheme, ...config },
     {
       produceCssVariable: (colorName) => `--hok-${colorName}`,
       defaultTheme: "light",
