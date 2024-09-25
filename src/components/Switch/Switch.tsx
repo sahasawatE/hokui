@@ -51,7 +51,7 @@ const track = tv({
 });
 
 const handle = tv({
-  base: "h-5 w-5 transform rounded-full bg-white outline outline-1 -outline-offset-1 outline-transparent shadow transition duration-200 ease-in-out",
+  base: "h-5 w-5 transform rounded-full bg-white outline outline-1 -outline-offset-1 outline-transparent transition duration-200 ease-in-out",
   variants: {
     isSelected: {
       false: "translate-x-[2px]",
