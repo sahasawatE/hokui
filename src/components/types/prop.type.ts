@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import type { ListData } from "react-stately";
 
 type Color =
   | "primary"
@@ -63,7 +62,7 @@ type DataTableProps<
   T extends { [key: string]: any; key: string; title: string },
 > = {
   header: DataTableHeaderProps;
-  items: ListData<T>;
+  items: T[];
   paging: DataTablePaginationProps;
   variant?: TableVariant;
   color?: Color;

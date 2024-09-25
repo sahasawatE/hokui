@@ -17,7 +17,6 @@ import {
   TableHeaderProps,
   TableProps,
   composeRenderProps,
-  useDragAndDrop,
   useTableOptions,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -56,21 +55,6 @@ const TableStyle = tv({
 export function Table<
   T extends { [key: string]: any; key: string; title: string },
 >(props: TableProp<T>) {
-  const { dragAndDropHooks } = useDragAndDrop({
-    isDisabled: !Boolean(props.allowDragAndDrop),
-    getItems: (keys) =>
-      Array.from(keys).map((key) => ({
-        "text/plain": props.items.getItem(key).key,
-      })),
-    onReorder: (e) => {
-      if (e.target.dropPosition === "before") {
-        props.items.moveBefore(e.target.key, e.keys);
-      } else if (e.target.dropPosition === "after") {
-        props.items.moveAfter(e.target.key, e.keys);
-      }
-    },
-  });
-
   return (
     <ResizableTableContainer
       className={TableStyle({
@@ -85,14 +69,15 @@ export function Table<
         {...props}
         aria-label="data-table"
         className="border-separate border-spacing-0"
-        dragAndDropHooks={dragAndDropHooks}
         onSelectionChange={(key) => {
           if (props.onSelect) {
             if (typeof key === "string") {
-              return props.onSelect(props.items.items);
+              return props.onSelect(props.items);
             } else {
               return props.onSelect(
-                Array.from(key).map((e) => props.items.getItem(e)),
+                Array.from(key).map((e) =>
+                  props.items.find((f) => f.key === e),
+                ),
               );
             }
           }
@@ -118,7 +103,7 @@ export function Table<
             </Column>
           ))}
         </TableHeader>
-        <TableBody items={props.items.items}>
+        <TableBody items={props.items}>
           {(item) => (
             <Row
               allowDragAndDrop={props.allowDragAndDrop}
@@ -130,11 +115,9 @@ export function Table<
                 props.children ? (
                   <Cell key={j} align={h.decoration?.align}>
                     {props.children({
-                      index: props.items.items.findIndex(
-                        (e) => e.key === item.key,
-                      ),
-                      value: props.items.getItem(item.key)[h.key],
-                      columnValue: props.items.getItem(item.key),
+                      index: props.items.findIndex((e) => e.key === item.key),
+                      value: item[h.key],
+                      columnValue: item,
                       key: h.key,
                     })}
                   </Cell>
