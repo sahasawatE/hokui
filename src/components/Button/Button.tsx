@@ -92,7 +92,7 @@ let button = tv({
         "bg-transparent border-[--borderColor] border-2 text-[--textColor] hover:bg-[--bgColorHover]",
       flat: "border-0 bg-[--bgFlat] text-[--textColor] hover:bg-[--bgColorHover]",
       text: "border-0 bg-transparent text-[--textColor] hover:bg-[--bgColorHover]",
-      icon: "![--btnPx:0] border-0 text-[--textColor] hover:bg-[--bgColorHover] bg-[--bgColor]",
+      icon: "![--btnPx:0] border-0 text-[--textColor] hover:bg-[--bgColorHover] bg-[--bgFlat]",
     },
     isDisabled: {
       true: "bg-gray-100 text-gray-300 border-black/5 cursor-not-allowed",
