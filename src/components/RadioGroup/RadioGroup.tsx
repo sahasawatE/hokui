@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import {
   Radio as RACRadio,
   RadioGroup as RACRadioGroup,
@@ -14,6 +14,10 @@ import type { Color } from "../types/prop.type";
 type CustomProps = {
   color?: Color;
 };
+
+const GroupContext = createContext<CustomProps>({
+  color: "default",
+});
 
 export interface RadioGroupProps<T>
   extends Omit<RACRadioGroupProps, "children">,
@@ -36,18 +40,23 @@ export function RadioGroup<
         "group flex flex-col gap-2",
       )}
     >
-      <Label>{props.label}</Label>
-      <div className="flex group-orientation-vertical:flex-col gap-2 group-orientation-horizontal:gap-4">
-        {props.options.map((e) =>
-          props.children ? (
-            props.children(e)
-          ) : (
-            <Radio key={e.value} value={e.value} color={props.color}>
-              {e.title}
-            </Radio>
-          ),
-        )}
-      </div>
+      <Label>
+        {props.label}{" "}
+        {props.isRequired && <span className="text-danger">*</span>}
+      </Label>
+      <GroupContext.Provider value={{ color: props.color }}>
+        <div className="flex group-orientation-vertical:flex-col gap-2 group-orientation-horizontal:gap-4">
+          {props.options.map((e) =>
+            props.children ? (
+              props.children(e)
+            ) : (
+              <Radio key={e.value} value={e.value}>
+                {e.title}
+              </Radio>
+            ),
+          )}
+        </div>
+      </GroupContext.Provider>
       {props.description && <Description>{props.description}</Description>}
       <FieldError>{props.errorMessage}</FieldError>
     </RACRadioGroup>
@@ -90,7 +99,8 @@ const styles = tv({
   },
 });
 
-export function Radio(props: RadioProps & CustomProps) {
+export function Radio(props: RadioProps) {
+  const groupContext = useContext(GroupContext);
   return (
     <RACRadio
       {...props}
@@ -101,7 +111,9 @@ export function Radio(props: RadioProps & CustomProps) {
     >
       {(renderProps) => (
         <>
-          <div className={styles({ ...renderProps, color: props.color })} />
+          <div
+            className={styles({ ...renderProps, color: groupContext.color })}
+          />
           {props.children}
         </>
       )}

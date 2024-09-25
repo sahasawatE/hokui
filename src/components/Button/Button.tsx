@@ -103,9 +103,6 @@ let button = tv({
       lg: "[--btnPx:1rem] h-10 min-w-10 text-lg",
       xl: "[--btnPx:1.25rem] h-12 min-w-12 text-xl",
     },
-    isHovered: {
-      true: "scale-105",
-    },
     isPressed: {
       true: "scale-95",
     },

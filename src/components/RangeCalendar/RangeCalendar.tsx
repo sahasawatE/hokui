@@ -16,7 +16,7 @@ type customProps = {
   color?: Color;
 };
 
-export interface RangeCalendarProps<T extends DateValue>
+export interface RangeCalendarProps<T extends DateValue = DateValue>
   extends Omit<AriaRangeCalendarProps<T>, "visibleDuration">,
     customProps {
   errorMessage?: string;

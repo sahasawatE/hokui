@@ -47,7 +47,7 @@ const cellStyles = tv({
   },
 });
 
-export interface CalendarProps<T extends DateValue>
+export interface CalendarProps<T extends DateValue = DateValue>
   extends Omit<AriaCalendarProps<T>, "visibleDuration">,
     customProps {
   errorMessage?: string;

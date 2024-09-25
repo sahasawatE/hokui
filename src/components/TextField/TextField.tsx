@@ -3,26 +3,19 @@ import {
   TextFieldProps as AriaTextFieldProps,
   ValidationResult,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
-import {
-  Description,
-  FieldError,
-  Input,
-  Label,
-  fieldBorderStyles,
-} from "../Field";
-import { composeTailwindRenderProps, focusRing } from "../utils";
+import { Description, FieldError, FieldGroup, Input, Label } from "../Field";
+import { composeTailwindRenderProps } from "../utils";
+import type { Color, InputVariant, Rounded } from "../types/prop.type";
 
-const inputStyles = tv({
-  extend: focusRing,
-  base: "border-2 rounded-md",
-  variants: {
-    isFocused: fieldBorderStyles.variants.isFocusWithin,
-    ...fieldBorderStyles.variants,
-  },
-});
+type CustomProps = {
+  color?: Color;
+  variant?: InputVariant;
+  rounded?: Rounded;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+};
 
-export interface TextFieldProps extends AriaTextFieldProps {
+export interface TextFieldProps extends AriaTextFieldProps, CustomProps {
   label?: string;
   description?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
@@ -42,8 +35,28 @@ export function TextField({
         "flex flex-col gap-1",
       )}
     >
-      {label && <Label>{label}</Label>}
-      <Input className={inputStyles} />
+      {label && (
+        <Label>
+          {label} {props.isRequired && <span className="text-danger">*</span>}
+        </Label>
+      )}
+      <FieldGroup
+        color={props.color}
+        variant={props.variant}
+        rounded={props.rounded}
+      >
+        {props.startContent && (
+          <div className="text-gray-400 p-1 select-none">
+            {props.startContent}
+          </div>
+        )}
+        <Input />
+        {props.endContent && (
+          <div className="text-gray-400 p-1 select-none">
+            {props.endContent}
+          </div>
+        )}
+      </FieldGroup>
       {description && <Description>{description}</Description>}
       <FieldError>{errorMessage}</FieldError>
     </AriaTextField>
