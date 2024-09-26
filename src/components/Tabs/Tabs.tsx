@@ -60,11 +60,11 @@ const tabProps = tv({
   variants: {
     isSelected: {
       false:
-        "text-gray-600 dark:text-zinc-300 hover:text-gray-700 pressed:text-gray-700 dark:hover:text-zinc-200 dark:pressed:text-zinc-200 hover:bg-gray-200 dark:hover:bg-zinc-800 pressed:bg-gray-200 dark:pressed:bg-zinc-800",
-      true: "text-white dark:text-black forced-colors:text-[HighlightText] bg-gray-800 dark:bg-zinc-200 forced-colors:bg-[Highlight]",
+        "text-gray-600 hover:text-gray-700 pressed:text-gray-700 hover:bg-gray-200 dark:hover:bg-zinc-800 pressed:bg-gray-200",
+      true: "text-white forced-colors:text-[HighlightText] bg-gray-800 forced-colors:bg-[Highlight]",
     },
     isDisabled: {
-      true: "text-gray-200 dark:text-zinc-600 forced-colors:text-[GrayText] selected:text-gray-300 dark:selected:text-zinc-500 forced-colors:selected:text-[HighlightText] selected:bg-gray-200 dark:selected:bg-zinc-600 forced-colors:selected:bg-[GrayText]",
+      true: "text-gray-200 forced-colors:text-[GrayText] selected:text-gray-300 forced-colors:selected:text-[HighlightText] selected:bg-gray-200 forced-colors:selected:bg-[GrayText]",
     },
   },
 });

@@ -1,12 +1,10 @@
 import { ArrowUp } from "lucide-react";
-import { GripVertical } from "lucide-react";
 import {
   Cell as AriaCell,
   Column as AriaColumn,
   Row as AriaRow,
   Table as AriaTable,
   TableHeader as AriaTableHeader,
-  Button,
   CellProps,
   Collection,
   ColumnProps,
@@ -28,6 +26,7 @@ import type {
   FontWeight,
   Color,
   Alignment,
+  TableRounded,
 } from "../types/prop.type";
 
 export interface TableProp<
@@ -35,20 +34,28 @@ export interface TableProp<
 > extends Omit<TableProps, "children" | "onSelectionChange">,
     DataTableProps<T> {
   onSelect?: (selected: any) => void;
-  allowDragAndDrop?: boolean;
+  rounded: TableRounded;
 }
 
 const TableStyle = tv({
-  base: "min-w-[550px] overflow-auto scroll-pt-[2.281rem] relative rounded-lg",
+  base: "min-w-[550px] overflow-auto scroll-pt-[2.281rem] relative",
   variants: {
     variant: {
       bordered: "border bg-transparent drop-shadow-none",
       flat: "border-0 bg-white drop-shadow-none",
       float: "border-0 bg-white drop-shadow-md",
     },
+    rounded: {
+      none: "rounded-none",
+      sm: "rounded-sm",
+      md: "rounded",
+      lg: "rounded-lg",
+      xl: "rounded-xl",
+    },
   },
   defaultVariants: {
     variant: "bordered",
+    rounded: "md",
   },
 });
 
@@ -59,6 +66,7 @@ export function Table<
     <ResizableTableContainer
       className={TableStyle({
         variant: props.variant,
+        rounded: props.rounded,
       })}
       style={{
         maxHeight: `${props.hiehgt ?? "580"}px`,
@@ -85,10 +93,7 @@ export function Table<
           return undefined;
         }}
       >
-        <TableHeader
-          allowDragAndDrop={props.allowDragAndDrop}
-          color={props.color}
-        >
+        <TableHeader color={props.color}>
           {props.header.map((h, i) => (
             <Column
               key={i}
@@ -106,7 +111,6 @@ export function Table<
         <TableBody items={props.items}>
           {(item) => (
             <Row
-              allowDragAndDrop={props.allowDragAndDrop}
               id={item.key}
               color={props.color}
               isDisabled={Boolean(item["disabled"])}
@@ -235,26 +239,21 @@ function Column(props: ColumnProps & CustomColumnProps) {
 
 type CustomTableHeaderprops = {
   color?: Color;
-  allowDragAndDrop?: boolean;
 };
 
 function TableHeader<T extends object>(
   props: TableHeaderProps<T> & CustomTableHeaderprops,
 ) {
-  let { selectionBehavior, selectionMode, allowsDragging } = useTableOptions();
+  let { selectionBehavior, selectionMode } = useTableOptions();
 
   return (
     <AriaTableHeader
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        "sticky top-0 z-10 bg-gray-100/60 backdrop-blur-md supports-[-moz-appearance:none]:bg-gray-100 forced-colors:bg-[Canvas] rounded-t-lg border-b",
+        "sticky top-0 z-10 bg-default-100/60 backdrop-blur-lg supports-[-moz-appearance:none]:bg-default-100/60 border-b h-12",
       )}
     >
-      {/* Add extra columns for drag and drop and selection. */}
-      {Boolean(props.allowDragAndDrop && allowsDragging) && (
-        <Column width={26} minWidth={26} />
-      )}
       {selectionBehavior === "toggle" && (
         <AriaColumn
           width={48}
@@ -273,7 +272,7 @@ function TableHeader<T extends object>(
 
 const rowStyles = tv({
   extend: focusRing,
-  base: "text-default-800 hover:bg-[hsl(var(--c)/0.1)] selected:bg-[hsl(var(--c)/0.2)] selected:hover:bg-[hsl(var(--c)/0.3)] group/row relative cursor-default select-none -outline-offset-2 text-sm transition-colors",
+  base: "hover:bg-[hsl(var(--c)/0.1)] selected:bg-[hsl(var(--c)/0.2)] selected:hover:bg-[hsl(var(--c)/0.3)]",
   variants: {
     color: {
       default: "[--c:var(--hok-default-500)]",
@@ -293,7 +292,6 @@ const rowStyles = tv({
 type CustomRowProps = {
   color?: Color;
   isDisabled?: boolean;
-  allowDragAndDrop?: boolean;
 };
 
 function Row<T extends object>({
@@ -301,29 +299,24 @@ function Row<T extends object>({
   children,
   ...otherProps
 }: Omit<RowProps<T>, "isDisabled"> & CustomRowProps) {
-  let { selectionBehavior, allowsDragging } = useTableOptions();
+  let { selectionBehavior } = useTableOptions();
 
   return (
     <AriaRow
       {...otherProps}
       isDisabled={otherProps.isDisabled}
       className={(renderProps) =>
-        rowStyles({ ...renderProps, color: otherProps.color })
+        rowStyles({
+          ...renderProps,
+          color: otherProps.color,
+          className:
+            "text-default-800 group/row relative cursor-default -outline-offset-2 text-sm transition-colors",
+        })
       }
     >
-      {Boolean(otherProps.allowDragAndDrop && allowsDragging) && (
-        <Cell>
-          <Button slot="drag" className="flex flex-col justify-center">
-            <GripVertical aria-hidden className="w-4 h-4 text-gray-600" />
-          </Button>
-        </Cell>
-      )}
       {selectionBehavior === "toggle" && (
         <Cell>
           <div className="flex flex-row justify-center">
-            {!Boolean(otherProps.allowDragAndDrop) && (
-              <Button slot="drag" className="hidden"></Button>
-            )}
             <Checkbox
               slot="selection"
               color={otherProps.color}

@@ -39,6 +39,8 @@ type ChipRounded = BadgeRounded;
 
 type TableVariant = "bordered" | "flat" | "float";
 
+type TableRounded = "none" | "sm" | "md" | "lg" | "xl";
+
 type DataTableHeaderProps = {
   key: string;
   title: string;
@@ -95,4 +97,5 @@ export type {
   FontSize,
   Alignment,
   SelectionMode,
+  TableRounded,
 };
