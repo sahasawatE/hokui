@@ -9,7 +9,6 @@ import {
   Collection,
   ColumnProps,
   Group,
-  ResizableTableContainer,
   RowProps,
   TableBody,
   TableHeaderProps,
@@ -63,20 +62,19 @@ export function Table<
   T extends { [key: string]: any; key: string; title: string },
 >(props: TableProp<T>) {
   return (
-    <ResizableTableContainer
-      className={TableStyle({
-        variant: props.variant,
-        rounded: props.rounded,
-      })}
-      style={{
-        maxHeight: `${props.hiehgt ?? "580"}px`,
-        width: props.width ? `${props.width}px` : undefined,
-      }}
-    >
+    <div className="no-scrollbar inline">
       <AriaTable
         {...props}
         aria-label="data-table"
-        className="border-separate border-spacing-0"
+        className={TableStyle({
+          variant: props.variant,
+          rounded: props.rounded,
+          className: "border-separate border-spacing-0 w-full",
+        })}
+        style={{
+          maxHeight: `${props.hiehgt ?? "580"}px`,
+          width: props.width ? `${props.width}px` : "100%",
+        }}
         onSelectionChange={(key) => {
           if (props.onSelect) {
             if (typeof key === "string") {
@@ -135,7 +133,7 @@ export function Table<
           )}
         </TableBody>
       </AriaTable>
-    </ResizableTableContainer>
+    </div>
   );
 }
 
