@@ -60,6 +60,13 @@ type DataTablePaginationProps = {
   total: number;
 };
 
+type TableCellCallback<T> = {
+  index: number;
+  key: string;
+  value: any;
+  columnValue: T;
+};
+
 type DataTableProps<
   T extends { [key: string]: any; key: string; title: string },
 > = {
@@ -71,12 +78,7 @@ type DataTableProps<
   hiehgt?: number | string;
   width?: number | string;
   rounded?: Rounded;
-  children?: (cell: {
-    index: number;
-    key: string;
-    value: any;
-    columnValue: T;
-  }) => ReactNode;
+  children?: (cell: TableCellCallback<T>) => ReactNode;
 };
 
 export type {
@@ -98,4 +100,5 @@ export type {
   Alignment,
   SelectionMode,
   TableRounded,
+  TableCellCallback,
 };
