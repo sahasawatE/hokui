@@ -17,16 +17,15 @@ import { Description, Label } from "../Field";
 import { focusRing } from "../utils";
 import type {
   Color,
-  ChipVariant,
-  ChipRounded,
+  TagVariant,
+  TagRounded,
   SelectionMode,
 } from "../types/prop.type";
-import type { ListData } from "react-stately";
 
 type TagContext = {
   color?: Color;
-  variant?: ChipVariant;
-  rounded?: ChipRounded;
+  variant?: TagVariant;
+  rounded?: TagRounded;
 };
 
 const ColorContext = createContext<TagContext>({
@@ -124,9 +123,9 @@ export interface TagGroupProps<T>
   label?: string;
   description?: string;
   errorMessage?: string;
-  variant?: ChipVariant;
-  rounded?: ChipRounded;
-  items?: ListData<T>;
+  variant?: TagVariant;
+  rounded?: TagRounded;
+  items?: T[];
   selectionMode?: SelectionMode;
   onRemove?: (keys: string[]) => void;
 }
@@ -164,7 +163,7 @@ export function TagGroup<
           }}
         >
           <TagList
-            items={items.items}
+            items={items}
             renderEmptyState={renderEmptyState}
             className="flex flex-wrap gap-1"
           >
@@ -201,7 +200,9 @@ const removeButtonStyles = tv({
   },
 });
 
-export function Tag({ children, ...props }: AriaTagProps) {
+export type Tagprops = AriaTagProps & TagContext;
+
+export function Tag({ children, ...props }: Tagprops) {
   let textValue = typeof children === "string" ? children : undefined;
   let groupCtx = useContext(ColorContext);
   return (

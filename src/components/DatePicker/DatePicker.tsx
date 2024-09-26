@@ -10,7 +10,6 @@ import { Calendar } from "../Calendar";
 import { DateInput } from "../DateField";
 import { Dialog } from "../Dialog";
 import { Description, FieldError, FieldGroup, Label } from "../Field";
-import { Popover } from "../Popover";
 import { composeTailwindRenderProps } from "../utils";
 import type { Color, Rounded, InputVariant } from "../types/prop.type";
 
@@ -42,7 +41,7 @@ export function DatePicker<T extends DateValue>({
         "group flex flex-col gap-1",
       )}
     >
-      <Popover
+      <Dialog
         activator={() => (
           <>
             {label && <Label>{label}</Label>}
@@ -65,10 +64,8 @@ export function DatePicker<T extends DateValue>({
           </>
         )}
       >
-        <Dialog>
-          <Calendar color={props.color} />
-        </Dialog>
-      </Popover>
+        <Calendar color={props.color} />
+      </Dialog>
     </AriaDatePicker>
   );
 }

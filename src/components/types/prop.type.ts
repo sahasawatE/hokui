@@ -33,9 +33,9 @@ type BadgeVariant = "default" | "bordered" | "flat";
 
 type BadgeRounded = "default" | "full";
 
-type ChipVariant = BadgeVariant;
+type TagVariant = BadgeVariant;
 
-type ChipRounded = BadgeRounded;
+type TagRounded = BadgeRounded;
 
 type TableVariant = "bordered" | "flat" | "float";
 
@@ -90,8 +90,8 @@ export type {
   Position,
   BadgeVariant,
   BadgeRounded,
-  ChipVariant,
-  ChipRounded,
+  TagVariant,
+  TagRounded,
   LinkVariant,
   TableVariant,
   DataTableProps,
