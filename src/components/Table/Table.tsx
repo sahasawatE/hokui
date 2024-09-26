@@ -34,7 +34,7 @@ export interface TableProp<
 > extends Omit<TableProps, "children" | "onSelectionChange">,
     DataTableProps<T> {
   onSelect?: (selected: any) => void;
-  rounded: TableRounded;
+  rounded?: TableRounded;
 }
 
 const TableStyle = tv({
@@ -251,7 +251,7 @@ function TableHeader<T extends object>(
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        "sticky top-0 z-10 bg-default-100/60 backdrop-blur-lg supports-[-moz-appearance:none]:bg-default-100/60 border-b h-12",
+        "sticky top-0 z-10 bg-default-100 backdrop-blur-md mix-blend-multiply supports-[-moz-appearance:none]:bg-default-100 border-b h-12",
       )}
     >
       {selectionBehavior === "toggle" && (
