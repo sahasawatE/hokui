@@ -70,7 +70,7 @@ export function Table<
       })}
       style={{
         maxHeight: `${props.hiehgt ?? "580"}px`,
-        width: `${props.width ?? "550"}px`,
+        width: props.width ? `${props.width}px` : "100%",
       }}
     >
       <AriaTable
