@@ -1,1 +1,1 @@
-export { Tag, TagGroup } from "./TagGroup";
+export { Tag, TagGroup, Chip } from "./TagGroup";

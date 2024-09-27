@@ -200,9 +200,9 @@ const removeButtonStyles = tv({
   },
 });
 
-export type Tagprops = AriaTagProps & TagContext;
+export type TagItemProps = AriaTagProps & TagContext;
 
-export function Tag({ children, ...props }: Tagprops) {
+export function Tag({ children, ...props }: TagItemProps) {
   let textValue = typeof children === "string" ? children : undefined;
   let groupCtx = useContext(ColorContext);
   return (
@@ -235,5 +235,58 @@ export function Tag({ children, ...props }: Tagprops) {
         </>
       )}
     </AriaTag>
+  );
+}
+
+export type ChipProps = TagItemProps & {
+  label?: string;
+  description?: string;
+  errorMessage?: string;
+};
+
+export function Chip({
+  children,
+  label,
+  description,
+  errorMessage,
+  ...props
+}: ChipProps) {
+  const textValue = typeof children === "string" ? children : "";
+  return (
+    <AriaTagGroup
+      aria-label={label}
+      className="flex flex-col justify-center gap-1"
+    >
+      <Label>{label}</Label>
+      <TagList>
+        <AriaTag
+          {...props}
+          textValue={textValue}
+          className={composeRenderProps(
+            props.className,
+            (className, renderProps) =>
+              tagStyles({
+                ...renderProps,
+                className,
+                color: props.color,
+                rounded: props.rounded,
+                variant: props.variant,
+              }),
+          )}
+        >
+          {textValue}
+        </AriaTag>
+      </TagList>
+      {description && (
+        <Text slot="description" className="text-sm text-gray-400">
+          Your selected categories.
+        </Text>
+      )}
+      {errorMessage && (
+        <Text slot="errorMessage" className="text-sm text-danger">
+          Your selected categories.
+        </Text>
+      )}
+    </AriaTagGroup>
   );
 }
