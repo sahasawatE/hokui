@@ -1,4 +1,4 @@
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Cell as AriaCell,
   Column as AriaColumn,
@@ -27,13 +27,20 @@ import type {
   Alignment,
   TableRounded,
 } from "../types/prop.type";
+import { Select, SelectItem } from "../Select";
+import { Label } from "../Field";
+import { Button } from "../Button";
 
-export interface TableProp<
+interface TableProp<
   T extends { [key: string]: any; key: string; title: string },
 > extends Omit<TableProps, "children" | "onSelectionChange">,
     DataTableProps<T> {
   onSelect?: (selected: any) => void;
+  allowDragAndDrop?: boolean;
   rounded?: TableRounded;
+  hidePagination?: boolean;
+  pagination?: React.ReactNode;
+  perPageOption?: { key: string }[];
 }
 
 const TableStyle = tv({
@@ -72,81 +79,120 @@ export function Table<
   T extends { [key: string]: any; key: string; title: string },
 >(props: TableProp<T>) {
   return (
-    <div
-      className={TableContainerStyle({
-        rounded: props.rounded,
-      })}
-    >
-      <AriaTable
-        {...props}
-        aria-label="data-table"
-        className={TableStyle({
-          variant: props.variant,
+    <div className="flex flex-col gap-2">
+      <div
+        className={TableContainerStyle({
           rounded: props.rounded,
-          className: "border-separate border-spacing-0 w-full",
         })}
-        style={{
-          maxHeight: `${props.hiehgt ?? "580"}px`,
-          width: props.width ? `${props.width}px` : "100%",
-        }}
-        onSelectionChange={(key) => {
-          if (props.onSelect) {
-            if (typeof key === "string") {
-              return props.onSelect(props.items);
-            } else {
-              return props.onSelect(
-                Array.from(key).map((e) =>
-                  props.items.find((f) => f.key === e),
-                ),
-              );
-            }
-          }
-
-          return undefined;
-        }}
       >
-        <TableHeader color={props.color}>
-          {props.header.map((h, i) => (
-            <Column
-              key={i}
-              isRowHeader={Boolean(h.isRowHeader)}
-              width={Number(h.decoration?.width)}
-              fontWeight={h.decoration?.fontWeight}
-              fontSize={h.decoration?.fontSize}
-              fontColor={h.decoration?.fontColor}
-              align={h.decoration?.align}
-            >
-              {h.title}
-            </Column>
-          ))}
-        </TableHeader>
-        <TableBody items={props.items}>
-          {(item) => (
-            <Row
-              id={item.key}
-              color={props.color}
-              isDisabled={Boolean(item["disabled"])}
-            >
-              {props.header.map((h, j) =>
-                props.children ? (
-                  <Cell key={j} align={h.decoration?.align}>
-                    {props.children({
-                      index: props.items.findIndex((e) => e.key === item.key),
-                      value: item[h.key],
-                      columnValue: item,
-                      key: h.key,
-                    })}
-                  </Cell>
-                ) : (
-                  <Cell key={j} align={h.decoration?.align}>
-                    {item[h.key]}
-                  </Cell>
-                ),
-              )}
-            </Row>
+        <AriaTable
+          {...props}
+          aria-label="data-table"
+          className={TableStyle({
+            variant: props.variant,
+            rounded: props.rounded,
+            className: "border-separate border-spacing-0 w-full",
+          })}
+          style={{
+            maxHeight: `${props.hiehgt ?? "580"}px`,
+            width: props.width ? `${props.width}px` : "100%",
+          }}
+          onSelectionChange={(key) => {
+            if (props.onSelect) {
+              if (typeof key === "string") {
+                return props.onSelect(props.items);
+              } else {
+                return props.onSelect(
+                  Array.from(key).map((e) =>
+                    props.items.find((f) => f.key === e),
+                  ),
+                );
+              }
+            }
+
+            return undefined;
+          }}
+        >
+          <TableHeader color={props.color}>
+            {props.header.map((h, i) => (
+              <Column
+                key={i}
+                isRowHeader={Boolean(h.isRowHeader)}
+                width={Number(h.decoration?.width)}
+                fontWeight={h.decoration?.fontWeight}
+                fontSize={h.decoration?.fontSize}
+                fontColor={h.decoration?.fontColor}
+                align={h.decoration?.align}
+              >
+                {h.title}
+              </Column>
+            ))}
+          </TableHeader>
+          <TableBody items={props.items}>
+            {(item) => (
+              <Row
+                id={item.key}
+                color={props.color}
+                isDisabled={Boolean(item["disabled"])}
+              >
+                {props.header.map((h, j) =>
+                  props.children ? (
+                    <Cell key={j} align={h.decoration?.align}>
+                      {props.children({
+                        index: props.items.findIndex((e) => e.key === item.key),
+                        value: item[h.key],
+                        columnValue: item,
+                        key: h.key,
+                      })}
+                    </Cell>
+                  ) : (
+                    <Cell key={j} align={h.decoration?.align}>
+                      {item[h.key]}
+                    </Cell>
+                  ),
+                )}
+              </Row>
+            )}
+          </TableBody>
+        </AriaTable>
+      </div>
+      {props.pagination
+        ? props.pagination
+        : !props.hidePagination && (
+            <div className="flex flex-row justify-between items-center">
+              <div className="flex flex-row gap-2 items-center">
+                <Label>แสดงข้อมูล</Label>
+                <Select
+                  aria-label="paging"
+                  defaultSelectedKey="50"
+                  color={props.color}
+                  items={
+                    props.perPageOption ?? [
+                      { key: "50" },
+                      { key: "100" },
+                      { key: "150" },
+                      { key: "200" },
+                    ]
+                  }
+                  className="w-20"
+                >
+                  {(page) => <SelectItem key={page.key}>{page.key}</SelectItem>}
+                </Select>
+                <Label>จากทั้งหมด {props.paging.total} รายการ</Label>
+              </div>
+              <div className="flex flex-row gap-1">
+                <Button variant="icon">
+                  <ChevronLeft />
+                </Button>
+
+                {/* page goes here */}
+
+                <Button variant="icon">
+                  <ChevronRight />
+                </Button>
+              </div>
+            </div>
           )}
-        </TableBody>
-      </AriaTable>
     </div>
   );
 }

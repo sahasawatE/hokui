@@ -29,7 +29,7 @@ type customProps<T> = {
 
 const styles = tv({
   extend: focusRing,
-  base: "flex items-center text-start gap-4 w-full cursor-default border border-black/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] pl-3 pr-2 py-2 min-w-[150px] transition bg-gray-50",
+  base: "flex items-center text-start gap-4 w-full cursor-default border border-black/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] pl-3 pr-2 py-2 transition bg-gray-50",
   variants: {
     isDisabled: {
       false: "text-gray-800",
