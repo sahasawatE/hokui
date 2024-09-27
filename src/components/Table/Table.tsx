@@ -58,11 +58,25 @@ const TableStyle = tv({
   },
 });
 
+const TableContainerStyle = tv({
+  base: "no-scrollbar max-w-full overflow-auto",
+  variants: {
+    rounded: TableStyle.variants.rounded,
+  },
+  defaultVariants: {
+    rounded: "md",
+  },
+});
+
 export function Table<
   T extends { [key: string]: any; key: string; title: string },
 >(props: TableProp<T>) {
   return (
-    <div className="no-scrollbar max-w-full overflow-auto">
+    <div
+      className={TableContainerStyle({
+        rounded: props.rounded,
+      })}
+    >
       <AriaTable
         {...props}
         aria-label="data-table"
