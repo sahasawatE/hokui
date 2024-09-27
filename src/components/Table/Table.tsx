@@ -62,7 +62,7 @@ export function Table<
   T extends { [key: string]: any; key: string; title: string },
 >(props: TableProp<T>) {
   return (
-    <div className="no-scrollbar inline">
+    <div className="no-scrollbar max-w-full overflow-auto">
       <AriaTable
         {...props}
         aria-label="data-table"
