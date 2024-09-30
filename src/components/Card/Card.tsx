@@ -4,7 +4,7 @@ import useSlot from "react-use-slots";
 import type { CardRounded, CardVariant, Shadow } from "../types/prop.type";
 
 const cardStyle = tv({
-  base: "flex flex-col gap-4 w-full p-4",
+  base: "flex flex-col gap-4 w-full p-4 bg-white",
   variants: {
     variant: {
       default: "border",
