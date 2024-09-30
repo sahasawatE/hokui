@@ -1,5 +1,6 @@
 import React from "react";
 import { tv } from "tailwind-variants";
+import { twMerge } from "tailwind-merge";
 import useSlot from "react-use-slots";
 import type { CardRounded, CardVariant, Shadow } from "../types/prop.type";
 
@@ -28,7 +29,7 @@ const cardStyle = tv({
   defaultVariants: {
     variant: "default",
     rounded: "md",
-    shadow: "md",
+    shadow: "sm",
   },
   compoundVariants: [
     {
@@ -43,8 +44,14 @@ export type CardProps = {
   variant?: CardVariant;
   rounded?: CardRounded;
   shadow?: Shadow;
-  children?: React.ReactNode;
   title?: string;
+  classNames?: {
+    base?: string;
+    header?: string;
+    title?: string;
+    content?: string;
+  };
+  children: React.ReactNode;
 };
 
 type AvailableSlotName = "header-content" | "header-actions";
@@ -69,13 +76,22 @@ function RenderSlot(
 
 export function Card(props: CardProps) {
   return (
-    <div className={cardStyle(props)}>
+    <div className={twMerge(cardStyle(props), props.classNames?.base ?? "")}>
       {/* header */}
       {RenderSlot(props, "header-content", () => (
         <>
           {props.title && (
-            <div className="flex flex-row justify-between items-center">
-              <span className="text-xl font-semibold">{props.title}</span>
+            <div
+              className={twMerge(
+                "flex flex-row justify-between items-center",
+                props.classNames?.header ?? "",
+              )}
+            >
+              <span
+                className={twMerge("text-lg", props.classNames?.title ?? "")}
+              >
+                {props.title}
+              </span>
               {RenderSlot(props, "header-actions", () => (
                 <div></div>
               ))}
@@ -85,7 +101,9 @@ export function Card(props: CardProps) {
       ))}
 
       {/* content */}
-      <div>{RenderSlot(props)}</div>
+      <div className={twMerge("", props.classNames?.content ?? "")}>
+        {RenderSlot(props)}
+      </div>
     </div>
   );
 }
