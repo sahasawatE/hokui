@@ -41,6 +41,12 @@ type TableVariant = "bordered" | "flat" | "float";
 
 type TableRounded = "none" | "sm" | "md" | "lg" | "xl";
 
+type Shadow = "none" | "sm" | "md" | "lg";
+
+type CardVariant = BadgeVariant;
+
+type CardRounded = TableRounded;
+
 type DataTableHeaderProps = {
   key: string;
   title: string;
@@ -101,4 +107,7 @@ export type {
   SelectionMode,
   TableRounded,
   TableCellCallback,
+  Shadow,
+  CardVariant,
+  CardRounded,
 };

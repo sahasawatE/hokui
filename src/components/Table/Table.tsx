@@ -47,7 +47,7 @@ const TableStyle = tv({
   base: "min-w-[550px] overflow-auto scroll-pt-[2.281rem] relative",
   variants: {
     variant: {
-      bordered: "border bg-transparent drop-shadow-none",
+      bordered: "bg-transparent drop-shadow-none",
       flat: "border-0 bg-white drop-shadow-none",
       float: "border-0 bg-white drop-shadow-md",
     },
@@ -66,7 +66,7 @@ const TableStyle = tv({
 });
 
 const TableContainerStyle = tv({
-  base: "no-scrollbar max-w-full overflow-auto",
+  base: "border no-scrollbar max-w-full overflow-auto",
   variants: {
     rounded: TableStyle.variants.rounded,
   },
