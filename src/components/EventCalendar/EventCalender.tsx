@@ -93,7 +93,10 @@ export function EventCalendar(props: EventCalendarProps) {
     useCalendar(props, state);
 
   return (
-    <div {...calendarProps} className="flex flex-col justify-center w-full">
+    <div
+      {...calendarProps}
+      className="flex flex-col gap-6 justify-center w-full"
+    >
       <div className="flex flex-row items-center justify-center gap-4">
         <Button variant="icon" {...prevButtonProps}>
           <ChevronLeft aria-hidden />
@@ -142,9 +145,9 @@ function CalendarGrid({ state, ...props }: CalendarGridProps) {
   };
 
   const dayStyle = (isWeekend: boolean) => {
-    if (isWeekend) return "bg-danger-50 text-danger rounded";
+    if (isWeekend) return "bg-danger-50 text-danger";
 
-    return "bg-default-100 text-default rounded";
+    return "bg-default-100 text-default";
   };
 
   return (
@@ -153,7 +156,10 @@ function CalendarGrid({ state, ...props }: CalendarGridProps) {
         {weekDays.map((day, index) => (
           <div
             key={index}
-            className={twMerge("px-3", dayStyle(index === 0 || index === 6))}
+            className={twMerge(
+              "px-3 rounded h-8 flex flex-row items-center",
+              dayStyle(index === 0 || index === 6),
+            )}
           >
             {day}.
           </div>
