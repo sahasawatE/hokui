@@ -413,24 +413,24 @@ function RenderDialogContent({
   const ctx = useContext(CalendarContext);
 
   return (
-    <div className="max-w-80 overflow-scroll no-scrollbar">
+    <div className="max-w-96 overflow-scroll no-scrollbar">
       {ctx.eventsDialog ? (
         ctx.eventsDialog(cb())
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           <div>{`${date.day} ${ctx.displayDate}`}</div>
 
           <div className="max-h-80 overflow-scroll no-scrollbar">
             {event ? (
               event.map((ev, i) => (
-                <div key={i} className="flex flex-row items-center gap-2">
+                <div key={i} className="flex flex-row items-center gap-4">
                   <div
-                    className="max-h-2 max-w-2 rounded-full"
+                    className="h-2 max-h-2 min-h-2 w-2 max-w-2 min-w-2 rounded-full"
                     style={{
                       backgroundColor: chipBg(ev.type).color,
                     }}
                   />
-                  <span>{ev.details}</span>
+                  <span className="text-nowrap">{ev.details}</span>
                 </div>
               ))
             ) : (
