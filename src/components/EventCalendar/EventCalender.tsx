@@ -325,32 +325,12 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
                 )}
                 className="p-0"
               >
-                <div className="max-w-80 overflow-scroll no-scrollbar">
-                  {ctx.eventsDialog ? (
-                    ctx.eventsDialog(cb())
-                  ) : (
-                    <div className="flex flex-col gap-2">
-                      <div>{`${date.day} ${ctx.displayDate}`}</div>
-
-                      <div className="max-h-80 overflow-scroll no-scrollbar">
-                        {event.map((ev, i) => (
-                          <div
-                            key={i}
-                            className="flex flex-row items-center gap-2"
-                          >
-                            <div
-                              className="h-2 w-2 rounded-full"
-                              style={{
-                                backgroundColor: chipBg(ev.type).color,
-                              }}
-                            />
-                            <span>{ev.details}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <RenderDialogContent
+                  cb={cb}
+                  chipBg={chipBg}
+                  event={event}
+                  date={date}
+                />
               </Dialog>
             </div>
           )}
@@ -381,35 +361,12 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
           )}
           className="p-0"
         >
-          <div className="max-w-80 overflow-scroll no-scrollbar">
-            {ctx.eventsDialog ? (
-              ctx.eventsDialog(cb())
-            ) : (
-              <div className="flex flex-col gap-2">
-                <div>{`${date.day} ${ctx.displayDate}`}</div>
-
-                <div className="max-h-80 overflow-scroll no-scrollbar">
-                  {event ? (
-                    event.map((ev, i) => (
-                      <div key={i} className="flex flex-row items-center gap-2">
-                        <div
-                          className="h-2 w-2 rounded-full"
-                          style={{
-                            backgroundColor: chipBg(ev.type).color,
-                          }}
-                        />
-                        <span>{ev.details}</span>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="flex flexrow justify-center text-gray-300">
-                      No Item.
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
+          <RenderDialogContent
+            cb={cb}
+            chipBg={chipBg}
+            event={event}
+            date={date}
+          />
         </Dialog>
       </div>
     </div>
@@ -430,5 +387,60 @@ function SmallCellBtn(
     >
       {props.children}
     </button>
+  );
+}
+
+function RenderDialogContent({
+  cb,
+  chipBg,
+  event,
+  date,
+}: {
+  cb: () =>
+    | {
+        displayDate: string;
+        day: string;
+        events: CalendarEventDetail[];
+      }
+    | undefined;
+  chipBg: (type: string) => {
+    color: string;
+    text: string;
+  };
+  event: CalendarEventDetail[] | undefined;
+  date: CalendarDate;
+}) {
+  const ctx = useContext(CalendarContext);
+
+  return (
+    <div className="max-w-80 overflow-scroll no-scrollbar">
+      {ctx.eventsDialog ? (
+        ctx.eventsDialog(cb())
+      ) : (
+        <div className="flex flex-col gap-2">
+          <div>{`${date.day} ${ctx.displayDate}`}</div>
+
+          <div className="max-h-80 overflow-scroll no-scrollbar">
+            {event ? (
+              event.map((ev, i) => (
+                <div key={i} className="flex flex-row items-center gap-2">
+                  <div
+                    className="max-h-2 max-w-2 rounded-full"
+                    style={{
+                      backgroundColor: chipBg(ev.type).color,
+                    }}
+                  />
+                  <span>{ev.details}</span>
+                </div>
+              ))
+            ) : (
+              <div className="flex flexrow justify-center text-gray-300">
+                No Item.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
