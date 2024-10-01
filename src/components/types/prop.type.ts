@@ -87,6 +87,19 @@ type DataTableProps<
   children?: (cell: TableCellCallback<T>) => ReactNode;
 };
 
+type CalendarEventDetail = { type: string; details: string };
+
+type CalendarEventColor = {
+  type: string;
+  color: string;
+  textColor?: string;
+}[];
+
+type CalendarEvent = {
+  day: string;
+  events: CalendarEventDetail[];
+};
+
 export type {
   Color,
   ButtonVariant,
@@ -110,4 +123,7 @@ export type {
   Shadow,
   CardVariant,
   CardRounded,
+  CalendarEvent,
+  CalendarEventDetail,
+  CalendarEventColor,
 };

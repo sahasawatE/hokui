@@ -14,6 +14,7 @@ export * from "./DateField";
 export * from "./DatePicker";
 export * from "./DateRangePicker";
 export * from "./Dialog";
+export * from "./EventCalendar";
 export * from "./Field";
 export * from "./Form";
 export * from "./GridList";
