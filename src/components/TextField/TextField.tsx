@@ -50,7 +50,7 @@ export function TextField({
             {props.startContent}
           </div>
         )}
-        <Input />
+        <Input name={props.name} />
         {props.endContent && (
           <div className="text-gray-400 p-1 select-none">
             {props.endContent}
