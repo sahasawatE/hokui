@@ -16,6 +16,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "babel": {
     "sourceType": "unambiguous",
     "presets": [
