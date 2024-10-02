@@ -25,7 +25,8 @@ jobs:
         with:
           node-version: 20.16.0
           registry-url: https://registry.npmjs.org/
+      - run: ls -l
       - run: npm ci
-      - run: npm publish
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.HOK_UI}}

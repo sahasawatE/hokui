@@ -1,6 +1,6 @@
 {
   "name": "hokui",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "author": "Sahasawat Uengwanitchphan",
   "description": "A UI Library created by Hok.",
   "license": "MIT",
@@ -13,9 +13,6 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "access": "public"
   },
