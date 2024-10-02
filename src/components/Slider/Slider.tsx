@@ -125,7 +125,11 @@ export function Slider<T extends number | number[]>({
                 ...renderProps,
                 color: props.color,
               })}
-              style={{ width: state.getThumbPercent(0) * 100 + "%" }}
+              style={
+                props.orientation === "horizontal" || !props.orientation
+                  ? { width: state.getThumbPercent(0) * 100 + "%" }
+                  : { height: state.getThumbPercent(0) * 100 + "%" }
+              }
             />
             {state.values.map((_, i) => (
               <SliderThumb
