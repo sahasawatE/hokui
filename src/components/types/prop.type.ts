@@ -100,6 +100,8 @@ type CalendarEvent = {
   events: CalendarEventDetail[];
 };
 
+type TabsVariant = "default" | "underlined" | "flat";
+
 export type {
   Color,
   ButtonVariant,
@@ -126,4 +128,5 @@ export type {
   CalendarEvent,
   CalendarEventDetail,
   CalendarEventColor,
+  TabsVariant,
 };
