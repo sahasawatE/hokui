@@ -105,7 +105,12 @@ export function Select<T extends { [k: string]: any; key: string }>({
         "group flex flex-col gap-1",
       )}
     >
-      {label && <Label>{label}</Label>}
+      {label && (
+        <Label>
+          {label}
+          {props.isRequired && <span className="text-danger">*</span>}
+        </Label>
+      )}
       <Popover
         activator={() => (
           <>
