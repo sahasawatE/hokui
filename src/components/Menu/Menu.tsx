@@ -23,11 +23,15 @@ type MenuContext = {
   color?: Color;
 };
 
-export interface MenuProps<T> extends AriaMenuProps<T>, MenuContext {
+export interface MenuProps<T>
+  extends Omit<AriaMenuProps<T>, "onAction" | "onSelectionChange">,
+    MenuContext {
   placement?: PopoverProps["placement"];
-  activator?: () => ReturnType<typeof Button>;
   label?: string;
   isOpen?: boolean;
+  activator?: () => ReturnType<typeof Button>;
+  onSelect?: (e: string) => void;
+  onSelectionChange?: (e: string[]) => void;
 }
 
 const MenuContext = createContext<MenuContext>({
@@ -53,6 +57,21 @@ export function Menu<
         >
           <AriaMenu
             {...props}
+            onAction={(e) => {
+              if (props.onSelect) {
+                return props.onSelect(String(e));
+              }
+
+              return undefined;
+            }}
+            onSelectionChange={(e) => {
+              if (props.onSelectionChange) {
+                const keys = Array.from(e).map((k) => String(k));
+                return props.onSelectionChange(keys);
+              }
+
+              return undefined;
+            }}
             className="outline outline-0 max-h-[inherit] overflow-auto [clip-path:inset(0_0_0_0_round_.5rem)]"
           >
             {props.children
