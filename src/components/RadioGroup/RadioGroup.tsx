@@ -63,9 +63,9 @@ export function RadioGroup<
   );
 }
 
-const styles = tv({
+const RadioBtnStyles = tv({
   extend: focusRing,
-  base: "w-5 h-5 rounded-full border-2 bg-white transition-all cursor-pointer",
+  base: "w-5 h-5 max-w-5 max-h-5 rounded-full border-2 bg-white transition-all cursor-pointer",
   variants: {
     isSelected: {
       false:
@@ -99,7 +99,11 @@ const styles = tv({
   },
 });
 
-export function Radio(props: RadioProps) {
+interface RadioProp extends Omit<RadioProps, "children"> {
+  children: React.ReactNode;
+}
+
+export function Radio(props: RadioProp) {
   const groupContext = useContext(GroupContext);
   return (
     <RACRadio
@@ -110,12 +114,15 @@ export function Radio(props: RadioProps) {
       )}
     >
       {(renderProps) => (
-        <>
+        <div className="flex flex-row items-start gap-2">
           <div
-            className={styles({ ...renderProps, color: groupContext.color })}
+            className={RadioBtnStyles({
+              ...renderProps,
+              color: groupContext.color,
+            })}
           />
           {props.children}
-        </>
+        </div>
       )}
     </RACRadio>
   );
