@@ -65,7 +65,9 @@ const TabsContext = createContext<TabsContextType>({
 
 export interface TabListProp<T> extends TabListProps<T>, TabsContextType {}
 
-export function TabList<T extends object>(props: TabListProp<T>) {
+export function TabList<
+  T extends { key: string; title: string; [k: string]: any },
+>(props: TabListProp<T>) {
   return (
     <TabsContext.Provider
       value={{ variant: props.variant, color: props.color }}
@@ -166,7 +168,7 @@ const tabProps = tv({
       isDisabled: false,
       isSelected: true,
       variant: "underlined",
-      className: "border-0 border-b-2 rounded-none border-[--bg]",
+      className: "border-0 border-b-2 rounded-none border-[--bg] text-[--bg]",
     },
   ],
 });

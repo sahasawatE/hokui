@@ -16,41 +16,64 @@ import {
 } from "../ListBox/ListBox";
 import { Popover, PopoverProps } from "../Popover/Popover";
 import type { Button } from "../Button";
+import type { Color } from "../types/prop.type";
+import { createContext, useContext } from "react";
 
-export interface MenuProps<T> extends AriaMenuProps<T> {
+type MenuContext = {
+  color?: Color;
+};
+
+export interface MenuProps<T> extends AriaMenuProps<T>, MenuContext {
   placement?: PopoverProps["placement"];
   activator?: () => ReturnType<typeof Button>;
   label?: string;
+  isOpen?: boolean;
 }
+
+const MenuContext = createContext<MenuContext>({
+  color: "default",
+});
 
 export function Menu<
   T extends { [k: string]: any; key: string; title: string },
 >(props: MenuProps<T>) {
   return (
-    <MenuTrigger>
-      <Popover
-        showArrow
-        label={props.label}
-        activator={props.activator}
-        placement={props.placement}
-        className="min-w-[150px]"
+    <MenuTrigger isOpen={props.isOpen}>
+      <MenuContext.Provider
+        value={{
+          color: props.color,
+        }}
       >
-        <AriaMenu
-          {...props}
-          className="outline outline-0 max-h-[inherit] overflow-auto [clip-path:inset(0_0_0_0_round_.5rem)]"
+        <Popover
+          showArrow
+          label={props.label}
+          activator={props.activator}
+          placement={props.placement}
+          className="min-w-[150px]"
         >
-          {props.children
-            ? props.children
-            : (e) => <MenuItem key={e.key}>{e.title}</MenuItem>}
-        </AriaMenu>
-      </Popover>
+          <AriaMenu
+            {...props}
+            className="outline outline-0 max-h-[inherit] overflow-auto [clip-path:inset(0_0_0_0_round_.5rem)]"
+          >
+            {props.children
+              ? props.children
+              : (e) => <MenuItem key={e.key}>{e.title}</MenuItem>}
+          </AriaMenu>
+        </Popover>
+      </MenuContext.Provider>
     </MenuTrigger>
   );
 }
 
 export function MenuItem(props: MenuItemProps) {
+  const ctx = useContext(MenuContext);
   return (
-    <AriaMenuItem {...props} className={dropdownItemStyles}>
+    <AriaMenuItem
+      {...props}
+      className={(renderProps) =>
+        dropdownItemStyles({ ...renderProps, color: ctx.color })
+      }
+    >
       {composeRenderProps(
         props.children,
         (children, { selectionMode, isSelected, hasSubmenu }) => (
