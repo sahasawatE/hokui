@@ -65,7 +65,7 @@ export function RadioGroup<
 
 const RadioBtnStyles = tv({
   extend: focusRing,
-  base: "w-5 h-5 max-w-5 max-h-5 rounded-full border-2 bg-white transition-all cursor-pointer",
+  base: "w-5 h-5 max-w-5 max-h-5 min-w-5 min-h-5  rounded-full border-2 bg-white transition-all cursor-pointer",
   variants: {
     isSelected: {
       false:
