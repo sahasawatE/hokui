@@ -45,24 +45,24 @@ const styles = tv({
     },
     color: {
       default:
-        "[--c:var(--hok-default-500)] [--bgColor:hsl(var(--c)/0.1)] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)]",
+        "[--c:var(--hok-default-200)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
       primary:
-        "[--c:var(--hok-primary-500)] [--bgColor:hsl(var(--c)/0.1)] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)]",
+        "[--c:var(--hok-primary-100)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
       secondary:
-        "[--c:var(--hok-secondary-500)] [--bgColor:hsl(var(--c)/0.1)] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)]",
+        "[--c:var(--hok-secondary-100)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
       success:
-        "[--c:var(--hok-success-500)] [--bgColor:hsl(var(--c)/0.1)] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)]",
+        "[--c:var(--hok-success-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
       danger:
-        "[--c:var(--hok-danger-500)] [--bgColor:hsl(var(--c)/0.1)] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)]",
+        "[--c:var(--hok-danger-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
       warning:
-        "[--c:var(--hok-warning-500)] [--bgColor:hsl(var(--c)/0.4)] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)]",
-      info: "[--c:var(--hok-warning-500)] [--bgColor:hsl(var(--c)/0.4)] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)]",
+        "[--c:var(--hok-warning-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
+      info: "[--c:var(--hok-warning-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
     },
     variant: {
       bordered:
-        "bg-transparent border-2 border-[--bgColor] hover:border-[--bgColorPressed] pressed:border-[hsl(var(--c))]",
+        "bg-white border-2 border-[--bgColor] hover:border-[--bgColorPressed] pressed:border-[hsl(var(--c))]",
       underlined: "",
-      flat: "bg-[--bgColor] hover:bg-[--bgColorHover] pressed:bg-[--bgColorPressed] group-invalid:border-red-600 forced-colors:group-invalid:border-[Mark]",
+      flat: "border-0 bg-[--bgColorFlat] pressed:bg-[--bgColorPressed] group-invalid:border-red-600",
     },
   },
   defaultVariants: {
