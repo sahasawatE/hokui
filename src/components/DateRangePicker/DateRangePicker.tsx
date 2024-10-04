@@ -58,7 +58,7 @@ export function DateRangePicker<T extends DateValue>({
               />
               <span
                 aria-hidden="true"
-                className="text-gray-800 forced-colors:text-[ButtonText] group-disabled:text-gray-200 group-disabled:dark:text-zinc-600 group-disabled:forced-colors:text-[GrayText]"
+                className="text-gray-800 forced-colors:text-[ButtonText] group-disabled:text-gray-200 group-disabled:forced-colors:text-[GrayText]"
               >
                 ~
               </span>

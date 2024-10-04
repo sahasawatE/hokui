@@ -22,13 +22,11 @@ export function ProgressBar({ label, ...props }: ProgressBarProps) {
         <>
           <div className="flex justify-between gap-2">
             <Label>{label}</Label>
-            <span className="text-sm text-gray-600 dark:text-zinc-400">
-              {valueText}
-            </span>
+            <span className="text-sm text-gray-600">{valueText}</span>
           </div>
-          <div className="w-64 h-2 rounded-full bg-gray-300 dark:bg-zinc-700 outline outline-1 -outline-offset-1 outline-transparent relative overflow-hidden">
+          <div className="w-64 h-2 rounded-full bg-gray-300 outline outline-1 -outline-offset-1 outline-transparent relative overflow-hidden">
             <div
-              className={`absolute top-0 h-full rounded-full bg-blue-600 dark:bg-blue-500 forced-colors:bg-[Highlight] ${
+              className={`absolute top-0 h-full rounded-full bg-blue-600 forced-colors:bg-[Highlight] ${
                 isIndeterminate
                   ? "left-full animate-in duration-1000 [--tw-enter-translate-x:calc(-16rem-100%)] slide-out-to-right-full repeat-infinite ease-out"
                   : "left-0"
