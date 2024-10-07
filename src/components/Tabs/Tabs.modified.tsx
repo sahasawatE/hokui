@@ -18,10 +18,7 @@ export type TabsProps<
   color?: Color;
   items: T[];
   onSelectionChange?: (key: string) => void;
-  renderTabItems?: (tabItemProps: {
-    key: string;
-    title: string;
-  }) => React.ReactNode;
+  renderTabItems?: (tabItemProps: T) => React.ReactNode;
   children: (item: T) => React.ReactNode;
 };
 
