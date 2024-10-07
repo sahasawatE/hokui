@@ -88,7 +88,7 @@ export function TabList<
   );
 }
 
-const tabProps = tv({
+const tabStyles = tv({
   extend: focusRing,
   base: "rounded-sm transition forced-color-adjust-none flex items-center cursor-pointer px-4 py-1.5 text-sm font-medium",
   variants: {
@@ -96,19 +96,13 @@ const tabProps = tv({
       true: "cursor-not-allowed",
     },
     color: {
-      default:
-        "[--bgHover:hsl(var(--hok-default-200))] [--bg:hsl(var(--hok-default-500))] [--textDisabled:hsl(var(--hok-default-300))]",
-      primary:
-        "[--bgHover:hsl(var(--hok-primary-200))] [--bg:hsl(var(--hok-primary-500))] [--textDisabled:hsl(var(--hok-primary-300))]",
-      secondary:
-        "[--bgHover:hsl(var(--hok-secondary-200))] [--bg:hsl(var(--hok-secondary-500))] [--textDisabled:hsl(var(--hok-secondary-300))]",
-      success:
-        "[--bgHover:hsl(var(--hok-success-200))] [--bg:hsl(var(--hok-success-500))] [--textDisabled:hsl(var(--hok-success-300))]",
-      danger:
-        "[--bgHover:hsl(var(--hok-danger-200))] [--bg:hsl(var(--hok-danger-500))] [--textDisabled:hsl(var(--hok-danger-300))]",
-      warning:
-        "[--bgHover:hsl(var(--hok-warning-200))] [--bg:hsl(var(--hok-warning-500))] [--textDisabled:hsl(var(--hok-warning-300))]",
-      info: "[--bgHover:hsl(var(--hok-info-200))] [--bg:hsl(var(--hok-info-500))] [--textDisabled:hsl(var(--hok-info-300))]",
+      default: "[--bgHover:hsl(var(--hok-default-200))]",
+      primary: "[--bgHover:hsl(var(--hok-primary-200))]",
+      secondary: "[--bgHover:hsl(var(--hok-secondary-200))]",
+      success: "[--bgHover:hsl(var(--hok-success-200))]",
+      danger: "[--bgHover:hsl(var(--hok-danger-200))]",
+      warning: "[--bgHover:hsl(var(--hok-warning-200))]",
+      info: "[--bgHover:hsl(var(--hok-info-200))]",
     },
     variant: {
       default: "",
@@ -128,18 +122,6 @@ const tabProps = tv({
       className: "text-gray-300",
     },
     {
-      isDisabled: false,
-      isSelected: true,
-      variant: ["default", "flat"],
-      className: "bg-[--bg] text-white",
-    },
-    {
-      isDisabled: false,
-      isSelected: true,
-      variant: "default",
-      className: "shadow",
-    },
-    {
       isDisabled: true,
       isSelected: true,
       variant: "default",
@@ -153,22 +135,8 @@ const tabProps = tv({
     },
     {
       isDisabled: true,
-      isSelected: true,
       variant: "underlined",
-      className:
-        "border-0 border-b-2 rounded-none border-[--bgHover] text-gray-300",
-    },
-    {
-      isDisabled: true,
-      isSelected: false,
-      variant: "underlined",
-      className: "rounded-none text-gray-300",
-    },
-    {
-      isDisabled: false,
-      isSelected: true,
-      variant: "underlined",
-      className: "border-0 border-b-2 rounded-none border-[--bg] text-[--bg]",
+      className: "text-gray-300",
     },
   ],
 });
@@ -179,7 +147,7 @@ export function Tab(props: TabProps) {
     <RACTab
       {...props}
       className={composeRenderProps(props.className, (className, renderProps) =>
-        tabProps({
+        tabStyles({
           ...renderProps,
           color: ctx.color,
           variant: ctx.variant,
