@@ -31,9 +31,8 @@ import { Select, SelectItem } from "../Select";
 import { Label } from "../Field";
 import { Button } from "../Button";
 
-interface TableProp<
-  T extends { [key: string]: any; key: string; title: string },
-> extends Omit<TableProps, "children" | "onSelectionChange">,
+interface TableProp<T extends { [key: string]: any; key: string }>
+  extends Omit<TableProps, "children" | "onSelectionChange">,
     DataTableProps<T> {
   onSelect?: (selected: any) => void;
   allowDragAndDrop?: boolean;
@@ -75,9 +74,9 @@ const TableContainerStyle = tv({
   },
 });
 
-export function Table<
-  T extends { [key: string]: any; key: string; title: string },
->(props: TableProp<T>) {
+export function Table<T extends { [key: string]: any; key: string }>(
+  props: TableProp<T>,
+) {
   return (
     <div className="flex flex-col gap-2">
       <div

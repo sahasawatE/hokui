@@ -73,9 +73,7 @@ type TableCellCallback<T> = {
   columnValue: T;
 };
 
-type DataTableProps<
-  T extends { [key: string]: any; key: string; title: string },
-> = {
+type DataTableProps<T extends { [key: string]: any; key: string }> = {
   header: DataTableHeaderProps;
   items: T[];
   paging: DataTablePaginationProps;
