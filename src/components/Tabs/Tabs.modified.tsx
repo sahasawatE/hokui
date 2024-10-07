@@ -5,9 +5,7 @@ import { Tabs as BaseTabs, TabList, Tab as BaseTab, TabPanel } from "./Tabs";
 import type { Color, TabsVariant } from "../types/prop.type";
 import { tv } from "tailwind-variants";
 
-export type TabsProps<
-  T extends { key: string; title: string; [k: string]: any },
-> = {
+export type TabsProps<T> = {
   selectedKey?: string;
   defaultSelectedKey?: string;
   label?: string;
@@ -16,9 +14,18 @@ export type TabsProps<
   className?: string;
   variant?: TabsVariant;
   color?: Color;
+  height?: number;
   items: T[];
+  classNames?: {
+    base?: string;
+    tabItems?: string;
+    tabPanels?: string;
+  };
   onSelectionChange?: (key: string) => void;
-  renderTabItems?: (tabItemProps: T) => React.ReactNode;
+  renderTabItems?: (tabItemProps: {
+    key: string;
+    title: string;
+  }) => React.ReactNode;
   children: (item: T) => React.ReactNode;
 };
 
@@ -103,7 +110,10 @@ export function Tabs<
       disabledKeys={props.disabledKeys}
       selectedKey={props.selectedKey}
       className={(renderProps) =>
-        twMerge(props.className, renderProps.defaultClassName)
+        twMerge(
+          twMerge(props.classNames?.base, props.className),
+          renderProps.defaultClassName,
+        )
       }
       onSelectionChange={(key) => {
         if (props.onSelectionChange) {
@@ -119,10 +129,13 @@ export function Tabs<
             {props.selectedKey === e.key && (
               <motion.div
                 layoutId="tab-indicator"
-                className={tabStyles({
-                  color: props.color,
-                  variant: props.variant,
-                })}
+                className={twMerge(
+                  tabStyles({
+                    color: props.color,
+                    variant: props.variant,
+                  }),
+                  props.classNames?.tabItems,
+                )}
                 transition={{
                   type: "spring",
                   duration: 0.3,
@@ -143,7 +156,17 @@ export function Tabs<
       </TabList>
 
       {props.items.map((e) => (
-        <TabPanel key={e.key} id={e.key}>
+        <TabPanel
+          key={e.key}
+          id={e.key}
+          className={twMerge(
+            "overflow-scroll no-scrollbar",
+            props.classNames?.tabPanels,
+          )}
+          style={{
+            maxHeight: `${props.height ?? "580"}px`,
+          }}
+        >
           {props.children(e)}
         </TabPanel>
       ))}
