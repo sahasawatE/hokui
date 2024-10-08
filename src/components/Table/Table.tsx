@@ -40,6 +40,7 @@ interface TableProp<T extends { [key: string]: any; key: string }>
   allowDragAndDrop?: boolean;
   rounded?: TableRounded;
   hidePagination?: boolean;
+  hideScrollbar?: boolean;
   pagination?: React.ReactNode;
   perPageOption?: { key: string }[];
 }
@@ -67,9 +68,12 @@ const TableStyle = tv({
 });
 
 const TableContainerStyle = tv({
-  base: "border no-scrollbar max-w-full overflow-auto",
+  base: "border max-w-full overflow-auto",
   variants: {
     rounded: TableStyle.variants.rounded,
+    hideScrollbar: {
+      true: "no-scrollbar",
+    },
   },
   defaultVariants: {
     rounded: "md",
@@ -135,6 +139,7 @@ export function Table<T extends { [key: string]: any; key: string }>(
       <div
         className={TableContainerStyle({
           rounded: props.rounded,
+          hideScrollbar: props.hideScrollbar,
         })}
         style={{
           maxHeight: `${props.hiehgt ?? "580"}px`,
