@@ -1,4 +1,4 @@
-import { ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUp, ChevronLeft, ChevronRight, LoaderCircle } from "lucide-react";
 import {
   Cell as AriaCell,
   Column as AriaColumn,
@@ -30,11 +30,13 @@ import type {
 import { Select, SelectItem } from "../Select";
 import { Label } from "../Field";
 import { Button } from "../Button";
+import { motion } from "framer-motion";
 
 interface TableProp<T extends { [key: string]: any; key: string }>
   extends Omit<TableProps, "children" | "onSelectionChange">,
     DataTableProps<T> {
   onSelect?: (selected: any) => void;
+  isLoading?: boolean;
   allowDragAndDrop?: boolean;
   rounded?: TableRounded;
   hidePagination?: boolean;
@@ -74,15 +76,70 @@ const TableContainerStyle = tv({
   },
 });
 
+const TableLoadingOverlayStyle = tv({
+  base: "absolute w-full h-full bg-black/10 backdrop-blur-sm",
+  variants: {
+    rounded: TableStyle.variants.rounded,
+  },
+  defaultVariants: {
+    rounded: "md",
+  },
+});
+
 export function Table<T extends { [key: string]: any; key: string }>(
   props: TableProp<T>,
 ) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 relative">
+      <motion.div
+        animate={
+          props.isLoading
+            ? {
+                display: "block",
+                opacity: 1,
+                zIndex: 1,
+              }
+            : {
+                opacity: 0,
+                transitionEnd: {
+                  zIndex: -1,
+                  display: "none",
+                },
+              }
+        }
+        className={TableLoadingOverlayStyle({
+          rounded: props.rounded,
+        })}
+      >
+        <div className="flex flex-row items-center h-full justify-center">
+          <div className="bg-white border w-20 h-20 rounded-xl p-2 flex flex-col justify-center items-center">
+            <motion.div
+              animate={{
+                rotate: [0, 360],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 1,
+                ease: "easeInOut",
+                times: [0, 0.2, 1],
+              }}
+            >
+              <LoaderCircle
+                size={40}
+                className="text-[hsl(var(--hok-default-500))]"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
       <div
         className={TableContainerStyle({
           rounded: props.rounded,
         })}
+        style={{
+          maxHeight: `${props.hiehgt ?? "580"}px`,
+          width: props.width ? `${props.width}px` : "100%",
+        }}
       >
         <AriaTable
           {...props}
@@ -92,10 +149,6 @@ export function Table<T extends { [key: string]: any; key: string }>(
             rounded: props.rounded,
             className: "border-separate border-spacing-0 w-full",
           })}
-          style={{
-            maxHeight: `${props.hiehgt ?? "580"}px`,
-            width: props.width ? `${props.width}px` : "100%",
-          }}
           onSelectionChange={(key) => {
             if (props.onSelect) {
               if (typeof key === "string") {
