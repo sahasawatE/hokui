@@ -2,7 +2,6 @@
 export { I18nProvider } from "react-aria-components";
 
 // components
-export * from "./AlertDialog";
 export * from "./Badge";
 export * from "./Breadcrumbs";
 export * from "./Button";
