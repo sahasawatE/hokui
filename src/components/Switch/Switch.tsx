@@ -52,7 +52,7 @@ const track = tv({
 });
 
 const handle = tv({
-  base: "h-5 w-5 rounded-full bg-white outline outline-1 -outline-offset-1 outline-transparent shadow",
+  base: "h-5 w-5 rounded-full bg-white outline outline-1 -outline-offset-1 outline-transparent",
   variants: {
     isPressed: {
       true: "w-6",
