@@ -29,11 +29,11 @@ const trackStyles = tv({
 });
 
 const trackValueStyles = tv({
-  base: "absolute h-2 top-[50%] translate-y-[-50%] rounded-full",
+  base: "absolute h-2 rounded-full",
   variants: {
     orientation: {
-      horizontal: "w-full h-[6px]",
-      vertical: "h-full w-[6px] ml-[50%] -translate-x-[50%]",
+      horizontal: "w-full h-[6px] top-[50%] translate-y-[-50%]",
+      vertical: "h-full w-[6px] bottom-0 ml-[50%] -translate-x-[50%] align-end",
     },
     isDisabled: {
       false: "bg-[--bg] forced-colors:bg-[ButtonBorder]",

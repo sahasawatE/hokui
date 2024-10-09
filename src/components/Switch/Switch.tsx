@@ -6,6 +6,7 @@ import {
 import { tv } from "tailwind-variants";
 import { composeTailwindRenderProps, focusRing } from "../utils";
 import type { Color } from "../types/prop.type";
+import { motion } from "framer-motion";
 
 type CustomProps = {
   color?: Color;
@@ -19,11 +20,11 @@ export interface SwitchProps
 
 const track = tv({
   extend: focusRing,
-  base: "flex h-7 w-12 px-px items-center shrink-0 cursor-default rounded-full transition duration-200 ease-in-out shadow-inner border border-transparent",
+  base: "flex flex-row h-7 w-12 px-[3px] items-center shrink-0 cursor-default rounded-full transition duration-200 ease-in-out shadow-inner border border-transparent",
   variants: {
     isSelected: {
-      false: "bg-gray-300 group-pressed:bg-gray-400",
-      true: "bg-[--bgSelected] forced-colors:!bg-[Highlight] group-pressed:bg-[--bgSelectedPressed]",
+      false: "bg-gray-300 group-pressed:bg-gray-400 justify-start",
+      true: "justify-end bg-[--bgSelected] forced-colors:!bg-[Highlight] group-pressed:bg-[--bgSelectedPressed]",
     },
     isDisabled: {
       true: "bg-gray-200 forced-colors:group-selected:!bg-[GrayText] forced-colors:border-[GrayText] cursor-not-allowed",
@@ -51,16 +52,20 @@ const track = tv({
 });
 
 const handle = tv({
-  base: "h-5 w-5 transform rounded-full bg-white outline outline-1 -outline-offset-1 outline-transparent transition duration-200 ease-in-out",
+  base: "h-5 w-5 rounded-full bg-white outline outline-1 -outline-offset-1 outline-transparent shadow",
   variants: {
-    isSelected: {
-      false: "translate-x-[2px]",
-      true: "translate-x-[110%]",
+    isPressed: {
+      true: "w-6",
+      false: "w-5",
     },
     isDisabled: {
       true: "forced-colors:outline-[GrayText]",
     },
   },
+  compoundVariants: [
+    { isSelected: false, isPressed: true, className: "pr-1" },
+    { isSelected: true, isPressed: true, className: "pl-1" },
+  ],
 });
 
 export function Switch({ label, ...props }: SwitchProps) {
@@ -75,7 +80,15 @@ export function Switch({ label, ...props }: SwitchProps) {
       {(renderProps) => (
         <>
           <div className={track({ ...renderProps, color: props.color })}>
-            <span className={handle(renderProps)} />
+            <motion.div
+              layout
+              transition={{
+                type: "spring",
+                stiffness: 700,
+                damping: 30,
+              }}
+              className={handle(renderProps)}
+            />
           </div>
           {label}
         </>
