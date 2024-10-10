@@ -171,13 +171,18 @@ export function FieldGroup(props: GroupProps & customProps) {
                 e.isFocusWithin
                   ? {
                       width: "100%",
+                      opacity: 1,
                     }
                   : {
-                      opacity: 0,
+                      width: "0",
+                      transitionEnd: {
+                        opacity: 0,
+                      },
                     }
               }
               transition={{
-                ease: "backInOut",
+                type: "tween",
+                ease: "circInOut",
               }}
               className={underlinedStyle({ color: props.color })}
             ></motion.div>

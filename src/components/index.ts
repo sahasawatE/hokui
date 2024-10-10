@@ -1,5 +1,5 @@
 // Lib
-export { I18nProvider } from "react-aria-components";
+export * from "./ComponentProvider";
 
 // components
 export * from "./Badge";
