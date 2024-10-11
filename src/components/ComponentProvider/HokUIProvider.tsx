@@ -1,52 +1,51 @@
-import React from "react";
-import { renderToString } from "react-dom/server";
-import { I18nProvider } from "react-aria";
 import { motion } from "framer-motion";
+import React from "react";
+import { I18nProvider } from "react-aria";
 
 type ToastHandlerProps = {
+  delay?: number;
+  toastId: string;
   children: React.ReactNode;
-  // onHover: (isHover: boolean) => void;
-  // onClick: () => void;
   onClose: () => void;
 };
 
-type ToastHandlerState = {
-  timoutId: ReturnType<typeof setTimeout> | null;
-};
-
-class ToastHandler extends React.Component<
-  ToastHandlerProps,
-  ToastHandlerState
-> {
-  state: ToastHandlerState = {
-    timoutId: null,
-  };
+class ToastHandler {
+  public toastId: string;
+  public delay: number;
+  private children: React.ReactNode;
+  private timeoutId: ReturnType<typeof setTimeout> | null;
 
   constructor(props: ToastHandlerProps) {
-    super(props);
+    this.children = props.children;
+    this.toastId = props.toastId;
+    this.delay = props.delay ?? 2500;
 
-    const timoutId = setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       props.onClose();
-    }, 2500);
-
-    this.state.timoutId = timoutId;
+      this.dispose();
+    }, this.delay);
   }
 
-  componentWillUnmount(): void {
-    if (this.state.timoutId) {
-      clearTimeout(this.state.timoutId);
-      this.setState({ timoutId: null });
+  private timeHandler(isHover: boolean) {
+    console.log(isHover, 1);
+  }
+
+  private dispose() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+
+      this.timeoutId = null;
     }
   }
 
-  render(): React.ReactNode {
+  render() {
     return (
       <div
-      // onMouseEnter={() => props.onHover(true)}
-      // onMouseLeave={() => props.onHover(false)}
-      // onClick={props.onClick}
+        id={this.toastId}
+        onMouseOver={() => this.timeHandler(true)}
+        onMouseOut={() => this.timeHandler(false)}
       >
-        {this.props.children}
+        {this.children}
       </div>
     );
   }
@@ -72,46 +71,72 @@ const DialogToastRendererRef = React.forwardRef<
   DialogToastRendererRef,
   DialogToastRendererProps
 >((props, ref) => {
-  const toastContainerRef = React.useRef<HTMLDivElement | null>(null);
+  const [toastState, setToastState] = React.useState<ToastHandler[]>([]);
+  const [renderKey, setRenderKey] = React.useState("");
+  const [showToast, setshowToast] = React.useState(false);
+
+  const toastAnimation = (delay: number) => {
+    let a: number | undefined = undefined;
+
+    const t = setTimeout(() => {
+      a = 1200;
+
+      clearTimeout(t);
+    }, delay);
+
+    return a;
+  };
+
+  const toastAction = (id: string, options: ToastOptions) => {
+    setToastState((prev) => {
+      prev.push(
+        new ToastHandler({
+          children: options.render,
+          delay: options.delay,
+          toastId: id,
+          onClose: () => {
+            console.log("close");
+          },
+        }),
+      );
+
+      return prev;
+    });
+
+    setshowToast(true);
+    setRenderKey(`${id}-${Math.random()}`);
+  };
 
   React.useImperativeHandle(ref, () => ({
     toast(options: ToastOptions) {
-      if (toastContainerRef.current) {
-        const postNode = document.createElement("div");
-        postNode.classList.add("animate-toastIn");
-        const toastElm = renderToString(
-          <div className="bg-white/40 backdrop-blur pointer-events-auto p-4 rounded shadow-sm">
-            <ToastHandler
-              onClose={() => {
-                postNode.classList.replace(
-                  "animate-toastIn",
-                  "animate-toastOut",
-                );
-                const toastTimeout = setTimeout(() => {
-                  toastContainerRef.current?.removeChild(postNode);
-                  clearTimeout(toastTimeout);
-                }, 500);
-              }}
-            >
-              {options.render}
-            </ToastHandler>
-          </div>,
-        );
-        postNode.innerHTML = toastElm;
-        toastContainerRef.current.appendChild(postNode);
-      }
+      const id = new Date().valueOf().toString();
+
+      toastAction(id, options);
     },
   }));
 
   return (
     <div>
       {props.children}
-      <motion.div className="fixed top-4 right-4 z-50 pointer-events-none">
+      <div className="fixed top-4 right-4 z-50 pointer-events-none">
         <div
-          ref={toastContainerRef}
-          className="flex flex-col items-end gap-2"
-        />
-      </motion.div>
+          key={renderKey}
+          className="flex flex-col items-end gap-2 max-w-[800px]"
+        >
+          {showToast &&
+            toastState.map((t, i) => (
+              <motion.div
+                key={`toast-key-${i}`}
+                animate={{
+                  translateX: toastAnimation(t.delay),
+                }}
+                className="bg-white/40 translate-x-[1200px] backdrop-blur pointer-events-auto p-4 rounded shadow-sm"
+              >
+                {t.render()}
+              </motion.div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 });

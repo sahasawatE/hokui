@@ -64,21 +64,21 @@ export default App;
 ```ts
 // app.tsx
 
-import { I18nProvider } from "hokui";
+import { HokUi } from "hokui";
 import "./tailwind.css";
 
 function App() {
   return (
     <div>
       {/* locale Thai with Gregorian calendar */}
-      <I18nProvider locale="th-TH-u-ca-gregory-nu-latn">
+      <HokUi.Provider locale="th-TH-u-ca-gregory-nu-latn">
         <Button
           size="xl"
           rounded="full"
         >
           this is Button
         </Button>
-      </I18nProvider>
+      </HokUi.Provider>
     </div>
   );
 }
