@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { DateValue } from "react-aria";
 
 type Color =
   | "primary"
@@ -103,6 +104,7 @@ type TabsVariant = "default" | "underlined" | "flat";
 type DialogVariant = "info" | "danger" | "warning" | "success";
 
 export type {
+  DateValue,
   Color,
   ButtonVariant,
   InputVariant,

@@ -1,5 +1,6 @@
 // Lib
 export * from "./ComponentProvider";
+export { parseDate } from "@internationalized/date";
 
 // components
 export * from "./Badge";
