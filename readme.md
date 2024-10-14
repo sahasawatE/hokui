@@ -1,6 +1,6 @@
 # HOK UI
 
-HOK UI is a ui library for react created by HOK in beased on react-aria and tailwind
+HOK-UI is a UI library for React created by HOK in beased on [React-Aria](https://react-spectrum.adobe.com/react-aria/index.html) and [Tailwind](https://tailwindcss.com/)
 
 ## Installation
 
@@ -122,7 +122,7 @@ function App() {
               type: "confirm",
               variant: "success",
               title: "test",
-              subTitle: "Lorem",
+              subTitle: "test",
             })
           }
         >

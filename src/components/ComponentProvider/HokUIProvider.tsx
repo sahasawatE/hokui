@@ -9,7 +9,7 @@ import { CircleCheck, Info, OctagonAlert, TriangleAlert } from "lucide-react";
 
 type ToastHandlerProps = {
   delay?: number;
-  color?: Color;
+  color?: Color | "white";
   toastId: string;
   children: React.ReactNode;
   forceUpdate: React.DispatchWithoutAction;
@@ -18,7 +18,7 @@ type ToastHandlerProps = {
 
 class ToastHandler {
   public toastId: string;
-  public color: Color;
+  public color: Color | "white";
   public currentTime: number;
   public delay: number;
   public show: boolean;
@@ -94,7 +94,7 @@ type DialogToastRendererProps = {
 export type ToastOptions = {
   render: React.ReactNode;
   delay?: number;
-  color?: Color;
+  color?: Color | "white";
 };
 
 export type DialogOptions = {
@@ -116,10 +116,11 @@ type DialogToastRendererRef = {
 const dialogToastRef = React.createRef<DialogToastRendererRef>();
 
 const toastTimeStyles = tv({
-  base: "absolute transition-all ease-linear bottom-0 left-0 h-1",
+  base: "absolute transition-all ease-linear bottom-0 left-0 h-1 rounded-sm",
   variants: {
     color: {
-      default: "bg-default",
+      white: "bg-default",
+      default: "bg-white",
       primary: "bg-primary",
       secondary: "bg-secondary",
       success: "bg-success",
@@ -129,7 +130,26 @@ const toastTimeStyles = tv({
     },
   },
   defaultVariants: {
-    color: "default",
+    color: "white",
+  },
+});
+
+const toastStyles = tv({
+  base: "translate-x-[-1200px] min-w-[380px] backdrop-blur pointer-events-auto p-4 rounded shadow-sm relative overflow-hidden",
+  variants: {
+    color: {
+      white: "bg-white/40",
+      default: "bg-default-300/40",
+      primary: "bg-primary-300/40",
+      secondary: "bg-secondary-300/40",
+      success: "bg-success-300/40",
+      danger: "bg-danger-300/40",
+      warning: "bg-warning-300/40",
+      info: "bg-info-300/40",
+    },
+  },
+  defaultVariants: {
+    color: "white",
   },
 });
 
@@ -232,7 +252,7 @@ const DialogToastRendererRef = React.forwardRef<
     <div>
       {props.children}
       <div className="fixed top-4 right-4 z-50 pointer-events-none">
-        <div className="flex flex-col items-end gap-2 max-w-[800px] translate-x-[1200px]">
+        <div className="flex flex-col items-end gap-2 max-w-[380px] translate-x-[1200px]">
           {toastState.map((t, i) => (
             <div
               key={`toast-key-${i}`}
@@ -250,7 +270,7 @@ const DialogToastRendererRef = React.forwardRef<
                   ease: "backInOut",
                   bounceDamping: 0.5,
                 }}
-                className="bg-white/40 translate-x-[-1200px] backdrop-blur pointer-events-auto p-4 rounded shadow-sm relative overflow-hidden"
+                className={toastStyles({ color: t.ToastHandler.color })}
               >
                 {t.ToastHandler.render()}
                 <div
