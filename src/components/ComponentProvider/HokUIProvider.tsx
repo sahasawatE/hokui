@@ -2,7 +2,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { I18nProvider } from "react-aria";
 import { tv } from "tailwind-variants";
-import type { Color } from "../types/prop.type";
+import type { Color, DialogVariant } from "../types/prop.type";
+import { Modal } from "../Modal";
+import { Button } from "../Button";
+import { CircleCheck, Info, OctagonAlert, TriangleAlert } from "lucide-react";
 
 type ToastHandlerProps = {
   delay?: number;
@@ -94,8 +97,20 @@ export type ToastOptions = {
   color?: Color;
 };
 
+export type DialogOptions = {
+  title: string;
+  subTitle: string;
+  type?: "confirm" | "warning";
+  variant?: DialogVariant;
+  calcelText?: string;
+  confirmText?: string;
+  onConfirm?: () => void;
+  onClose?: () => void;
+};
+
 type DialogToastRendererRef = {
   toast: (options: ToastOptions) => void;
+  dialog: (options: DialogOptions) => void;
 };
 
 const dialogToastRef = React.createRef<DialogToastRendererRef>();
@@ -124,11 +139,46 @@ const DialogToastRendererRef = React.forwardRef<
   DialogToastRendererProps
 >((props, ref) => {
   //
+
+  const [dialogState, setDialogState] = React.useState<{
+    open: boolean;
+    options: DialogOptions;
+  }>({
+    open: false,
+    options: {
+      title: "-",
+      subTitle: "-",
+    },
+  });
+
   const [toastState, setToastState] = React.useState<
     { ToastHandler: ToastHandler; show: boolean }[]
   >([]);
 
   const [, toastForceUpdate] = React.useReducer((x) => x + 1, 0);
+
+  const renderDialogIcon = React.useMemo(() => {
+    const {
+      options: { variant },
+    } = dialogState;
+
+    switch (variant) {
+      case "info":
+        return <Info className="text-info" />;
+
+      case "warning":
+        return <TriangleAlert className="text-warning" />;
+
+      case "danger":
+        return <OctagonAlert className="text-danger" />;
+
+      case "success":
+        return <CircleCheck className="text-success" />;
+
+      default:
+        return <Info />;
+    }
+  }, [dialogState]);
 
   React.useEffect(() => {
     const tempToast = toastState.map((e) => e.show);
@@ -168,10 +218,13 @@ const DialogToastRendererRef = React.forwardRef<
   };
 
   React.useImperativeHandle(ref, () => ({
-    toast(options: ToastOptions) {
+    toast(options) {
       const id = new Date().valueOf().toString();
 
       toastAction(id, options);
+    },
+    dialog(options) {
+      setDialogState({ open: true, options });
     },
   }));
 
@@ -214,6 +267,41 @@ const DialogToastRendererRef = React.forwardRef<
           ))}
         </div>
       </div>
+
+      <Modal isOpen={dialogState.open} size="sm">
+        <div slot="header-content">
+          <div className="flex flex-row items-center gap-2">
+            {renderDialogIcon}
+            {dialogState.options.title}
+          </div>
+        </div>
+        <div>{dialogState.options.subTitle}</div>
+        <div slot="bottom-content">
+          <div className="flex flex-row justify-end gap-2">
+            {dialogState.options.type === "confirm" && (
+              <Button
+                variant="flat"
+                onPress={() => {
+                  setDialogState((prev) => ({ ...prev, open: false }));
+                  dialogState.options.onClose;
+                }}
+              >
+                {dialogState.options.calcelText ?? "ยกเลิก"}
+              </Button>
+            )}
+            <Button
+              color={dialogState.options.variant}
+              variant="default"
+              onPress={() => {
+                setDialogState((prev) => ({ ...prev, open: false }));
+                dialogState.options.onClose;
+              }}
+            >
+              {dialogState.options.confirmText ?? "ตกลง"}
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 });
@@ -238,6 +326,11 @@ export function useAlert() {
     toast: (options: ToastOptions) => {
       if (dialogToastRef.current) {
         dialogToastRef.current.toast(options);
+      }
+    },
+    dialog: (options: DialogOptions) => {
+      if (dialogToastRef.current) {
+        dialogToastRef.current.dialog(options);
       }
     },
   };

@@ -100,6 +100,8 @@ type CalendarEvent = {
 
 type TabsVariant = "default" | "underlined" | "flat";
 
+type DialogVariant = "info" | "danger" | "warning" | "success";
+
 export type {
   Color,
   ButtonVariant,
@@ -127,4 +129,5 @@ export type {
   CalendarEventDetail,
   CalendarEventColor,
   TabsVariant,
+  DialogVariant,
 };

@@ -86,6 +86,56 @@ function App() {
 export default App;
 ```
 
+## useAlert Hook
+
+```ts
+// app.tsx
+
+import { HokUi, useAlert } from "hokui";
+import "./tailwind.css";
+
+function App() {
+  const { toast, dialog } = useAlert();
+
+  return (
+    <div>
+      {/* locale Thai with Gregorian calendar */}
+      <HokUi.Provider locale="th-TH-u-ca-gregory-nu-latn">
+        <Button
+          size="xl"
+          rounded="full"
+          onPress={() =>
+            toast({
+              delay: 3000,
+              color: "info",
+              render: <div>this is taost content</div>,
+            })
+          }
+        >
+          this is Button for toast
+        </Button>
+        <Button
+          size="xl"
+          rounded="full"
+          onPress={() =>
+            dialog({
+              type: "confirm",
+              variant: "success",
+              title: "test",
+              subTitle: "Lorem",
+            })
+          }
+        >
+          this is Button for dialog
+        </Button>
+      </HokUi.Provider>
+    </div>
+  );
+}
+
+export default App;
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
