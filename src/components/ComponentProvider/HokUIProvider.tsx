@@ -135,7 +135,7 @@ const toastTimeStyles = tv({
 });
 
 const toastStyles = tv({
-  base: "translate-x-[-1200px] min-w-[380px] backdrop-blur pointer-events-auto p-4 rounded shadow-sm relative overflow-hidden",
+  base: "translate-x-[-1200px] backdrop-blur pointer-events-auto p-4 rounded shadow-sm relative overflow-hidden",
   variants: {
     color: {
       white: "bg-white/40",
@@ -251,7 +251,7 @@ const DialogToastRendererRef = React.forwardRef<
   return (
     <div>
       {props.children}
-      <div className="fixed top-4 right-4 z-50 pointer-events-none">
+      <div className="fixed top-4 right-4 left-4 z-50 pointer-events-none inset-0 flex flex-row justify-end">
         <div className="flex flex-col items-end gap-2 max-w-[380px] translate-x-[1200px]">
           {toastState.map((t, i) => (
             <div

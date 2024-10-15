@@ -38,11 +38,11 @@ const modalStyles = tv({
       true: "animate-out zoom-out-95 ease-in duration-200",
     },
     size: {
-      xs: "w-[20vw]",
-      sm: "w-[35vw]",
-      md: "w-[50vw]",
-      lg: "w-[65vw]",
-      xl: "w-[80vw]",
+      xs: "w-[60vw] md:w-[20vw]",
+      sm: "w-[70vw] md:w-[35vw]",
+      md: "w-[80vw] md:w-[50vw]",
+      lg: "w-[90vw] md:w-[65vw]",
+      xl: "w-[100vw] md:w-[80vw]",
     },
   },
   defaultVariants: {
