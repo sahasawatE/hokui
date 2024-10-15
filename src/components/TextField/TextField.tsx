@@ -17,6 +17,7 @@ type CustomProps = {
 
 export interface TextFieldProps extends AriaTextFieldProps, CustomProps {
   label?: string;
+  placeholder?: string;
   description?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
 }
@@ -50,7 +51,7 @@ export function TextField({
             {props.startContent}
           </div>
         )}
-        <Input name={props.name} />
+        <Input name={props.name} placeholder={props.placeholder} />
         {props.endContent && (
           <div className="text-gray-400 p-1 select-none">
             {props.endContent}

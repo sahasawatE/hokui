@@ -27,6 +27,7 @@ type customProps = {
 export interface NumberFieldProps extends AriaNumberFieldProps, customProps {
   label?: string;
   description?: string;
+  placeholder?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
 }
 
@@ -55,7 +56,7 @@ export function NumberField({
       >
         {(renderProps) => (
           <>
-            <Input />
+            <Input name={props.name} placeholder={props.placeholder} />
             {!!!props.hideSpinButton && (
               <div
                 className={fieldBorderStyles({

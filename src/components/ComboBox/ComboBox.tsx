@@ -24,6 +24,7 @@ export interface ComboBoxProps<
   label?: string;
   description?: string | null;
   errorMessage?: string | ((validation: ValidationResult) => string);
+  placeholder?: string;
   color?: Color;
   rounded?: Rounded;
   variant?: InputVariant;
@@ -64,7 +65,7 @@ export function ComboBox<
               variant={props.variant}
               rounded={props.rounded}
             >
-              <Input />
+              <Input name={props.name} placeholder={props.placeholder} />
               <Button
                 variant="icon"
                 size="sm"
