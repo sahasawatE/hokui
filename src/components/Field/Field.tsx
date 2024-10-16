@@ -60,19 +60,19 @@ export function FieldError(props: FieldErrorProps) {
 export const fieldBorderStyles = tv({
   variants: {
     isFocusWithin: {
-      false: "border-[--borderColor] forced-colors:border-[ButtonBorder]",
-      true: "border-[--borderColor] forced-colors:border-[Highlight]",
+      false: "border-[--borderColor] forced-colors:border-[--borderColor]",
+      true: "border-[--borderColorFocused] forced-colors:border-[--borderColorFocused]",
     },
     isInvalid: {
-      true: "border-red-600 forced-colors:border-[Mark]",
+      true: "border-red-600 forced-colors:border-red-600",
     },
     isDisabled: {
-      true: "border-gray-200 forced-colors:border-[GrayText]",
+      true: "cursor-not-allowed border-gray-200 forced-colors:border-gray-200",
     },
     variant: {
       bordered: "bg-white border-2",
       underlined: "bg-transparent border-b-2",
-      flat: "bg-[--bgColorFlat] border-0",
+      flat: "border-0",
     },
     rounded: {
       none: "rounded-none",
@@ -84,24 +84,19 @@ export const fieldBorderStyles = tv({
     },
     color: {
       default:
-        "[--c:var(--hok-default-200)] [--c1:var(--hok-default-500)] [--borderColor:hsl(var(--c))] [--bgColorFlat:hsl(var(--c)/0.8)]",
+        "[--c:var(--hok-default-200)] [--c1:var(--hok-default-500)] [--borderColor:hsl(var(--c))] [--borderColorFocused:hsl(var(--c1))] [--bgColorFlat:hsl(var(--c)/0.6)]",
       primary:
-        "[--c:var(--hok-primary-100)] [--c1:var(--hok-primary-500)] [--borderColor:hsl(var(--c))] [--bgColorFlat:hsl(var(--c)/0.8)]",
+        "[--c:var(--hok-primary-100)] [--c1:var(--hok-primary-500)] [--borderColor:hsl(var(--c))] [--borderColorFocused:hsl(var(--c1))] [--bgColorFlat:hsl(var(--c)/0.6)]",
       secondary:
-        "[--c:var(--hok-secondary-100)] [--c1:var(--hok-secondary-500)] [--borderColor:hsl(var(--c))] [--bgColorFlat:hsl(var(--c)/0.8)]",
+        "[--c:var(--hok-secondary-100)] [--c1:var(--hok-secondary-500)] [--borderColor:hsl(var(--c))] [--borderColorFocused:hsl(var(--c1))] [--bgColorFlat:hsl(var(--c)/0.6)]",
       success:
-        "[--c:var(--hok-success-300)] [--c1:var(--hok-success-500)] [--borderColor:hsl(var(--c))] [--bgColorFlat:hsl(var(--c)/0.8)]",
+        "[--c:var(--hok-success-300)] [--c1:var(--hok-success-500)] [--borderColor:hsl(var(--c))] [--borderColorFocused:hsl(var(--c1))] [--bgColorFlat:hsl(var(--c)/0.6)]",
       danger:
-        "[--c:var(--hok-danger-300)] [--c1:var(--hok-danger-500)] [--borderColor:hsl(var(--c))] [--bgColorFlat:hsl(var(--c)/0.8)]",
+        "[--c:var(--hok-danger-300)] [--c1:var(--hok-danger-500)] [--borderColor:hsl(var(--c))] [--borderColorFocused:hsl(var(--c1))] [--bgColorFlat:hsl(var(--c)/0.6)]",
       warning:
-        "[--c:var(--hok-warning-300)] [--c1:var(--hok-warning-500)] [--borderColor:hsl(var(--c))] [--bgColorFlat:hsl(var(--c)/0.8)]",
-      info: "[--c:var(--hok-info-300)] [--c1:var(--hok-info-500)] [--borderColor:hsl(var(--c))] [--bgColorFlat:hsl(var(--c)/0.8)]",
+        "[--c:var(--hok-warning-300)] [--c1:var(--hok-warning-500)] [--borderColor:hsl(var(--c))] [--borderColorFocused:hsl(var(--c1))] [--bgColorFlat:hsl(var(--c)/0.6)]",
+      info: "[--c:var(--hok-info-300)] [--c1:var(--hok-info-500)] [--borderColor:hsl(var(--c))] [--borderColorFocused:hsl(var(--c1))] [--bgColorFlat:hsl(var(--c)/0.6)]",
     },
-  },
-  defaultVariants: {
-    variant: "bordered",
-    rounded: "md",
-    color: "default",
   },
 });
 
@@ -115,9 +110,63 @@ export const fieldElememtStyles = tv({
   },
   compoundVariants: [
     {
-      variant: "underlined",
+      isInvalid: true,
+      variant: "flat",
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className: "bg-red-200",
+    },
+    {
+      isInvalid: false,
+      variant: "flat",
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className: "bg-[--bgColorFlat]",
+    },
+    {
+      isInvalid: true,
       rounded: ["full", "lg", "md", "none", "sm", "xl"],
-      className: "rounded-none",
+      variant: "underlined",
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className: "rounded-none border-red-300 forced-colors:border-red-300",
+    },
+    {
+      isInvalid: false,
+      rounded: ["full", "lg", "md", "none", "sm", "xl"],
+      variant: "underlined",
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className:
+        "rounded-none border-[--borderColor] forced-colors:border-[--borderColor]",
     },
   ],
 });
@@ -125,6 +174,7 @@ export const fieldElememtStyles = tv({
 export const fieldGroupStyles = tv({
   extend: focusRing,
   base: "group h-9 overflow-hidden",
+  variants: fieldBorderStyles.variants,
 });
 
 const underlinedStyle = tv({
@@ -184,7 +234,9 @@ export function FieldGroup(props: GroupProps & customProps) {
                 type: "tween",
                 ease: "circInOut",
               }}
-              className={underlinedStyle({ color: props.color })}
+              className={underlinedStyle({
+                color: props.isInvalid ? "danger" : props.color,
+              })}
             ></motion.div>
           )}
         </div>
@@ -199,7 +251,7 @@ export function Input(props: InputProps) {
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        "bg-transparent outline-0 px-2 py-1.5 flex-1 min-w-0s text-sm text-gray-800 disabled:text-gray-200",
+        "bg-transparent outline-0 px-2 py-1.5 flex-1 min-w-10 text-sm text-gray-800 disabled:text-gray-200",
       )}
     />
   );

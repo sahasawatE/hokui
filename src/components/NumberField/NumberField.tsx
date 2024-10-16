@@ -26,8 +26,8 @@ type customProps = {
 
 export interface NumberFieldProps extends AriaNumberFieldProps, customProps {
   label?: string;
-  description?: string;
   placeholder?: string;
+  description?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
 }
 

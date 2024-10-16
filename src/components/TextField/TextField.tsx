@@ -42,6 +42,8 @@ export function TextField({
         </Label>
       )}
       <FieldGroup
+        isDisabled={props.isDisabled}
+        isInvalid={props.isInvalid}
         color={props.color}
         variant={props.variant}
         rounded={props.rounded}

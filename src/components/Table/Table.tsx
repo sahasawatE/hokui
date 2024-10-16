@@ -42,7 +42,7 @@ interface TableProp<T extends { [key: string]: any; key: string }>
   hidePagination?: boolean;
   hideScrollbar?: boolean;
   pagination?: React.ReactNode;
-  perPageOption?: { key: string }[];
+  perPageOption?: { key: string; title: string }[];
 }
 
 const TableStyle = tv({
@@ -225,15 +225,17 @@ export function Table<T extends { [key: string]: any; key: string }>(
                   color={props.color}
                   items={
                     props.perPageOption ?? [
-                      { key: "50" },
-                      { key: "100" },
-                      { key: "150" },
-                      { key: "200" },
+                      { key: "50", title: "50" },
+                      { key: "100", title: "100" },
+                      { key: "150", title: "150" },
+                      { key: "200", title: "200" },
                     ]
                   }
                   className="w-20"
                 >
-                  {(page) => <SelectItem key={page.key}>{page.key}</SelectItem>}
+                  {(page) => (
+                    <SelectItem key={page.key}>{page.title}</SelectItem>
+                  )}
                 </Select>
                 <Label>จากทั้งหมด {props.paging.total} รายการ</Label>
               </div>

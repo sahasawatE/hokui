@@ -22,9 +22,9 @@ export interface ComboBoxProps<
   T extends { [k: string]: any; key: string; title: string },
 > extends Omit<AriaComboBoxProps<T>, "children" | "onSelectionChange"> {
   label?: string;
+  placeholder?: string;
   description?: string | null;
   errorMessage?: string | ((validation: ValidationResult) => string);
-  placeholder?: string;
   color?: Color;
   rounded?: Rounded;
   variant?: InputVariant;
@@ -61,6 +61,8 @@ export function ComboBox<
           <>
             <Label>{label}</Label>
             <FieldGroup
+              isDisabled={props.isDisabled}
+              isInvalid={props.isInvalid}
               color={props.color}
               variant={props.variant}
               rounded={props.rounded}

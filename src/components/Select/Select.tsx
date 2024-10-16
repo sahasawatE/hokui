@@ -4,21 +4,23 @@ import {
   Select as AriaSelect,
   SelectProps as AriaSelectProps,
   Button,
-  ListBox,
   ListBoxItemProps,
   SelectValue,
   ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Description, FieldError, Label } from "../Field";
+import { Description, fieldBorderStyles, FieldError, Label } from "../Field";
 import {
+  ListBox,
   DropdownItem,
   DropdownSection,
-  DropdownSectionProps,
+  type DropdownSectionProps,
 } from "../ListBox/ListBox";
 import { Popover } from "../Popover";
-import { composeTailwindRenderProps, focusRing } from "../utils";
+import { focusRing } from "../utils";
 import type { Color, InputVariant, Rounded } from "../types/prop.type";
+
+import { motion } from "framer-motion";
 
 type customProps<T> = {
   rounded?: Rounded;
@@ -27,62 +29,116 @@ type customProps<T> = {
   onSelect?: (value: T) => void;
 };
 
-const styles = tv({
+const buttonStyles = tv({
   extend: focusRing,
-  base: "flex items-center text-start gap-4 w-full cursor-default border border-black/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] pl-3 pr-2 py-2 transition bg-gray-50",
+  base: "relative flex items-center h-9 text-start gap-4 px-2 w-full min-w-10 cursor-default border border-0 bg-transparent",
   variants: {
+    ...fieldBorderStyles.variants,
     isDisabled: {
       false: "text-gray-800",
-      true: "text-gray-200 forced-colors:text-[GrayText] forced-colors:border-[GrayText]",
-    },
-    rounded: {
-      none: "rounded-none",
-      sm: "rounded-sm",
-      md: "rounded-md",
-      lg: "rounded-lg",
-      xl: "rounded-xl",
-      full: "rounded-full",
-    },
-    color: {
-      default:
-        "[--c:var(--hok-default-200)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
-      primary:
-        "[--c:var(--hok-primary-100)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
-      secondary:
-        "[--c:var(--hok-secondary-100)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
-      success:
-        "[--c:var(--hok-success-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
-      danger:
-        "[--c:var(--hok-danger-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
-      warning:
-        "[--c:var(--hok-warning-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
-      info: "[--c:var(--hok-warning-300)] [--bgColor:hsl(var(--c))] [--bgColorHover:hsl(var(--c)/0.2)] [--bgColorPressed:hsl(var(--c)/0.3)] [--bgColorFlat:hsl(var(--c)/0.8)]",
-    },
-    variant: {
-      bordered:
-        "bg-white border-2 border-[--bgColor] hover:border-[--bgColorPressed] pressed:border-[hsl(var(--c))]",
-      underlined: "",
-      flat: "border-0 bg-[--bgColorFlat] pressed:bg-[--bgColorPressed] group-invalid:border-red-600",
+      true: "text-gray-200 forced-colors:text-gray-200 forced-colors:border-gray-200",
     },
   },
   defaultVariants: {
+    variant: "bordered",
     rounded: "md",
     color: "default",
-    variant: "bordered",
+  },
+  compoundVariants: [
+    {
+      isInvalid: true,
+      variant: "flat",
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className: "bg-red-200",
+    },
+    {
+      isInvalid: false,
+      variant: "flat",
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className: "bg-[--bgColorFlat]",
+    },
+    {
+      isInvalid: true,
+      rounded: ["full", "lg", "md", "none", "sm", "xl"],
+      variant: "underlined",
+      isFocusWithin: [true, false],
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className: "rounded-none border-red-300 forced-colors:border-red-300",
+    },
+    {
+      isInvalid: false,
+      rounded: ["full", "lg", "md", "none", "sm", "xl"],
+      variant: "underlined",
+      isFocusWithin: [true, false],
+      color: [
+        "danger",
+        "default",
+        "info",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+      ],
+      className:
+        "rounded-none border-[--borderColor] forced-colors:border-[--borderColor]",
+    },
+  ],
+});
+
+const underlinedStyle = tv({
+  extend: focusRing,
+  base: "absolute w-[0px] h-[2px] rounded-full -bottom-[2px] right-1/2 translate-x-1/2 [--lineColor:hsl(var(--c1))] bg-[--lineColor]",
+  variants: {
+    color: buttonStyles.variants.color,
+  },
+  defaultVariants: {
+    color: "default",
   },
 });
 
-export interface SelectProps<T extends { [k: string]: any; key: string }>
-  extends Omit<AriaSelectProps<T>, "children">,
+const selectStyles = tv({
+  extend: focusRing,
+  base: "group flex flex-col gap-1 min-w-10",
+});
+
+export interface SelectProps<
+  T extends { [k: string]: any; key: string; title: string },
+> extends Omit<AriaSelectProps<T>, "children" | "onSelectionChange">,
     customProps<T> {
   label?: string;
   description?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
   items: Iterable<T>;
-  children: React.ReactNode | ((item: T) => React.ReactNode);
+  children: (item: T) => React.ReactNode;
 }
 
-export function Select<T extends { [k: string]: any; key: string }>({
+export function Select<
+  T extends { [k: string]: any; key: string; title: string },
+>({
   label,
   description,
   errorMessage,
@@ -100,49 +156,77 @@ export function Select<T extends { [k: string]: any; key: string }>({
           props.onSelect(f);
         }
       }}
-      className={composeTailwindRenderProps(
-        props.className,
-        "group flex flex-col gap-1",
-      )}
+      className={(renderProps) => selectStyles({ ...renderProps })}
     >
-      {label && (
-        <Label>
-          {label}
-          {props.isRequired && <span className="text-danger">*</span>}
-        </Label>
+      {(renderProps) => (
+        <>
+          {label && (
+            <Label>
+              {label}
+              {props.isRequired && <span className="text-danger">*</span>}
+            </Label>
+          )}
+          <Popover
+            activator={() => (
+              <>
+                <Button
+                  className={(renderBtnProps) =>
+                    buttonStyles({
+                      ...renderBtnProps,
+                      isInvalid: renderProps.isInvalid,
+                      rounded: props.rounded,
+                      color: props.color,
+                      variant: props.variant,
+                      isFocusWithin:
+                        renderBtnProps.isFocused ||
+                        renderProps.isFocused ||
+                        renderProps.isOpen,
+                    })
+                  }
+                >
+                  <SelectValue className="flex-1 text-sm placeholder-shown:text-gray-400" />
+                  <ChevronDown
+                    aria-hidden
+                    className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
+                  />
+                  {/* underlined style */}
+                  {props.variant === "underlined" && (
+                    <motion.div
+                      animate={
+                        renderProps.isFocused
+                          ? {
+                              width: "100%",
+                              opacity: 1,
+                            }
+                          : {
+                              width: "0",
+                              transitionEnd: {
+                                opacity: 0,
+                              },
+                            }
+                      }
+                      transition={{
+                        type: "tween",
+                        ease: "circInOut",
+                      }}
+                      className={underlinedStyle({
+                        color: props.isInvalid ? "danger" : props.color,
+                      })}
+                    ></motion.div>
+                  )}
+                </Button>
+                {description && <Description>{description}</Description>}
+                <FieldError>{errorMessage}</FieldError>
+              </>
+            )}
+            className="min-w-[--trigger-width]"
+          >
+            <ListBox items={items} color={props.color} className="border-0">
+              {children}
+            </ListBox>
+          </Popover>
+        </>
       )}
-      <Popover
-        activator={() => (
-          <>
-            <Button
-              className={(renderProps) =>
-                styles({
-                  ...renderProps,
-                  rounded: props.rounded,
-                  color: props.color,
-                  variant: props.variant,
-                })
-              }
-            >
-              <SelectValue className="flex-1 text-sm placeholder-shown:italic" />
-              <ChevronDown
-                aria-hidden
-                className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
-              />
-            </Button>
-            {description && <Description>{description}</Description>}
-            <FieldError>{errorMessage}</FieldError>
-          </>
-        )}
-        className="min-w-[--trigger-width]"
-      >
-        <ListBox
-          items={items}
-          className="outline-none p-1 max-h-[inherit] overflow-auto [clip-path:inset(0_0_0_0_round_.75rem)]"
-        >
-          {children}
-        </ListBox>
-      </Popover>
     </AriaSelect>
   );
 }
