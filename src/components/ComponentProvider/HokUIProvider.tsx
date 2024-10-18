@@ -288,7 +288,7 @@ const DialogToastRendererRef = React.forwardRef<
         </div>
       </div>
 
-      <Modal isOpen={dialogState.open} size="sm" className="z-[9999]">
+      <Modal isOpen={dialogState.open} size="sm" style={{ zIndex: 999 }}>
         <div slot="header-content">
           <div className="flex flex-row items-center gap-2">
             {renderDialogIcon}
@@ -303,7 +303,9 @@ const DialogToastRendererRef = React.forwardRef<
                 variant="flat"
                 onPress={() => {
                   setDialogState((prev) => ({ ...prev, open: false }));
-                  dialogState.options.onClose;
+                  if (dialogState.options.onClose) {
+                    dialogState.options.onClose();
+                  }
                 }}
               >
                 {dialogState.options.calcelText ?? "ยกเลิก"}
@@ -314,7 +316,9 @@ const DialogToastRendererRef = React.forwardRef<
               variant="default"
               onPress={() => {
                 setDialogState((prev) => ({ ...prev, open: false }));
-                dialogState.options.onClose;
+                if (dialogState.options.onConfirm) {
+                  dialogState.options.onConfirm();
+                }
               }}
             >
               {dialogState.options.confirmText ?? "ตกลง"}

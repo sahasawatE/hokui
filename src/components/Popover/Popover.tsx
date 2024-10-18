@@ -25,6 +25,7 @@ export interface PopoverProps
 }
 
 const popoverStyles = tv({
+  base: "!z-[99]",
   variants: {
     isEntering: {
       true: "animate-in duration-200",
