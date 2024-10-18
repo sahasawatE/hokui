@@ -288,14 +288,14 @@ const DialogToastRendererRef = React.forwardRef<
         </div>
       </div>
 
-      <Modal isOpen={dialogState.open} size="sm">
+      <Modal isOpen={dialogState.open} size="sm" className="z-[9999]">
         <div slot="header-content">
           <div className="flex flex-row items-center gap-2">
             {renderDialogIcon}
             {dialogState.options.title}
           </div>
         </div>
-        <div>{dialogState.options.subTitle}</div>
+        <div className="no-scrollbar">{dialogState.options.subTitle}</div>
         <div slot="bottom-content">
           <div className="flex flex-row justify-end gap-2">
             {dialogState.options.type === "confirm" && (
