@@ -132,4 +132,5 @@ export type {
   CalendarEventColor,
   TabsVariant,
   DialogVariant,
+  DataTablePaginationProps,
 };

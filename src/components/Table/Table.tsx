@@ -1,4 +1,4 @@
-import { ArrowUp, ChevronLeft, ChevronRight, LoaderCircle } from "lucide-react";
+import { ArrowUp, LoaderCircle } from "lucide-react";
 import {
   Cell as AriaCell,
   Column as AriaColumn,
@@ -26,11 +26,12 @@ import type {
   Color,
   Alignment,
   TableRounded,
+  DataTablePaginationProps,
 } from "../types/prop.type";
 import { Select, SelectItem } from "../Select";
 import { Label } from "../Field";
-import { Button } from "../Button";
 import { motion } from "framer-motion";
+import { Pagination } from "../Pagination";
 
 interface TableProp<T extends { [key: string]: any; key: string }>
   extends Omit<TableProps, "children" | "onSelectionChange">,
@@ -43,6 +44,7 @@ interface TableProp<T extends { [key: string]: any; key: string }>
   hideScrollbar?: boolean;
   pagination?: React.ReactNode;
   perPageOption?: { key: string; title: string }[];
+  onPagechange?: (paging: DataTablePaginationProps) => void;
 }
 
 const TableStyle = tv({
@@ -222,6 +224,7 @@ export function Table<T extends { [key: string]: any; key: string }>(
                 <Select
                   aria-label="paging"
                   defaultSelectedKey="50"
+                  selectedKey={String(props.paging.perPage)}
                   color={props.color}
                   items={
                     props.perPageOption ?? [
@@ -232,6 +235,16 @@ export function Table<T extends { [key: string]: any; key: string }>(
                     ]
                   }
                   className="w-20"
+                  onSelect={({ key }) => {
+                    if (props.onPagechange) {
+                      const perPage = Number(key);
+
+                      props.onPagechange({
+                        ...props.paging,
+                        perPage,
+                      });
+                    }
+                  }}
                 >
                   {(page) => (
                     <SelectItem key={page.key}>{page.title}</SelectItem>
@@ -239,17 +252,13 @@ export function Table<T extends { [key: string]: any; key: string }>(
                 </Select>
                 <Label>จากทั้งหมด {props.paging.total} รายการ</Label>
               </div>
-              <div className="flex flex-row gap-1">
-                <Button variant="icon">
-                  <ChevronLeft />
-                </Button>
-
-                {/* page goes here */}
-
-                <Button variant="icon">
-                  <ChevronRight />
-                </Button>
-              </div>
+              <Pagination
+                page={props.paging.page}
+                perPage={props.paging.perPage}
+                total={props.paging.total}
+                color={props.color}
+                onPagechange={props.onPagechange}
+              />
             </div>
           )}
     </div>
@@ -298,6 +307,24 @@ const ColumnDecoration = tv({
     fontSize: "base",
     fontColor: "default",
     align: "start",
+  },
+});
+
+const TableHeaderStyles = tv({
+  base: "sticky top-0 z-10 bg-[--c] backdrop-blur-md mix-blend-multiply supports-[-moz-appearance:none]:bg-default-[--c] border-b h-12",
+  variants: {
+    color: {
+      default: "[--c:hsl(var(--hok-default-100))]",
+      primary: "[--c:hsl(var(--hok-primary-100))]",
+      secondary: "[--c:hsl(var(--hok-secondary-100))]",
+      success: "[--c:hsl(var(--hok-success-100))]",
+      warning: "[--c:hsl(var(--hok-warning-100))]",
+      danger: "[--c:hsl(var(--hok-danger-100))]",
+      info: "[--c:hsl(var(--hok-info-100))]",
+    },
+  },
+  defaultVariants: {
+    color: "default",
   },
 });
 
@@ -368,18 +395,18 @@ function TableHeader<T extends object>(
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        "sticky top-0 z-10 bg-default-100 backdrop-blur-md mix-blend-multiply supports-[-moz-appearance:none]:bg-default-100 border-b h-12",
+        TableHeaderStyles({
+          color: props.color,
+        }),
       )}
     >
       {selectionBehavior === "toggle" && (
-        <AriaColumn
-          width={48}
-          minWidth={48}
-          className="text-center text-sm font-semibold cursor-default flex flex-row justify-center items-center h-12"
-        >
-          {selectionMode === "multiple" && (
-            <Checkbox slot="selection" color={props.color} />
-          )}
+        <AriaColumn className="text-center text-sm font-semibold cursor-default h-12 w-12 px-2">
+          <div className="max-w-10 flex flex-row justify-center items-center">
+            {selectionMode === "multiple" && (
+              <Checkbox slot="selection" color={props.color} />
+            )}
+          </div>
         </AriaColumn>
       )}
       <Collection items={props.columns}>{props.children}</Collection>
@@ -433,7 +460,7 @@ function Row<T extends object>({
     >
       {selectionBehavior === "toggle" && (
         <Cell>
-          <div className="flex flex-row justify-center">
+          <div className="flex flex-row justify-center max-w-10">
             <Checkbox
               slot="selection"
               color={otherProps.color}
