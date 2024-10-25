@@ -34,6 +34,7 @@ export * from "./Select";
 export * from "./Separator";
 export * from "./Slider";
 export * from "./Switch";
+export * from "./Steppers";
 export * from "./Table";
 export * from "./Tabs";
 export * from "./TagGroup";
