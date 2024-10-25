@@ -39,8 +39,8 @@ const CalendarContext = createContext<{
   eventsDialog?: (
     dialogProps?: CalendarEvent & { displayDate: string },
   ) => React.ReactNode;
-  onCLickDay?: (events?: CalendarEvent & { displayDate: string }) => void;
-  onCLickViewAll?: (events?: CalendarEvent & { displayDate: string }) => void;
+  onClickDay?: (events?: CalendarEvent & { displayDate: string }) => void;
+  onClickViewAll?: (events?: CalendarEvent & { displayDate: string }) => void;
 }>({
   events: [],
   color: [],
@@ -77,8 +77,8 @@ export interface EventCalendarProps<T extends DateValue = DateValue>
   eventsDialog?: (
     dialogProps?: CalendarEvent & { displayDate: string },
   ) => React.ReactNode;
-  onCLickDay?: (events?: CalendarEvent & { displayDate: string }) => void;
-  onCLickViewAll?: (events?: CalendarEvent & { displayDate: string }) => void;
+  onClickDay?: (events?: CalendarEvent & { displayDate: string }) => void;
+  onClickViewAll?: (events?: CalendarEvent & { displayDate: string }) => void;
 }
 
 export function EventCalendar(props: EventCalendarProps) {
@@ -114,8 +114,8 @@ export function EventCalendar(props: EventCalendarProps) {
           viewTitle: props.viewTitle ?? "view all",
           children: props.children,
           eventsDialog: props.eventsDialog,
-          onCLickDay: props.onCLickDay,
-          onCLickViewAll: props.onCLickViewAll,
+          onClickDay: props.onClickDay,
+          onClickViewAll: props.onClickViewAll,
         }}
       >
         <CalendarGrid state={state} />
@@ -271,8 +271,8 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
           isUnavailable,
         })}
         onClick={() => {
-          if (ctx.onCLickDay) {
-            ctx.onCLickDay(cb());
+          if (ctx.onClickDay) {
+            ctx.onClickDay(cb());
           }
         }}
       >
@@ -313,8 +313,8 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
                     variant="text"
                     rounded="sm"
                     onPress={() => {
-                      if (ctx.onCLickViewAll) {
-                        ctx.onCLickViewAll(cb());
+                      if (ctx.onClickViewAll) {
+                        ctx.onClickViewAll(cb());
                       }
                     }}
                   >
@@ -323,7 +323,6 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
                     </span>
                   </Button>
                 )}
-                className="p-0"
               >
                 <RenderDialogContent
                   cb={cb}

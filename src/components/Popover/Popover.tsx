@@ -113,7 +113,7 @@ export function Popover({
               renderProps.isEntering,
               renderProps.isExiting,
             )}
-            className="p-1 bg-white opacity-0 shadow-2xl rounded-xl bg-clip-padding border border-black/10 text-slate-700"
+            className="p-1 bg-white opacity-0 shadow-2xl rounded-xl bg-clip-padding border border-black/10 text-slate-700 shadow-sm"
           >
             {showArrow && (
               <OverlayArrow className="group">
