@@ -37,7 +37,6 @@ jobs:
         with:
           name: hokui-build
           path: dist/
-      - run: ls
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.HOK_UI}}
