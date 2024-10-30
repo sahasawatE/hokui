@@ -30,8 +30,8 @@ export default [
         exclude: [
           "**/*.test.tsx",
           "**/*.test.ts",
-          "**/*.stories.ts",
-          "**/stories/**/*.*",
+          "tailwind.config.ts",
+          "**/stories/*",
         ],
       }),
       postcss({ extensions: [".css"], inject: true, extract: false }),
