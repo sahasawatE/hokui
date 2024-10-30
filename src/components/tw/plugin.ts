@@ -1,5 +1,6 @@
+import plugin from "tailwindcss/plugin";
 import { createThemes } from "tw-colors";
-import type { Theme } from "./config.type";
+import type { Layout, Theme } from "./config.type";
 
 const defaultLightTheme = {
   light: {
@@ -98,12 +99,105 @@ const defaultLightTheme = {
   },
 };
 
-export function hokTheme(config?: Theme) {
-  return createThemes(
-    { ...defaultLightTheme, ...config },
+const defaultLayout: Layout = {
+  borderRadius: {
+    none: "0",
+    // xs: ".125rem", // 2 px
+    // sm: ".25rem", // 4 px
+    // DEFAULT: ".5rem", // 8 px
+    // md: ".5rem", // 8 px
+    // lg: ".75rem", // 12 px
+    // xl: "1rem", // 16 px
+    // "2xl": "1.125rem", // 18 px
+    xs: ".25rem", // 4 px
+    sm: ".5rem", // 8 px
+    DEFAULT: ".75rem", // 12 px
+    md: ".75rem", // 12 px
+    lg: "1rem", // 16 px
+    xl: "1.125rem", // 18 px
+    "2xl": "1.25rem", // 20 px
+    full: "9999px",
+  },
+  boxShadow: {
+    sm: "0px 2px 10px 0px #DFE4E8",
+    DEFAULT: "0px 4px 10px 4px #DFE4E8",
+    md: "0px 4px 10px 4px #DFE4E8",
+    lg: "0px 6px 24px 6px #C9D0D6",
+  },
+};
+
+function hokTheme(config?: Theme, defaultTheme: string = "light") {
+  return createThemes(Object.assign(config ?? {}, defaultLightTheme), {
+    produceCssVariable: (colorName) => `--hok-${colorName}`,
+    defaultTheme: defaultTheme ?? "light",
+  });
+}
+
+function hokLayout(config?: Layout) {
+  const layoutObject = Object.assign(config ?? {}, defaultLayout);
+
+  const layoutResult: { [key: string]: string } = {};
+
+  for (const [key, value] of Object.entries(layoutObject)) {
+    const layoutPrefix = `--hok-${key}`;
+
+    if (typeof value === "object") {
+      for (const [nestedKey, nestedValue] of Object.entries(value)) {
+        const layoutPrefixWithVarient = `${layoutPrefix}-${nestedKey}`;
+
+        layoutResult[layoutPrefixWithVarient] = nestedValue;
+      }
+    } else {
+      layoutResult[layoutPrefix] = value;
+    }
+  }
+
+  return plugin(
+    ({ addUtilities }) => {
+      addUtilities({
+        ":root": layoutResult,
+        ".text-balance": {
+          "text-wrap": "balance",
+        },
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        ".no-scrollbar::-webkit-scrollbar": {
+          display: "none",
+        },
+        /* Hide scrollbar for IE, Edge and Firefox */
+        ".no-scrollbar": {
+          "-ms-overflow-style": "none" /* IE and Edge */,
+          "scrollbar-width": "none" /* Firefox */,
+        },
+        ".blur-dot": {
+          "background-image":
+            "radial-gradient(rgba(0, 0, 0, 0) 1px, #F6F5F4 1px)",
+          "backdrop-filter": "blur(3px)",
+          "background-size": "4px 4px",
+        },
+      });
+    },
     {
-      produceCssVariable: (colorName) => `--hok-${colorName}`,
-      defaultTheme: "light",
+      theme: {
+        borderRadius: {
+          none: "var(--hok-borderRadius-none)",
+          xs: "var(--hok-borderRadius-xs)",
+          sm: "var(--hok-borderRadius-sm)",
+          DEFAULT: "var(--hok-borderRadius-DEFAULT)",
+          md: "var(--hok-borderRadius-md)",
+          lg: "var(--hok-borderRadius-lg)",
+          xl: "var(--hok-borderRadius-xl)",
+          "2xl": "var(--hok-borderRadius-2xl)",
+          full: "var(--hok-borderRadius-full)",
+        },
+        boxShadow: {
+          sm: "var(--hok-boxShadow-sm)",
+          DEFAULT: "var(--hok-boxShadow-DEFAULT)",
+          md: "var(--hok-boxShadow-md)",
+          lg: "var(--hok-boxShadow-lg)",
+        },
+      },
     },
   );
 }
+
+export { hokTheme, hokLayout };

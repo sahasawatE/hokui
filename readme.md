@@ -19,7 +19,7 @@ yarn add hokui
 ```ts
 // tailwind.config.ts
 
-import { hokTheme } from "hokui";
+import { hokTheme, hokLayout } from "hokui";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -30,6 +30,7 @@ export default {
   theme: {},
   plugins: [
     hokTheme(),
+    hokLayout(),
   ],
 } satisfies Config;
 

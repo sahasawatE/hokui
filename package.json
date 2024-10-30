@@ -1,6 +1,6 @@
 {
   "name": "hokui",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Sahasawat Uengwanitchphan",
   "description": "A UI Library created by Hok.",
   "license": "MIT",
@@ -61,9 +61,18 @@
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.0",
+    "@chromatic-com/storybook": "^1.9.0",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@rollup/plugin-typescript": "^11.1.4",
+    "@storybook/addon-essentials": "^8.3.6",
+    "@storybook/addon-interactions": "^8.3.6",
+    "@storybook/addon-links": "^8.3.6",
+    "@storybook/addon-onboarding": "^8.3.6",
+    "@storybook/blocks": "^8.3.6",
+    "@storybook/react": "^8.3.6",
+    "@storybook/react-vite": "^8.3.6",
+    "@storybook/test": "^8.3.6",
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.3.0",
     "postcss": "^8.4.31",
@@ -72,7 +81,10 @@
     "rollup": "^3.29.4",
     "rollup-plugin-dts": "^6.0.2",
     "rollup-plugin-postcss": "^4.0.2",
-    "storybook": "^7.4.5",
+    "storybook": "^8.3.6",
+    "tailwindcss": "^3.4.14",
+    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-react-aria-components": "^1.1.6",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2"
   },
@@ -90,8 +102,6 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tailwind-merge": "^2.5.2",
     "tailwind-variants": "^0.2.1",
-    "tailwindcss-animate": "^1.0.7",
-    "tailwindcss-react-aria-components": "^1.1.5",
     "tw-colors": "^3.3.2"
   }
 }

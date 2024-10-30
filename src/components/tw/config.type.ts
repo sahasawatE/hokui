@@ -28,4 +28,24 @@ type Theme = {
   light: ColorVariables;
 };
 
-export type { Theme, ColorVariables, ColorVariant };
+type Layout = {
+  borderRadius?: {
+    none?: string;
+    xs?: string;
+    sm?: string;
+    DEFAULT?: string;
+    md?: string;
+    lg?: string;
+    xl?: string;
+    "2xl"?: string;
+    full?: string;
+  };
+  boxShadow?: {
+    sm?: string;
+    DEFAULT?: string;
+    md?: string;
+    lg?: string;
+  };
+};
+
+export type { Theme, ColorVariables, ColorVariant, Layout };
