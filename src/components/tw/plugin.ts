@@ -127,14 +127,14 @@ const defaultLayout: Layout = {
 };
 
 function hokTheme(config?: Theme, defaultTheme: string = "light") {
-  return createThemes(Object.assign(config ?? {}, defaultLightTheme), {
+  return createThemes(Object.assign(defaultLightTheme, config ?? {}), {
     produceCssVariable: (colorName) => `--hok-${colorName}`,
     defaultTheme: defaultTheme ?? "light",
   });
 }
 
 function hokLayout(config?: Layout) {
-  const layoutObject = Object.assign(config ?? {}, defaultLayout);
+  const layoutObject = Object.assign(defaultLayout, config ?? {});
 
   const layoutResult: { [key: string]: string } = {};
 
