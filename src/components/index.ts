@@ -49,6 +49,7 @@ export * from "./utils";
 
 // HOC
 export * from "./hoc/withListData";
+export * from "./hoc/withAlert";
 
 // types
 export type * from "./types/prop.type";
