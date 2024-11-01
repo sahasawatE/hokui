@@ -2,7 +2,7 @@ import React from "react";
 import { useAlert } from "../ComponentProvider/HokUIProvider";
 
 export type WithAlertProps = {
-  alert: ReturnType<typeof alert>;
+  alert: ReturnType<typeof useAlert>;
 };
 
 export function WithAlert<P extends WithAlertProps = WithAlertProps>(
