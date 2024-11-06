@@ -8,10 +8,10 @@ Use the package manager to install.
 
 ```bash
 # Using npm
-npm install hokui
+npm install hokui tailwindcss-react-aria-components tailwindcss-animate
 
 # Using yarn
-yarn add hokui
+yarn add hokui tailwindcss-react-aria-components tailwindcss-animate
 ```
 
 ## Configuration
@@ -29,6 +29,8 @@ export default {
   ],
   theme: {},
   plugins: [
+    require("tailwindcss-react-aria-components"),
+    require("tailwindcss-animate"),
     hokTheme(),
     hokLayout(),
   ],
