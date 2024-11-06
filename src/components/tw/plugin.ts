@@ -155,7 +155,10 @@ function hokLayout(config?: Layout) {
   return plugin(
     ({ addUtilities }) => {
       addUtilities({
-        ":root": layoutResult,
+        ":root": {
+          ...layoutResult,
+          "--background": "hsl(var(--hok-background))",
+        },
         ".text-balance": {
           "text-wrap": "balance",
         },

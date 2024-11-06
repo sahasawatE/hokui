@@ -311,7 +311,7 @@ function StepIndicator<T extends StepsObjectOption & { id: number }>({
       })}
     >
       {value ? (
-        <div className="h-fit w-fit flex flex-row items-center px-1">
+        <div className="h-fit w-fit flex flex-row items-center gap-2 px-2">
           {hideStep ? (
             <div
               className={StepIndicatorDotStyles({
