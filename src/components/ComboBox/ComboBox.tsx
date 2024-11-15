@@ -5,15 +5,15 @@ import {
   ComboBoxProps as AriaComboBoxProps,
   ListBoxItemProps,
   ValidationResult,
+  Button,
 } from "react-aria-components";
-import { Button } from "../Button";
 import { Description, FieldError, FieldGroup, Input, Label } from "../Field";
 import {
   DropdownItem,
   DropdownSection,
   ListBox,
   DropdownSectionProps,
-} from "../ListBox/ListBox";
+} from "../ListBox";
 import { Popover } from "../Popover";
 import { composeTailwindRenderProps } from "../utils";
 import type { Color, InputVariant, Rounded } from "../types/prop.type";
@@ -68,12 +68,7 @@ export function ComboBox<
               rounded={props.rounded}
             >
               <Input name={props.name} placeholder={props.placeholder} />
-              <Button
-                variant="icon"
-                size="sm"
-                className="mr-1"
-                rounded={props.rounded === "full" ? "full" : "sm"}
-              >
+              <Button className="mr-1">
                 <ChevronDown aria-hidden className="w-4 h-4" />
               </Button>
             </FieldGroup>

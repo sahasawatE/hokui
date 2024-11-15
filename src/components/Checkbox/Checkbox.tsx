@@ -1,104 +1,151 @@
-import { ChevronDown } from "lucide-react";
-import React from "react";
+import { Check, Minus } from "lucide-react";
+import { ReactNode } from "react";
 import {
-  ComboBox as AriaComboBox,
-  ComboBoxProps as AriaComboBoxProps,
-  ListBoxItemProps,
+  Checkbox as AriaCheckbox,
+  CheckboxGroup as AriaCheckboxGroup,
+  CheckboxGroupProps as AriaCheckboxGroupProps,
+  CheckboxProps,
   ValidationResult,
-  Button,
+  composeRenderProps,
 } from "react-aria-components";
-import { Description, FieldError, FieldGroup, Input, Label } from "../Field";
-import {
-  DropdownItem,
-  DropdownSection,
-  ListBox,
-  DropdownSectionProps,
-} from "../ListBox";
-import { Popover } from "../Popover";
-import { composeTailwindRenderProps } from "../utils";
-import type { Color, InputVariant, Rounded } from "../types/prop.type";
+import { tv } from "tailwind-variants";
+import { Description, FieldError, Label } from "../Field";
+import { composeTailwindRenderProps, focusRing } from "../utils";
+import type { Color } from "../types/prop.type";
 
-export interface ComboBoxProps<
-  T extends { [k: string]: any; key: string; title: string },
-> extends Omit<AriaComboBoxProps<T>, "children" | "onSelectionChange"> {
+export interface CheckboxGroupProps
+  extends Omit<AriaCheckboxGroupProps, "children"> {
   label?: string;
-  placeholder?: string;
-  description?: string | null;
+  children?: ReactNode;
+  description?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
-  color?: Color;
-  rounded?: Rounded;
-  variant?: InputVariant;
-  children?: (item: T) => React.ReactNode;
-  onSelectionChange?: (key: string) => void;
 }
 
-export function ComboBox<
-  T extends { [k: string]: any; key: string; title: string },
->({
-  label,
-  description,
-  errorMessage,
-  children,
-  items,
-  ...props
-}: ComboBoxProps<T>) {
+export interface cbProps extends Omit<CheckboxProps, "children"> {
+  children?: ReactNode;
+  color?: Color;
+}
+
+export function CheckboxGroup(props: CheckboxGroupProps) {
   return (
-    <AriaComboBox
+    <AriaCheckboxGroup
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        "group flex flex-col gap-1",
+        "flex flex-col gap-2",
       )}
-      onSelectionChange={(e) => {
-        if (props.onSelectionChange) {
-          const k = String(e);
-          props.onSelectionChange(k);
-        }
-      }}
     >
-      <Popover
-        activator={() => (
-          <>
-            <Label>{label}</Label>
-            <FieldGroup
-              isDisabled={props.isDisabled}
-              isInvalid={props.isInvalid}
-              color={props.color}
-              variant={props.variant}
-              rounded={props.rounded}
-            >
-              <Input name={props.name} placeholder={props.placeholder} />
-              <Button className="mr-1">
-                <ChevronDown aria-hidden className="w-4 h-4" />
-              </Button>
-            </FieldGroup>
-            {description && <Description>{description}</Description>}
-            <FieldError>{errorMessage}</FieldError>
-          </>
-        )}
-        className="w-56"
-      >
-        <ListBox
-          items={items}
-          color={props.color}
-          selectionMode="single"
-          className="border-0"
-        >
-          {children
-            ? children
-            : (e) => <ComboBoxItem key={e.key}>{e.title}</ComboBoxItem>}
-        </ListBox>
-      </Popover>
-    </AriaComboBox>
+      <Label>{props.label}</Label>
+      {props.children}
+      {props.description && <Description>{props.description}</Description>}
+      <FieldError>{props.errorMessage}</FieldError>
+    </AriaCheckboxGroup>
   );
 }
 
-export function ComboBoxItem(props: ListBoxItemProps) {
-  return <DropdownItem {...props} />;
-}
+const checkboxStyles = tv({
+  base: "flex gap-2 items-center group text-sm transition",
+  variants: {
+    isDisabled: {
+      false: "text-gray-800",
+      true: "text-gray-300 forced-colors:text-[GrayText]",
+    },
+  },
+});
 
-export function ComboBoxSection<
-  T extends { [k: string]: any; key: string; title: string },
->(props: DropdownSectionProps<T>) {
-  return <DropdownSection {...props} />;
+const boxStyles = tv({
+  extend: focusRing,
+  base: "w-5 h-5 flex-shrink-0 rounded-[.35rem] flex items-center justify-center border-2 transition cursor-pointer",
+  variants: {
+    isSelected: {
+      false:
+        "bg-white border-[--color] [--color:--colorSelectFalse] group-pressed:text-default",
+      true: "bg-[--color] border-[--color] [--color:--colorSelectTrue] group-pressed:[--color:--colorSelectPressed] forced-colors:![--color:Highlight]",
+    },
+    isInvalid: {
+      true: "[--color:theme(colors.red.700)] forced-colors:![--color:Mark] group-pressed:[--color:theme(colors.red.800)]",
+    },
+    isDisabled: {
+      true: "[--color:theme(colors.gray.200)] forced-colors:![--color:GrayText]",
+    },
+    color: {
+      default: [
+        "[--colorSelectFalse:hsl(var(--hok-default-200))]",
+        "[--colorSelectTrue:hsl(var(--hok-default-600))]",
+        "[--colorSelectPressed:hsl(var(--hok-default-700))]",
+      ],
+      primary: [
+        "[--colorSelectFalse:hsl(var(--hok-primary-200))]",
+        "[--colorSelectTrue:hsl(var(--hok-primary-300))]",
+        "[--colorSelectPressed:hsl(var(--hok-primary-400))]",
+      ],
+      secondary: [
+        "[--colorSelectFalse:hsl(var(--hok-secondary-200))]",
+        "[--colorSelectTrue:hsl(var(--hok-secondary-700))]",
+        "[--colorSelectPressed:hsl(var(--hok-secondary-800))]",
+      ],
+      success: [
+        "[--colorSelectFalse:hsl(var(--hok-success-400))]",
+        "[--colorSelectTrue:hsl(var(--hok-success-500))]",
+        "[--colorSelectPressed:hsl(var(--hok-success-600))]",
+      ],
+      danger: [
+        "[--colorSelectFalse:hsl(var(--hok-danger-400))]",
+        "[--colorSelectTrue:hsl(var(--hok-danger-500))]",
+        "[--colorSelectPressed:hsl(var(--hok-danger-600))]",
+      ],
+      warning: [
+        "[--colorSelectFalse:hsl(var(--hok-warning-400))]",
+        "[--colorSelectTrue:hsl(var(--hok-warning-500))]",
+        "[--colorSelectPressed:hsl(var(--hok-warning-600))]",
+      ],
+      info: [
+        "[--colorSelectFalse:hsl(var(--hok-info-400))]",
+        "[--colorSelectTrue:hsl(var(--hok-info-500))]",
+        "[--colorSelectPressed:hsl(var(--hok-info-600))]",
+      ],
+    },
+    isHovered: {
+      true: "scale-105",
+    },
+    isPressed: {
+      true: "scale-95",
+    },
+  },
+  defaultVariants: {
+    color: "default",
+  },
+});
+
+const iconStyles =
+  "w-4 h-4 text-white group-disabled:text-gray-400 forced-colors:text-[HighlightText]";
+
+export function Checkbox(props: cbProps) {
+  return (
+    <AriaCheckbox
+      {...props}
+      className={composeRenderProps(props.className, (className, renderProps) =>
+        checkboxStyles({ ...renderProps, className }),
+      )}
+    >
+      {({ isSelected, isIndeterminate, ...renderProps }) => (
+        <>
+          <div
+            className={boxStyles({
+              isSelected: isSelected || isIndeterminate,
+              color: props.color,
+              ...renderProps,
+            })}
+          >
+            {isIndeterminate ? (
+              <Minus aria-hidden className={iconStyles} />
+            ) : isSelected ? (
+              <Check aria-hidden className={iconStyles} />
+            ) : null}
+          </div>
+          {props.children}
+        </>
+      )}
+    </AriaCheckbox>
+  );
 }
