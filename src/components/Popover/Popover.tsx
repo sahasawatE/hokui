@@ -6,21 +6,23 @@ import {
   PopoverContext,
   useSlottedContext,
 } from "react-aria-components";
-import React from "react";
+import React, { useRef } from "react";
 import { tv } from "tailwind-variants";
 import { Button } from "../Button";
 import { motion, type TargetAndTransition } from "framer-motion";
-import type { PlacementAxis } from "react-aria";
+import { useButton, type Placement, type PlacementAxis } from "react-aria";
+import { focusRing } from "../utils";
 
 type CustomProps = {
-  activator?: () => ReturnType<typeof Button>;
+  activator?: () => React.ReactNode;
   label?: string;
 };
 
 export interface PopoverProps
-  extends Omit<AriaPopoverProps, "children">,
+  extends Omit<AriaPopoverProps, "children" | "placement">,
     CustomProps {
   showArrow?: boolean;
+  placement?: PlacementAxis;
   children: React.ReactNode;
 }
 
@@ -36,6 +38,10 @@ const popoverStyles = tv({
   },
 });
 
+const defaultActivatorStyles = tv({
+  extend: focusRing,
+});
+
 export function Popover({
   children,
   showArrow,
@@ -44,8 +50,12 @@ export function Popover({
 }: PopoverProps) {
   let popoverContext = useSlottedContext(PopoverContext)!;
   let isSubmenu = popoverContext?.trigger === "SubmenuTrigger";
-  let offset = showArrow ? 6 : 4;
-  let crossOffset = 0;
+  let offset = showArrow
+    ? props.offset
+      ? props.offset + 2
+      : 6
+    : props.offset ?? 4;
+  let crossOffset = props.crossOffset ?? 0;
   offset = isSubmenu ? offset - 6 : offset;
 
   const animatePlacement = (
@@ -95,13 +105,33 @@ export function Popover({
     }
   };
 
+  const activatorRef = useRef<any>(null);
+  let { buttonProps } = useButton(
+    {
+      elementType: "div",
+    },
+    activatorRef,
+  );
+
   return (
     <>
-      {props.activator ? props.activator() : <Button>{props.label}</Button>}
+      {props.activator ? (
+        <div
+          {...buttonProps}
+          ref={activatorRef}
+          className={defaultActivatorStyles()}
+        >
+          {props.activator()}
+        </div>
+      ) : (
+        <Button ref={activatorRef}>{props.label}</Button>
+      )}
       <AriaPopover
+        {...props}
+        placement={props.placement as Placement}
+        triggerRef={activatorRef}
         offset={offset}
         crossOffset={crossOffset}
-        {...props}
         className={composeRenderProps(className, (className, renderProps) =>
           popoverStyles({ ...renderProps, className }),
         )}
@@ -121,7 +151,7 @@ export function Popover({
                   width={12}
                   height={12}
                   viewBox="0 0 12 12"
-                  className="block fill-white forced-colors:fill-[Canvas] stroke-1 stroke-black/10 forced-colors:stroke-[ButtonBorder] group-placement-bottom:rotate-180 group-placement-left:-rotate-90 group-placement-right:rotate-90"
+                  className="block fill-white stroke-1 stroke-black/10 rotate-180 group-placement-bottom:rotate-180 group-placement-left:-rotate-90 group-placement-right:rotate-90"
                 >
                   <path d="M0 0 L6 6 L12 0" />
                 </svg>

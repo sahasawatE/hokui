@@ -1,4 +1,5 @@
 import { Check, ChevronRight } from "lucide-react";
+import React, { createContext, useContext } from "react";
 import {
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
@@ -13,11 +14,9 @@ import {
   DropdownSection,
   DropdownSectionProps,
   dropdownItemStyles,
-} from "../ListBox/ListBox";
-import { Popover, PopoverProps } from "../Popover/Popover";
-import type { Button } from "../Button";
+} from "../ListBox";
+import { Popover, PopoverProps } from "../Popover";
 import type { Color } from "../types/prop.type";
-import { createContext, useContext } from "react";
 
 type MenuContext = {
   color?: Color;
@@ -29,7 +28,7 @@ export interface MenuProps<T>
   placement?: PopoverProps["placement"];
   label?: string;
   isOpen?: boolean;
-  activator?: () => ReturnType<typeof Button>;
+  activator?: () => React.ReactNode;
   onSelect?: (e: string) => void;
   onSelectionChange?: (e: string[]) => void;
 }

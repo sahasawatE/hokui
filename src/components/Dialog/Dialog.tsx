@@ -1,3 +1,4 @@
+import React from "react";
 import {
   DialogProps,
   DialogTrigger,
@@ -5,11 +6,11 @@ import {
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { Popover } from "../Popover";
-import type { Button } from "../Button";
 
 export interface DialogProp extends DialogProps {
-  activator?: () => ReturnType<typeof Button>;
+  activator?: () => React.ReactNode;
   label?: string;
+  elementType?: React.JSXElementConstructor<any> | React.ElementType;
 }
 
 export function Dialog(props: DialogProp) {

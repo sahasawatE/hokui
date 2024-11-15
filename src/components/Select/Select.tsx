@@ -4,6 +4,7 @@ import {
   Select as AriaSelect,
   SelectProps as AriaSelectProps,
   Button,
+  // ListBox,
   ListBoxItemProps,
   SelectValue,
   ValidationResult,
@@ -11,15 +12,14 @@ import {
 import { tv } from "tailwind-variants";
 import { Description, fieldBorderStyles, FieldError, Label } from "../Field";
 import {
-  ListBox,
   DropdownItem,
   DropdownSection,
+  ListBox,
   type DropdownSectionProps,
-} from "../ListBox/ListBox";
+} from "../ListBox";
 import { Popover } from "../Popover";
 import { focusRing } from "../utils";
 import type { Color, InputVariant, Rounded } from "../types/prop.type";
-
 import { motion } from "framer-motion";
 
 type customProps<T> = {
@@ -125,9 +125,8 @@ const selectStyles = tv({
   base: "group flex flex-col gap-1 min-w-10",
 });
 
-export interface SelectProps<
-  T extends { [k: string]: any; key: string; title: string },
-> extends Omit<AriaSelectProps<T>, "children" | "onSelectionChange">,
+export interface SelectProps<T extends { [k: string]: any; key: string }>
+  extends Omit<AriaSelectProps<T>, "children" | "onSelectionChange">,
     customProps<T> {
   label?: string;
   description?: string;

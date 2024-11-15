@@ -102,20 +102,20 @@ const defaultLightTheme = {
 const defaultLayout: Layout = {
   borderRadius: {
     none: "0",
-    // xs: ".125rem", // 2 px
-    // sm: ".25rem", // 4 px
-    // DEFAULT: ".5rem", // 8 px
-    // md: ".5rem", // 8 px
-    // lg: ".75rem", // 12 px
-    // xl: "1rem", // 16 px
-    // "2xl": "1.125rem", // 18 px
-    xs: ".25rem", // 4 px
-    sm: ".5rem", // 8 px
-    DEFAULT: ".75rem", // 12 px
-    md: ".75rem", // 12 px
-    lg: "1rem", // 16 px
-    xl: "1.125rem", // 18 px
-    "2xl": "1.25rem", // 20 px
+    xs: ".125rem", // 2 px
+    sm: ".25rem", // 4 px
+    DEFAULT: ".5rem", // 8 px
+    md: ".5rem", // 8 px
+    lg: ".75rem", // 12 px
+    xl: "1rem", // 16 px
+    "2xl": "1.125rem", // 18 px
+    // xs: ".25rem", // 4 px
+    // sm: ".5rem", // 8 px
+    // DEFAULT: ".75rem", // 12 px
+    // md: ".75rem", // 12 px
+    // lg: "1rem", // 16 px
+    // xl: "1.125rem", // 18 px
+    // "2xl": "1.25rem", // 20 px
     full: "9999px",
   },
   boxShadow: {
