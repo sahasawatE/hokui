@@ -8,8 +8,14 @@ import { type PlacementAxis } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { Popover } from "../Popover";
 
-export interface DialogProp extends DialogProps {
-  activator?: () => React.ReactNode;
+type BtnOptions = {
+  props: any;
+  ref: any;
+  defaultClassName: string;
+};
+
+interface DialogProp extends DialogProps {
+  activator?: (btnProps: BtnOptions) => React.ReactNode;
   label?: string;
   placement?: PlacementAxis;
   elementType?: React.JSXElementConstructor<any> | React.ElementType;
@@ -20,6 +26,7 @@ export function Dialog(props: DialogProp) {
     <DialogTrigger>
       <Popover
         showArrow
+        elementType={props.elementType}
         placement={props.placement}
         label={props.label}
         activator={props.activator}

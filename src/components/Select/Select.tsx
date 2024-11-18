@@ -130,6 +130,7 @@ export interface SelectProps<T extends { [k: string]: any; key: string }>
     customProps<T> {
   label?: string;
   description?: string;
+  elementType?: React.JSXElementConstructor<any> | React.ElementType;
   errorMessage?: string | ((validation: ValidationResult) => string);
   items: Iterable<T>;
   children: (item: T) => React.ReactNode;
@@ -166,9 +167,11 @@ export function Select<
             </Label>
           )}
           <Popover
-            activator={() => (
-              <>
+            elementType={props.elementType}
+            activator={(btnProps) => (
+              <div ref={btnProps.ref}>
                 <Button
+                  {...btnProps.props}
                   className={(renderBtnProps) =>
                     buttonStyles({
                       ...renderBtnProps,
@@ -216,7 +219,7 @@ export function Select<
                 </Button>
                 {description && <Description>{description}</Description>}
                 <FieldError>{errorMessage}</FieldError>
-              </>
+              </div>
             )}
             className="min-w-[--trigger-width]"
           >

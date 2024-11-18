@@ -13,9 +13,16 @@ import { motion, type TargetAndTransition } from "framer-motion";
 import { useButton, type Placement, type PlacementAxis } from "react-aria";
 import { focusRing } from "../utils";
 
+type BtnOptions = {
+  props: any;
+  ref: any;
+  defaultClassName: string;
+};
+
 type CustomProps = {
-  activator?: () => React.ReactNode;
+  activator?: (btnProps: BtnOptions) => React.ReactNode;
   label?: string;
+  elementType?: React.JSXElementConstructor<any> | React.ElementType;
 };
 
 export interface PopoverProps
@@ -40,7 +47,6 @@ const popoverStyles = tv({
 
 const defaultActivatorStyles = tv({
   extend: focusRing,
-  base: "w-0 h-0 absolute bottom-0 left-0 pointer-event-none -z-10",
 });
 
 export function Popover({
@@ -109,7 +115,7 @@ export function Popover({
   const activatorRef = useRef<any>(null);
   let { buttonProps } = useButton(
     {
-      elementType: "div",
+      elementType: props.elementType ?? "div",
     },
     activatorRef,
   );
@@ -117,14 +123,11 @@ export function Popover({
   return (
     <>
       {props.activator ? (
-        <div className="relative">
-          {props.activator()}
-          <div
-            {...buttonProps}
-            ref={activatorRef}
-            className={defaultActivatorStyles()}
-          />
-        </div>
+        props.activator({
+          props: buttonProps,
+          ref: activatorRef,
+          defaultClassName: defaultActivatorStyles(),
+        })
       ) : (
         <Button ref={activatorRef}>{props.label}</Button>
       )}

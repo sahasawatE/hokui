@@ -22,13 +22,20 @@ type MenuContext = {
   color?: Color;
 };
 
+type BtnOptions = {
+  props: any;
+  ref: any;
+  defaultClassName: string;
+};
+
 export interface MenuProps<T>
   extends Omit<AriaMenuProps<T>, "onAction" | "onSelectionChange">,
     MenuContext {
   placement?: PopoverProps["placement"];
+  elementType?: React.JSXElementConstructor<any> | React.ElementType;
   label?: string;
   isOpen?: boolean;
-  activator?: () => React.ReactNode;
+  activator?: (btnProps: BtnOptions) => React.ReactNode;
   onSelect?: (e: string) => void;
   onSelectionChange?: (e: string[]) => void;
 }
@@ -50,6 +57,7 @@ export function Menu<
         <Popover
           showArrow
           label={props.label}
+          elementType={props.elementType}
           activator={props.activator}
           placement={props.placement}
           className="min-w-[150px]"

@@ -27,6 +27,7 @@ export interface ComboBoxProps<
   errorMessage?: string | ((validation: ValidationResult) => string);
   color?: Color;
   rounded?: Rounded;
+  elementType?: React.JSXElementConstructor<any> | React.ElementType;
   variant?: InputVariant;
   children?: (item: T) => React.ReactNode;
   onSelectionChange?: (key: string) => void;
@@ -57,8 +58,9 @@ export function ComboBox<
       }}
     >
       <Popover
-        activator={() => (
-          <>
+        elementType={props.elementType}
+        activator={(btnProps) => (
+          <div ref={btnProps.ref}>
             <Label>{label}</Label>
             <FieldGroup
               isDisabled={props.isDisabled}
@@ -68,13 +70,13 @@ export function ComboBox<
               rounded={props.rounded}
             >
               <Input name={props.name} placeholder={props.placeholder} />
-              <Button className="mr-1">
+              <Button {...btnProps.props} className="mr-1">
                 <ChevronDown aria-hidden className="w-4 h-4" />
               </Button>
             </FieldGroup>
             {description && <Description>{description}</Description>}
             <FieldError>{errorMessage}</FieldError>
-          </>
+          </div>
         )}
         className="w-56"
       >
