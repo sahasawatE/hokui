@@ -38,7 +38,8 @@ export function TextField({
     >
       {label && (
         <Label>
-          {label} {props.isRequired && <span className="text-danger">*</span>}
+          {label}
+          {props.isRequired && <span className="text-danger">*</span>}
         </Label>
       )}
       <FieldGroup

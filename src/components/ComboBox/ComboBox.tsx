@@ -5,9 +5,9 @@ import {
   ComboBoxProps as AriaComboBoxProps,
   ListBoxItemProps,
   ValidationResult,
-  Button,
 } from "react-aria-components";
 import { Description, FieldError, FieldGroup, Input, Label } from "../Field";
+import { Button } from "../Button";
 import {
   DropdownItem,
   DropdownSection,
@@ -61,7 +61,12 @@ export function ComboBox<
         elementType={props.elementType}
         activator={(btnProps) => (
           <div ref={btnProps.ref}>
-            <Label>{label}</Label>
+            {label && (
+              <Label>
+                {label}
+                {props.isRequired && <span className="text-danger">*</span>}
+              </Label>
+            )}
             <FieldGroup
               isDisabled={props.isDisabled}
               isInvalid={props.isInvalid}
@@ -70,7 +75,13 @@ export function ComboBox<
               rounded={props.rounded}
             >
               <Input name={props.name} placeholder={props.placeholder} />
-              <Button {...btnProps.props} className="mr-1">
+              <Button
+                {...btnProps.props}
+                variant="icon"
+                size="sm"
+                className="mr-1"
+                rounded={props.rounded === "full" ? "full" : "sm"}
+              >
                 <ChevronDown aria-hidden className="w-4 h-4" />
               </Button>
             </FieldGroup>
