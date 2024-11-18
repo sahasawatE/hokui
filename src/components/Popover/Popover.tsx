@@ -40,6 +40,7 @@ const popoverStyles = tv({
 
 const defaultActivatorStyles = tv({
   extend: focusRing,
+  base: "w-0 h-0 absolute bottom-0 left-0 pointer-event-none -z-10",
 });
 
 export function Popover({
@@ -116,12 +117,13 @@ export function Popover({
   return (
     <>
       {props.activator ? (
-        <div
-          {...buttonProps}
-          ref={activatorRef}
-          className={defaultActivatorStyles()}
-        >
+        <div className="relative">
           {props.activator()}
+          <div
+            {...buttonProps}
+            ref={activatorRef}
+            className={defaultActivatorStyles()}
+          />
         </div>
       ) : (
         <Button ref={activatorRef}>{props.label}</Button>
