@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useRef } from "react";
 import {
   ModalOverlay,
   ModalOverlayProps,
@@ -8,10 +8,14 @@ import useSlot from "react-use-slots";
 import { tv } from "tailwind-variants";
 import type { Size } from "../types/prop.type";
 import { Button } from "../Button";
+import { motion } from "framer-motion";
+import { Loading } from "../Loading";
 
 type customeProps = {
   title?: string;
   size?: Size;
+  isLoading?: boolean;
+  hideScrollbar?: boolean;
   onCancel?: () => void;
   onOk?: () => void;
 };
@@ -50,6 +54,23 @@ const modalStyles = tv({
   },
 });
 
+const bodyStyle = tv({
+  base: "relative max-h-[75vh] overflow-x-hidden",
+  variants: {
+    hideScrollbar: {
+      true: "no-scrollbar",
+    },
+    isLoading: {
+      true: "overflow-y-hidden",
+      false: "overflow-y-scroll",
+    },
+  },
+  defaultVariants: {
+    hideScrollbar: false,
+    isLoading: false,
+  },
+});
+
 type AvailableSlotName = "bottom-content" | "header-content";
 
 function RenderSlot(
@@ -73,6 +94,22 @@ function RenderSlot(
 export type ModalProps = ModalOverlayProps & customeProps;
 
 export function Modal(props: ModalProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const containerArea = useMemo(() => {
+    if (containerRef.current) {
+      const containerWidth = containerRef.current.offsetWidth;
+      const containerHeight = containerRef.current.offsetHeight;
+
+      return {
+        w: `${containerWidth}px`,
+        h: `${containerHeight}px`,
+      };
+    }
+
+    return null;
+  }, [containerRef]);
+
   const handleCLickCancel = () => {
     if (props.onCancel) {
       props.onCancel();
@@ -93,32 +130,82 @@ export function Modal(props: ModalProps) {
           modalStyles({ ...renderProps, size: props.size })
         }
       >
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col">
           {/* header */}
-          {RenderSlot(props, "header-content", () => (
-            <>
-              {props.title && (
-                <span className="font-semibold text-lg">{props.title}</span>
-              )}
-            </>
-          ))}
+          <div className="p-4">
+            {RenderSlot(props, "header-content", () => (
+              <>
+                {props.title && (
+                  <span className="font-semibold text-lg">{props.title}</span>
+                )}
+              </>
+            ))}
+          </div>
 
           {/* content */}
-          <div className="max-h-[75vh] overflow-y-auto overflow-x-hidden">
-            {RenderSlot(props)}
+          <div
+            ref={containerRef}
+            className={bodyStyle({
+              hideScrollbar: props.hideScrollbar,
+              isLoading: props.isLoading,
+            })}
+          >
+            <motion.div
+              animate={
+                props.isLoading
+                  ? {
+                      display: "block",
+                      opacity: 1,
+                      zIndex: 1,
+                    }
+                  : {
+                      opacity: 0,
+                      transitionEnd: {
+                        zIndex: -1,
+                        display: "none",
+                      },
+                    }
+              }
+              className="absolute bg-white/75"
+              style={
+                containerArea
+                  ? {
+                      height: containerArea.h,
+                      width: containerArea.w,
+                    }
+                  : {}
+              }
+            >
+              <div className="flex flex-row items-center h-full justify-center">
+                <div className="bg-white border w-20 h-20 rounded-xl p-2 flex flex-col justify-center items-center">
+                  <Loading size="xl" />
+                </div>
+              </div>
+            </motion.div>
+            <div className="px-4">{RenderSlot(props)}</div>
           </div>
 
           {/* foot */}
-          {RenderSlot(props, "bottom-content", () => (
-            <div className="flex flex-row justify-end gap-2">
-              <Button color="danger" variant="text" onPress={handleCLickCancel}>
-                ยกเลิก
-              </Button>
-              <Button color="primary" variant="default" onPress={handleCLickOk}>
-                ตกลง
-              </Button>
-            </div>
-          ))}
+          <div className="p-4">
+            {RenderSlot(props, "bottom-content", () => (
+              <div className="flex flex-row justify-end gap-2">
+                <Button
+                  color="danger"
+                  variant="text"
+                  onPress={handleCLickCancel}
+                >
+                  ยกเลิก
+                </Button>
+                <Button
+                  color="primary"
+                  variant="default"
+                  onPress={handleCLickOk}
+                >
+                  ตกลง
+                </Button>
+              </div>
+            ))}
+          </div>
         </div>
       </RACModal>
     </ModalOverlay>

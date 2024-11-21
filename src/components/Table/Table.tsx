@@ -1,4 +1,4 @@
-import { ArrowUp, LoaderCircle } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import {
   Cell as AriaCell,
   Column as AriaColumn,
@@ -32,6 +32,7 @@ import { Select, SelectItem } from "../Select";
 import { Label } from "../Field";
 import { motion } from "framer-motion";
 import { Pagination } from "../Pagination";
+import { Loading } from "../Loading";
 
 interface TableProp<T extends { [key: string]: any; key: string }>
   extends Omit<TableProps, "children" | "onSelectionChange">,
@@ -119,22 +120,7 @@ export function Table<T extends { [key: string]: any; key: string }>(
       >
         <div className="flex flex-row items-center h-full justify-center">
           <div className="bg-white border w-20 h-20 rounded-xl p-2 flex flex-col justify-center items-center">
-            <motion.div
-              animate={{
-                rotate: [0, 360],
-              }}
-              transition={{
-                repeat: Infinity,
-                duration: 1,
-                ease: "easeInOut",
-                times: [0, 0.2, 1],
-              }}
-            >
-              <LoaderCircle
-                size={40}
-                className="text-[hsl(var(--hok-default-500))]"
-              />
-            </motion.div>
+            <Loading size="xl" color={props.color} />
           </div>
         </div>
       </motion.div>

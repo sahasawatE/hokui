@@ -20,6 +20,7 @@ export * from "./Form";
 export * from "./GridList";
 export * from "./Link";
 export * from "./ListBox";
+export * from "./Loading";
 export * from "./Menu";
 export * from "./Meter";
 export * from "./Modal";
