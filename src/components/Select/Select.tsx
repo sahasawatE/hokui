@@ -4,7 +4,6 @@ import {
   Select as AriaSelect,
   SelectProps as AriaSelectProps,
   Button,
-  // ListBox,
   ListBoxItemProps,
   SelectValue,
   ValidationResult,
@@ -133,7 +132,7 @@ export interface SelectProps<T extends { [k: string]: any; key: string }>
   elementType?: React.JSXElementConstructor<any> | React.ElementType;
   errorMessage?: string | ((validation: ValidationResult) => string);
   items: Iterable<T>;
-  children: (item: T) => React.ReactNode;
+  children?: (item: T) => React.ReactNode;
 }
 
 export function Select<
@@ -223,8 +222,15 @@ export function Select<
             )}
             className="min-w-[--trigger-width]"
           >
-            <ListBox items={items} color={props.color} className="border-0">
-              {children}
+            <ListBox
+              items={items}
+              color={props.color}
+              selectionMode="single"
+              className="border-0 max-h-60 overflow-y-scroll overflow-x-visible no-scrollbar"
+            >
+              {children
+                ? children
+                : (e) => <SelectItem key={e.key}>{e.title}</SelectItem>}
             </ListBox>
           </Popover>
         </>

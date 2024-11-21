@@ -95,7 +95,7 @@ export function ComboBox<
           items={items}
           color={props.color}
           selectionMode="single"
-          className="border-0"
+          className="border-0 max-h-60 overflow-y-scroll overflow-x-visible no-scrollbar"
         >
           {children
             ? children
