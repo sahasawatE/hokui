@@ -42,7 +42,7 @@ export function DatePicker<T extends DateValue>({
       )}
     >
       <Dialog
-        activator={() => (
+        activator={(btnProp) => (
           <>
             {label && <Label>{label}</Label>}
             <FieldGroup
@@ -55,7 +55,14 @@ export function DatePicker<T extends DateValue>({
                 color={props.color}
                 className="flex-1 min-w-[150px] px-2 py-1.5 text-sm"
               />
-              <Button variant="icon" size="sm" rounded="sm" className="mr-1">
+              <Button
+                {...btnProp.props}
+                ref={btnProp.ref}
+                variant="icon"
+                size="sm"
+                rounded="sm"
+                className="mr-1"
+              >
                 <CalendarIcon aria-hidden className="w-4 h-4" />
               </Button>
             </FieldGroup>
