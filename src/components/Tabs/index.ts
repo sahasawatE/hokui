@@ -1,1 +1,1 @@
-export { Tabs } from "./Tabs.modified";
+export { Tabs, type TabsProps } from "./Tabs.modified";

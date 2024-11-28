@@ -3,7 +3,7 @@ import {
   Radio as RACRadio,
   RadioGroup as RACRadioGroup,
   RadioGroupProps as RACRadioGroupProps,
-  RadioProps,
+  RadioProps as RACRadioProps,
   ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -99,11 +99,11 @@ const RadioBtnStyles = tv({
   },
 });
 
-interface RadioProp extends Omit<RadioProps, "children"> {
+export interface RadioProps extends Omit<RACRadioProps, "children"> {
   children: React.ReactNode;
 }
 
-export function Radio(props: RadioProp) {
+export function Radio(props: RadioProps) {
   const groupContext = useContext(GroupContext);
   return (
     <RACRadio

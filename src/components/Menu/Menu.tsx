@@ -4,17 +4,17 @@ import {
   Menu as AriaMenu,
   MenuItem as AriaMenuItem,
   MenuProps as AriaMenuProps,
-  MenuItemProps,
+  MenuItemProps as AriaMenuItemProps,
   MenuTrigger,
   Separator,
-  SeparatorProps,
+  SeparatorProps as AriaSeparatorProps,
   composeRenderProps,
 } from "react-aria-components";
 import {
   DropdownSection,
-  DropdownSectionProps,
+  DropdownSectionProps as DSProps,
   dropdownItemStyles,
-} from "../ListBox";
+} from "../ListBox/ListBox";
 import { Popover, PopoverProps } from "../Popover";
 import type { Color } from "../types/prop.type";
 
@@ -91,6 +91,8 @@ export function Menu<
   );
 }
 
+export type MenuItemProps = AriaMenuItemProps;
+
 export function MenuItem(props: MenuItemProps) {
   const ctx = useContext(MenuContext);
   return (
@@ -122,11 +124,15 @@ export function MenuItem(props: MenuItemProps) {
   );
 }
 
+export type SeparatorProps = AriaSeparatorProps;
+
 export function MenuSeparator(props: SeparatorProps) {
   return (
     <Separator {...props} className="mx-3 my-1 border-b border-gray-300" />
   );
 }
+
+export type DropdownSectionProps<T> = DSProps<T>;
 
 export function MenuSection<
   T extends { [k: string]: any; key: string; title: string },

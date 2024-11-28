@@ -1,1 +1,6 @@
-export { Calendar, CalendarGridHeader, CalendarHeader } from "./Calendar";
+export {
+  Calendar,
+  CalendarGridHeader,
+  CalendarHeader,
+  type CalendarProps,
+} from "./Calendar";

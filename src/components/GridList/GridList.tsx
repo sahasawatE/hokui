@@ -4,8 +4,8 @@ import {
   GridList as AriaGridList,
   GridListItem as AriaGridListItem,
   Button,
-  GridListItemProps,
-  GridListProps,
+  GridListItemProps as AriaGridListItemProps,
+  GridListProps as AriaGridListProps,
   useDragAndDrop,
 } from "react-aria-components";
 import type { ListData } from "react-stately";
@@ -14,7 +14,7 @@ import { Checkbox } from "../Checkbox";
 import { composeTailwindRenderProps, focusRing } from "../utils";
 import type { Color, InputVariant, Rounded } from "../types/prop.type";
 
-export type customGridListProps<T> = {
+type customGridListProps<T> = {
   items?: ListData<T>;
   color?: Color;
   rounded?: Rounded;
@@ -24,18 +24,21 @@ export type customGridListProps<T> = {
   onSelect?: (value: string[]) => void;
 };
 
-export type CustomGridListItemContext = {
+type CustomGridListItemContext = {
   color?: Color;
   allowDragandDrop?: boolean;
 };
 
-export type GridListP<T> = Omit<
-  GridListProps<T>,
+export type GridListProps<T> = Omit<
+  AriaGridListProps<T>,
   "items" | "children" | "onSelectionChange"
 > &
   customGridListProps<T>;
 
-export type GridListItemP = GridListItemProps;
+export interface GridListItemProps
+  extends Omit<AriaGridListItemProps, "children"> {
+  children: React.ReactNode;
+}
 
 const GridContext = createContext<CustomGridListItemContext>({
   color: "default",
@@ -44,7 +47,7 @@ const GridContext = createContext<CustomGridListItemContext>({
 
 export function GridList<
   T extends { [k: string]: any; key: string; title: string },
->(props: GridListP<T>) {
+>(props: GridListProps<T>) {
   const { dragAndDropHooks } = useDragAndDrop({
     isDisabled: !Boolean(props.allowDragandDrop),
     getItems: (keys) =>
@@ -160,7 +163,7 @@ const itemStyles = tv({
   },
 });
 
-export function GridListItem({ children, ...props }: GridListItemP) {
+export function GridListItem({ children, ...props }: GridListItemProps) {
   let textValue = typeof children === "string" ? children : undefined;
   const gridContext = useContext(GridContext);
 
@@ -177,7 +180,7 @@ export function GridListItem({ children, ...props }: GridListItemP) {
     >
       {({ selectionMode, selectionBehavior, allowsDragging }) => (
         <>
-          {Boolean(gridContext.allowDragandDrop && allowsDragging) ? (
+          {gridContext.allowDragandDrop && allowsDragging ? (
             <Button slot="drag">
               <GripVertical aria-hidden className="w-4 h-4 text-gray-600" />
             </Button>

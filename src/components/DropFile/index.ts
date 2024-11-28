@@ -1,1 +1,1 @@
-export { DropFile } from "./DropFile";
+export { DropFile, type DropFileProps } from "./DropFile";

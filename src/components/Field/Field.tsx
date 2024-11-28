@@ -1,14 +1,14 @@
 import {
-  FieldErrorProps,
   Group,
-  GroupProps,
-  InputProps,
-  LabelProps,
   FieldError as RACFieldError,
   Input as RACInput,
   Label as RACLabel,
   Text,
-  TextProps,
+  type FieldErrorProps as RACFieldErrorProps,
+  type GroupProps as RACGroupProps,
+  type InputProps as RACInputProps,
+  type LabelProps as RACLabelProps,
+  type TextProps as RACTextProps,
   composeRenderProps,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -23,6 +23,8 @@ type customProps = {
   variant?: InputVariant;
 };
 
+export type LabelProps = RACLabelProps;
+
 export function Label(props: LabelProps) {
   return (
     <RACLabel
@@ -35,6 +37,8 @@ export function Label(props: LabelProps) {
   );
 }
 
+export type TextProps = RACTextProps;
+
 export function Description(props: TextProps) {
   return (
     <Text
@@ -44,6 +48,8 @@ export function Description(props: TextProps) {
     />
   );
 }
+
+export type FieldErrorProps = RACFieldErrorProps;
 
 export function FieldError(props: FieldErrorProps) {
   return (
@@ -187,7 +193,9 @@ const underlinedStyle = tv({
   },
 });
 
-export function FieldGroup(props: GroupProps & customProps) {
+export type FieldGroupProps = RACGroupProps & customProps;
+
+export function FieldGroup(props: FieldGroupProps) {
   return (
     <Group
       {...props}
@@ -244,6 +252,8 @@ export function FieldGroup(props: GroupProps & customProps) {
     </Group>
   );
 }
+
+export type InputProps = RACInputProps;
 
 export function Input(props: InputProps) {
   return (

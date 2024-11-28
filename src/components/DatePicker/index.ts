@@ -1,1 +1,1 @@
-export { DatePicker } from "./DatePicker";
+export { DatePicker, type DatePickerProps } from "./DatePicker";

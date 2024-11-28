@@ -6,7 +6,7 @@ import {
   ListBoxProps as AriaListBoxProps,
   Collection,
   Header,
-  ListBoxItemProps,
+  ListBoxItemProps as AriaListBoxItemProps,
   Section,
   SectionProps,
   composeRenderProps,
@@ -27,6 +27,8 @@ export interface ListBoxProps<T>
   children?: (item: T) => React.ReactNode;
   onSelect?: (value: string[]) => void;
 }
+
+export type ListBoxItemProps = AriaListBoxItemProps;
 
 export function ListBox<
   T extends { [k: string]: any; key: string; title: string },

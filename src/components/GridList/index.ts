@@ -1,1 +1,6 @@
-export { GridList, GridListItem } from "./GridList";
+export {
+  GridList,
+  GridListItem,
+  type GridListItemProps,
+  type GridListProps,
+} from "./GridList";

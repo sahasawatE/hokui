@@ -1,1 +1,1 @@
-export { Meter } from "./Meter";
+export { Meter, type MeterProps } from "./Meter";

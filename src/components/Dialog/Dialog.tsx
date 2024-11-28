@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  DialogProps,
+  DialogProps as AriaDialogProps,
   DialogTrigger,
   Dialog as RACDialog,
 } from "react-aria-components";
@@ -14,14 +14,14 @@ type BtnOptions = {
   defaultClassName: string;
 };
 
-interface DialogProp extends DialogProps {
+export interface DialogProps extends AriaDialogProps {
   activator?: (btnProps: BtnOptions) => React.ReactNode;
   label?: string;
   placement?: PlacementAxis;
   elementType?: React.JSXElementConstructor<any> | React.ElementType;
 }
 
-export function Dialog(props: DialogProp) {
+export function Dialog(props: DialogProps) {
   return (
     <DialogTrigger>
       <Popover

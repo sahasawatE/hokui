@@ -133,4 +133,5 @@ export type {
   TabsVariant,
   DialogVariant,
   DataTablePaginationProps,
+  DataTableHeaderProps,
 };

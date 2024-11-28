@@ -2,7 +2,7 @@ import {
   DateField as AriaDateField,
   DateFieldProps as AriaDateFieldProps,
   DateInput as AriaDateInput,
-  DateInputProps,
+  DateInputProps as AriaDateInputProps,
   DateSegment,
   DateValue,
   ValidationResult,
@@ -79,9 +79,11 @@ const segmentStyles = tv({
   },
 });
 
-export function DateInput(
-  props: Omit<DateInputProps, "children"> & CustomProps,
-) {
+export interface DateInputProps
+  extends Omit<AriaDateInputProps, "children">,
+    CustomProps {}
+
+export function DateInput(props: DateInputProps) {
   return (
     <AriaDateInput
       className={(renderProps) =>

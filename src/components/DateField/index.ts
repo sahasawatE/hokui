@@ -1,1 +1,6 @@
-export { DateField, DateInput } from "./DateField";
+export {
+  DateField,
+  DateInput,
+  type DateFieldProps,
+  type DateInputProps,
+} from "./DateField";

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import type { Color, Size } from "../types/prop.type";
 import { tv } from "tailwind-variants";
 
-interface Props {
+export interface LoadingProps {
   color?: Color;
   size?: Size;
   value?: number;
@@ -42,7 +42,7 @@ const IndicatorStyles = tv({
   },
 });
 
-export function Loading(props: Props) {
+export function Loading(props: LoadingProps) {
   if (props.line) {
     return (
       <div className="relative rounded w-full h-[5px] bg-gray-200 overflow-hidden">

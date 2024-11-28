@@ -1,6 +1,6 @@
 import {
   Separator as RACSeparator,
-  SeparatorProps,
+  SeparatorProps as RACSeparatorProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
@@ -16,6 +16,8 @@ const styles = tv({
     orientation: "horizontal",
   },
 });
+
+export type SeparatorProps = RACSeparatorProps;
 
 export function Separator(props: SeparatorProps) {
   return (

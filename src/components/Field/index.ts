@@ -6,4 +6,9 @@ export {
   Label,
   fieldBorderStyles,
   fieldGroupStyles,
+  type FieldErrorProps,
+  type FieldGroupProps,
+  type InputProps,
+  type LabelProps,
+  type TextProps,
 } from "./Field";

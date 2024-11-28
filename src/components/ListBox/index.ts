@@ -3,6 +3,7 @@ export {
   DropdownSection,
   ListBox,
   ListBoxItem,
-  DropdownSectionProps,
-  dropdownItemStyles,
+  type DropdownSectionProps,
+  type ListBoxProps,
+  type ListBoxItemProps,
 } from "./ListBox";

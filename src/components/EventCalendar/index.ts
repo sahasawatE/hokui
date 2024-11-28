@@ -1,1 +1,1 @@
-export { EventCalendar } from "./EventCalender";
+export { EventCalendar, type EventCalendarProps } from "./EventCalender";
