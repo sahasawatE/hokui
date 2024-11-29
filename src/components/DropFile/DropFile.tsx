@@ -4,12 +4,13 @@ import {
   FileTrigger,
   Text,
   type DropZoneProps as AriaDropZoneProps,
+  type ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type { Color, Rounded } from "../types/prop.type";
 import { Button } from "../Button";
 import { FilePlus, X } from "lucide-react";
-import { Description, Label } from "../Field";
+import { Description, FieldError, Label } from "../Field";
 
 const DropFileStyles = tv({
   base: "border-2 transition-all p-2",
@@ -98,7 +99,7 @@ export interface DropFileProps
   showDeleteButton?: boolean;
   onClickDelete?: (file: File, index: number) => void;
   isInvalid?: boolean;
-  errorMessage?: string;
+  errorMessage?: string | ((validation: ValidationResult) => string);
   isRequired?: boolean;
   label?: string;
   description?: string;
@@ -226,9 +227,7 @@ export function DropFile(props: DropFileProps) {
         )}
       </AriaDropZone>
       {props.description && <Description>{props.description}</Description>}
-      {props.errorMessage && (
-        <span className="text-sm text-danger">{props.errorMessage}</span>
-      )}
+      <FieldError>{props.errorMessage}</FieldError>
     </div>
   );
 }
