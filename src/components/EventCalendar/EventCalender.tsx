@@ -1,4 +1,4 @@
-import React, { createContext, useContext, type ElementType } from "react";
+import React, { createContext, useContext } from "react";
 import useSlot from "react-use-slots";
 import { twMerge } from "tailwind-merge";
 import {
@@ -6,11 +6,9 @@ import {
   useLocale,
   useCalendarGrid,
   useCalendarCell,
-  useButton,
   type DateValue,
   type AriaCalendarProps,
   type AriaCalendarGridProps,
-  type AriaButtonOptions,
 } from "react-aria";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCalendarState, type CalendarState } from "react-stately";
@@ -307,8 +305,10 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
           {event && (
             <div className="flex-row justify-end flex">
               <Dialog
-                activator={() => (
+                activator={(btnProps) => (
                   <Button
+                    {...btnProps.props}
+                    ref={btnProps.ref}
                     size="sm"
                     variant="text"
                     rounded="sm"
@@ -335,8 +335,15 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
           )}
         </Card>
         <Dialog
-          activator={() => (
-            <SmallCellBtn>
+          activator={(btnProps) => (
+            <button
+              {...btnProps.props}
+              ref={btnProps.ref}
+              className={twMerge(
+                btnProps.defaultClassName,
+                "xl:hidden h-full w-full border p-2 bg-white rounded-sm",
+              )}
+            >
               <div className="flex flex-col gap-2 justify-start">
                 <span className="text-xl">{formattedDate}</span>
                 <div className="flex flex-row justify-end gap-1">
@@ -356,7 +363,7 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
                   )}
                 </div>
               </div>
-            </SmallCellBtn>
+            </button>
           )}
           className="p-0"
         >
@@ -369,23 +376,6 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
         </Dialog>
       </div>
     </div>
-  );
-}
-
-function SmallCellBtn(
-  props: { children: React.ReactNode } & AriaButtonOptions<ElementType>,
-) {
-  const ref = React.useRef<HTMLButtonElement | null>(null);
-  const { buttonProps } = useButton(props, ref);
-
-  return (
-    <button
-      {...buttonProps}
-      ref={ref}
-      className="xl:hidden h-full w-full border p-2 bg-white rounded-sm"
-    >
-      {props.children}
-    </button>
   );
 }
 

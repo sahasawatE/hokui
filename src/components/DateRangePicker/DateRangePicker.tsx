@@ -42,7 +42,7 @@ export function DateRangePicker<T extends DateValue>({
       )}
     >
       <Dialog
-        activator={() => (
+        activator={(btnProps) => (
           <>
             {label && <Label>{label}</Label>}
             <FieldGroup
@@ -67,7 +67,14 @@ export function DateRangePicker<T extends DateValue>({
                 slot="end"
                 className="flex-1 px-2 py-1.5 text-sm"
               />
-              <Button variant="icon" size="sm" rounded="sm" className="mr-1">
+              <Button
+                {...btnProps.props}
+                ref={btnProps.ref}
+                variant="icon"
+                size="sm"
+                rounded="sm"
+                className="mr-1"
+              >
                 <CalendarIcon aria-hidden className="w-4 h-4" />
               </Button>
             </FieldGroup>
