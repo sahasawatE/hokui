@@ -80,7 +80,7 @@ type DataTableProps<T extends { [key: string]: any; key: string }> = {
   paging: DataTablePaginationProps;
   variant?: TableVariant;
   color?: Color;
-  hiehgt?: number | string;
+  height?: number | string;
   width?: number | string;
   rounded?: Rounded;
   children?: (cell: TableCellCallback<T>) => ReactNode;

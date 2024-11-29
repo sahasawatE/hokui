@@ -177,7 +177,7 @@ export function Modal(props: ModalProps) {
               }
             >
               <div className="flex flex-row items-center h-full justify-center">
-                <div className="bg-white border w-20 h-20 rounded-xl p-2 flex flex-col justify-center items-center">
+                <div className="bg-white border w-20 h-20 rounded-xl p-2 flex flex-col justify-center items-center top-1/2 left-1/2">
                   <Loading size="xl" />
                 </div>
               </div>

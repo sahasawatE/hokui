@@ -159,7 +159,8 @@ export function DropFile(props: DropFileProps) {
         }}
       >
         {!props.hideAddFileButton &&
-          props.value.length < (props.maxLength ?? props.value.length) && (
+          (props.value.length < (props.maxLength ?? props.value.length) ||
+            !props.maxLength) && (
             <div className="w-full pb-2 justify-center flex flex-row">
               <FileTrigger
                 allowsMultiple={props.maxLength !== 1}

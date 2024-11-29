@@ -37,7 +37,7 @@ import { Loading } from "../Loading";
 interface TableProp<T extends { [key: string]: any; key: string }>
   extends Omit<TableProps, "children" | "onSelectionChange">,
     DataTableProps<T> {
-  onSelect?: (selected: any) => void;
+  onSelect?: (selected: T[]) => void;
   isLoading?: boolean;
   allowDragAndDrop?: boolean;
   rounded?: TableRounded;
@@ -84,7 +84,7 @@ const TableContainerStyle = tv({
 });
 
 const TableLoadingOverlayStyle = tv({
-  base: "absolute w-full h-full bg-black/10 backdrop-blur-sm",
+  base: "absolute w-full h-full bg-white/75",
   variants: {
     rounded: TableStyle.variants.rounded,
   },
@@ -119,7 +119,7 @@ export function Table<T extends { [key: string]: any; key: string }>(
         })}
       >
         <div className="flex flex-row items-center h-full justify-center">
-          <div className="bg-white border w-20 h-20 rounded-xl p-2 flex flex-col justify-center items-center">
+          <div className="bg-white border w-20 h-20 rounded-xl p-2 flex flex-col justify-center items-center top-1/2 left-1/2">
             <Loading size="xl" color={props.color} />
           </div>
         </div>
@@ -130,7 +130,7 @@ export function Table<T extends { [key: string]: any; key: string }>(
           hideScrollbar: props.hideScrollbar,
         })}
         style={{
-          maxHeight: `${props.hiehgt ?? "580"}px`,
+          maxHeight: `${props.height ?? "580"}px`,
           width: props.width ? `${props.width}px` : "100%",
         }}
       >
@@ -148,9 +148,9 @@ export function Table<T extends { [key: string]: any; key: string }>(
                 return props.onSelect(props.items);
               } else {
                 return props.onSelect(
-                  Array.from(key).map((e) =>
-                    props.items.find((f) => f.key === e),
-                  ),
+                  Array.from(key)
+                    .map((e) => props.items.find((f) => f.key === e))
+                    .filter((e) => !!e),
                 );
               }
             }
