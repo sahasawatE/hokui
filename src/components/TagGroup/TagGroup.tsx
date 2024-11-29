@@ -1,5 +1,5 @@
 import { XIcon } from "lucide-react";
-import { createContext, useContext } from "react";
+import React, { createContext, useContext } from "react";
 import {
   Tag as AriaTag,
   TagGroup as AriaTagGroup,
@@ -15,6 +15,7 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 import { Description, Label } from "../Field";
 import { focusRing } from "../utils";
+
 import type {
   Color,
   TagVariant,
@@ -200,7 +201,11 @@ const removeButtonStyles = tv({
   },
 });
 
-export type TagItemProps = AriaTagProps & TagContext;
+export interface TagItemProps
+  extends Omit<AriaTagProps, "children">,
+    TagContext {
+  children: React.ReactNode;
+}
 
 export function Tag({ children, ...props }: TagItemProps) {
   let textValue = typeof children === "string" ? children : undefined;
@@ -238,11 +243,15 @@ export function Tag({ children, ...props }: TagItemProps) {
   );
 }
 
-export type ChipProps = TagItemProps & {
+export interface ChipProps
+  extends Omit<TagItemProps, "children" | "textValue" | "ping"> {
   label?: string;
   description?: string;
   errorMessage?: string;
-};
+  children: string;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+}
 
 export function Chip({
   children,
@@ -251,7 +260,6 @@ export function Chip({
   errorMessage,
   ...props
 }: ChipProps) {
-  const textValue = typeof children === "string" ? children : "";
   return (
     <AriaTagGroup
       aria-label={label}
@@ -261,7 +269,7 @@ export function Chip({
       <TagList>
         <AriaTag
           {...props}
-          textValue={textValue}
+          textValue={children}
           className={composeRenderProps(
             props.className,
             (className, renderProps) =>
@@ -274,7 +282,11 @@ export function Chip({
               }),
           )}
         >
-          {textValue}
+          <div className="flex flex-row items-center gap-1">
+            {props.startContent}
+            {children}
+            {props.endContent}
+          </div>
         </AriaTag>
       </TagList>
       {description && (
