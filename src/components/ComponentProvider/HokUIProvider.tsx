@@ -102,7 +102,7 @@ export type DialogOptions = {
   subTitle: string;
   type?: "confirm" | "warning";
   variant?: DialogVariant;
-  calcelText?: string;
+  cancelText?: string;
   confirmText?: string;
   onConfirm?: () => void;
   onClose?: () => void;
@@ -308,7 +308,7 @@ const DialogToastRendererRef = React.forwardRef<
                   }
                 }}
               >
-                {dialogState.options.calcelText ?? "ยกเลิก"}
+                {dialogState.options.cancelText ?? "ยกเลิก"}
               </Button>
             )}
             <Button
