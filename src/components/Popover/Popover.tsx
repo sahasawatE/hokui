@@ -5,10 +5,10 @@ import {
   composeRenderProps,
   PopoverContext,
   useSlottedContext,
+  Button,
 } from "react-aria-components";
 import React from "react";
 import { tv } from "tailwind-variants";
-import { Button } from "../Button";
 import { motion, type TargetAndTransition } from "framer-motion";
 import { type Placement, type PlacementAxis } from "react-aria";
 import { focusRing } from "../utils";
