@@ -5,7 +5,6 @@ import {
   DateValue,
   ValidationResult,
 } from "react-aria-components";
-import { Button } from "../Button";
 import { DateInput } from "../DateField";
 import { Dialog } from "../Dialog";
 import { Description, FieldError, FieldGroup, Label } from "../Field";
@@ -41,50 +40,40 @@ export function DateRangePicker<T extends DateValue>({
         "group flex flex-col gap-1",
       )}
     >
-      <Dialog
-        activator={(btnProps) => (
-          <>
-            {label && <Label>{label}</Label>}
-            <FieldGroup
-              color={props.color}
-              rounded={props.rounded}
-              variant={props.variant}
-              className="min-w-[208px] w-auto"
-            >
-              <DateInput
-                color={props.color}
-                slot="start"
-                className="px-2 py-1.5 text-sm"
-              />
-              <span
-                aria-hidden="true"
-                className="text-gray-800 forced-colors:text-[ButtonText] group-disabled:text-gray-200 group-disabled:forced-colors:text-[GrayText]"
-              >
-                ~
-              </span>
-              <DateInput
-                color={props.color}
-                slot="end"
-                className="flex-1 px-2 py-1.5 text-sm"
-              />
-              <Button
-                {...btnProps.props}
-                ref={btnProps.ref}
-                variant="icon"
-                size="sm"
-                rounded="sm"
-                className="mr-1"
-              >
-                <CalendarIcon aria-hidden className="w-4 h-4" />
-              </Button>
-            </FieldGroup>
-            {description && <Description>{description}</Description>}
-            <FieldError>{errorMessage}</FieldError>
-          </>
-        )}
+      {label && (
+        <Label>
+          {label}
+          {props.isRequired && <span className="text-danger">*</span>}
+        </Label>
+      )}
+      <FieldGroup
+        color={props.color}
+        rounded={props.rounded}
+        variant={props.variant}
+        className="min-w-[208px] w-auto"
       >
-        <RangeCalendar color={props.color} />
-      </Dialog>
+        <DateInput
+          color={props.color}
+          slot="start"
+          className="px-2 py-1.5 text-sm"
+        />
+        <span
+          aria-hidden="true"
+          className="text-gray-800 forced-colors:text-[ButtonText] group-disabled:text-gray-200 group-disabled:forced-colors:text-[GrayText]"
+        >
+          ~
+        </span>
+        <DateInput
+          color={props.color}
+          slot="end"
+          className="flex-1 px-2 py-1.5 text-sm"
+        />
+        <Dialog activator={<CalendarIcon aria-hidden className="w-4 h-4" />}>
+          <RangeCalendar color={props.color} />
+        </Dialog>
+      </FieldGroup>
+      {description && <Description>{description}</Description>}
+      <FieldError>{errorMessage}</FieldError>
     </AriaDateRangePicker>
   );
 }

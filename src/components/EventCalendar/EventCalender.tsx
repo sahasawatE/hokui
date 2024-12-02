@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useCallback, useContext } from "react";
 import useSlot from "react-use-slots";
 import { twMerge } from "tailwind-merge";
 import {
@@ -235,14 +235,17 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
     return result;
   };
 
-  const chipBg = (type: string) => {
-    if (!ctx.color) return { color: "#fff", text: "#000" };
+  const chipBg = useCallback(
+    (type: string) => {
+      if (!ctx.color) return { color: "#fff", text: "#000" };
 
-    const found = ctx.color.find((e) => e.type === type);
-    if (!found) return { color: "#fff", text: "#000" };
+      const found = ctx.color.find((e) => e.type === type);
+      if (!found) return { color: "#fff", text: "#000" };
 
-    return { color: found.color, text: found.textColor ?? "white" };
-  };
+      return { color: found.color, text: found.textColor ?? "white" };
+    },
+    [ctx.color],
+  );
 
   const cb = () => {
     if (ctx.events) {
@@ -305,14 +308,9 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
           {event && (
             <div className="flex-row justify-end flex">
               <Dialog
-                activator={(btnProps) => (
-                  <Button
-                    {...btnProps.props}
-                    ref={btnProps.ref}
-                    size="sm"
-                    variant="text"
-                    rounded="sm"
-                    onPress={() => {
+                activator={
+                  <div
+                    onClick={() => {
                       if (ctx.onClickViewAll) {
                         ctx.onClickViewAll(cb());
                       }
@@ -321,8 +319,8 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
                     <span>
                       {ctx.viewTitle} ({event.length})
                     </span>
-                  </Button>
-                )}
+                  </div>
+                }
               >
                 <RenderDialogContent
                   cb={cb}
@@ -335,36 +333,28 @@ function CalendarCell({ state, date, event }: CalendarCellProps) {
           )}
         </Card>
         <Dialog
-          activator={(btnProps) => (
-            <button
-              {...btnProps.props}
-              ref={btnProps.ref}
-              className={twMerge(
-                btnProps.defaultClassName,
-                "xl:hidden h-full w-full border p-2 bg-white rounded-sm",
-              )}
-            >
-              <div className="flex flex-col gap-2 justify-start">
-                <span className="text-xl">{formattedDate}</span>
-                <div className="flex flex-row justify-end gap-1">
-                  {groupEvent().length ? (
-                    groupEvent().map((e, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          backgroundColor: chipBg(e.type).color,
-                          color: chipBg(e.type).text,
-                        }}
-                        className="rounded-full h-2 w-2"
-                      ></div>
-                    ))
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
+          activatorClassName="w-full h-full xl:hidden border p-2 bg-white rounded-sm"
+          activator={
+            <div className="flex flex-col gap-2 justify-start">
+              <span className="text-xl">{formattedDate}</span>
+              <div className="flex flex-row justify-end gap-1">
+                {groupEvent().length ? (
+                  groupEvent().map((e, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        backgroundColor: chipBg(e.type).color,
+                        color: chipBg(e.type).text,
+                      }}
+                      className="rounded-full h-2 w-2"
+                    ></div>
+                  ))
+                ) : (
+                  <div></div>
+                )}
               </div>
-            </button>
-          )}
+            </div>
+          }
           className="p-0"
         >
           <RenderDialogContent
@@ -402,7 +392,7 @@ function RenderDialogContent({
   const ctx = useContext(CalendarContext);
 
   return (
-    <div className="max-w-96 overflow-scroll no-scrollbar">
+    <div className="max-w-96 overflow-scroll no-scrollbar p-2">
       {ctx.eventsDialog ? (
         ctx.eventsDialog(cb())
       ) : (

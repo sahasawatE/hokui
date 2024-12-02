@@ -5,7 +5,6 @@ import {
   DateValue,
   ValidationResult,
 } from "react-aria-components";
-import { Button } from "../Button";
 import { Calendar } from "../Calendar";
 import { DateInput } from "../DateField";
 import { Dialog } from "../Dialog";
@@ -41,38 +40,23 @@ export function DatePicker<T extends DateValue>({
         "group flex flex-col gap-1",
       )}
     >
-      <Dialog
-        activator={(btnProp) => (
-          <>
-            {label && <Label>{label}</Label>}
-            <FieldGroup
-              color={props.color}
-              rounded={props.rounded}
-              variant={props.variant}
-              className="min-w-[208px] w-auto"
-            >
-              <DateInput
-                color={props.color}
-                className="flex-1 min-w-[150px] px-2 py-1.5 text-sm"
-              />
-              <Button
-                {...btnProp.props}
-                ref={btnProp.ref}
-                variant="icon"
-                size="sm"
-                rounded="sm"
-                className="mr-1"
-              >
-                <CalendarIcon aria-hidden className="w-4 h-4" />
-              </Button>
-            </FieldGroup>
-            {description && <Description>{description}</Description>}
-            <FieldError>{errorMessage}</FieldError>
-          </>
-        )}
+      {label && <Label>{label}</Label>}
+      <FieldGroup
+        color={props.color}
+        rounded={props.rounded}
+        variant={props.variant}
+        className="min-w-[208px] w-auto"
       >
-        <Calendar color={props.color} />
-      </Dialog>
+        <DateInput
+          color={props.color}
+          className="flex-1 min-w-[150px] px-2 py-1.5 text-sm"
+        />
+        <Dialog activator={<CalendarIcon aria-hidden className="w-4 h-4" />}>
+          <Calendar color={props.color} />
+        </Dialog>
+      </FieldGroup>
+      {description && <Description>{description}</Description>}
+      <FieldError>{errorMessage}</FieldError>
     </AriaDatePicker>
   );
 }

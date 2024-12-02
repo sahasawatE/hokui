@@ -8,14 +8,9 @@ import { type PlacementAxis } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { Popover } from "../Popover";
 
-type BtnOptions = {
-  props: any;
-  ref: any;
-  defaultClassName: string;
-};
-
 export interface DialogProps extends AriaDialogProps {
-  activator?: (btnProps: BtnOptions) => React.ReactNode;
+  activator: React.ReactNode;
+  activatorClassName?: string;
   label?: string;
   placement?: PlacementAxis;
   elementType?: React.JSXElementConstructor<any> | React.ElementType;
@@ -30,6 +25,7 @@ export function Dialog(props: DialogProps) {
         placement={props.placement}
         label={props.label}
         activator={props.activator}
+        activatorClassName={props.activatorClassName}
       >
         <RACDialog
           {...props}

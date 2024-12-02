@@ -7,7 +7,6 @@ import {
   ValidationResult,
 } from "react-aria-components";
 import { Description, FieldError, FieldGroup, Input, Label } from "../Field";
-import { Button } from "../Button";
 import {
   DropdownItem,
   DropdownSection,
@@ -57,51 +56,41 @@ export function ComboBox<
         }
       }}
     >
-      <Popover
-        elementType={props.elementType}
-        activator={(btnProps) => (
-          <div ref={btnProps.ref}>
-            {label && (
-              <Label>
-                {label}
-                {props.isRequired && <span className="text-danger">*</span>}
-              </Label>
-            )}
-            <FieldGroup
-              isDisabled={props.isDisabled}
-              isInvalid={props.isInvalid}
-              color={props.color}
-              variant={props.variant}
-              rounded={props.rounded}
-            >
-              <Input name={props.name} placeholder={props.placeholder} />
-              <Button
-                {...btnProps.props}
-                variant="icon"
-                size="sm"
-                className="mr-1"
-                rounded={props.rounded === "full" ? "full" : "sm"}
-              >
-                <ChevronDown aria-hidden className="w-4 h-4" />
-              </Button>
-            </FieldGroup>
-            {description && <Description>{description}</Description>}
-            <FieldError>{errorMessage}</FieldError>
-          </div>
+      <div>
+        {label && (
+          <Label>
+            {label}
+            {props.isRequired && <span className="text-danger">*</span>}
+          </Label>
         )}
-        className="w-56"
-      >
-        <ListBox
-          items={items}
+        <FieldGroup
+          isDisabled={props.isDisabled}
+          isInvalid={props.isInvalid}
           color={props.color}
-          selectionMode="single"
-          className="border-0 max-h-60 overflow-y-scroll overflow-x-visible no-scrollbar"
+          variant={props.variant}
+          rounded={props.rounded}
         >
-          {children
-            ? children
-            : (e) => <ComboBoxItem key={e.key}>{e.title}</ComboBoxItem>}
-        </ListBox>
-      </Popover>
+          <Input name={props.name} placeholder={props.placeholder} />
+          <Popover
+            elementType={props.elementType}
+            activator={<ChevronDown aria-hidden className="w-4 h-4" />}
+            className="w-56"
+          >
+            <ListBox
+              items={items}
+              color={props.color}
+              selectionMode="single"
+              className="border-0 max-h-60 overflow-y-scroll overflow-x-visible no-scrollbar"
+            >
+              {children
+                ? children
+                : (e) => <ComboBoxItem key={e.key}>{e.title}</ComboBoxItem>}
+            </ListBox>
+          </Popover>
+        </FieldGroup>
+        {description && <Description>{description}</Description>}
+        <FieldError>{errorMessage}</FieldError>
+      </div>
     </AriaComboBox>
   );
 }

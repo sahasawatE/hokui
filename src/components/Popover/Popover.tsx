@@ -6,21 +6,16 @@ import {
   PopoverContext,
   useSlottedContext,
 } from "react-aria-components";
-import React, { useRef } from "react";
+import React from "react";
 import { tv } from "tailwind-variants";
 import { Button } from "../Button";
 import { motion, type TargetAndTransition } from "framer-motion";
-import { useButton, type Placement, type PlacementAxis } from "react-aria";
+import { type Placement, type PlacementAxis } from "react-aria";
 import { focusRing } from "../utils";
 
-type BtnOptions = {
-  props: any;
-  ref: any;
-  defaultClassName: string;
-};
-
 type CustomProps = {
-  activator?: (btnProps: BtnOptions) => React.ReactNode;
+  activator: React.ReactNode;
+  activatorClassName?: string;
   label?: string;
   elementType?: React.JSXElementConstructor<any> | React.ElementType;
 };
@@ -112,29 +107,18 @@ export function Popover({
     }
   };
 
-  const activatorRef = useRef<any>(null);
-  let { buttonProps } = useButton(
-    {
-      elementType: props.elementType ?? "div",
-    },
-    activatorRef,
-  );
-
   return (
     <>
-      {props.activator ? (
-        props.activator({
-          props: buttonProps,
-          ref: activatorRef,
-          defaultClassName: defaultActivatorStyles(),
-        })
-      ) : (
-        <Button ref={activatorRef}>{props.label}</Button>
-      )}
+      <Button
+        className={defaultActivatorStyles({
+          className: props.activatorClassName,
+        })}
+      >
+        {props.activator}
+      </Button>
       <AriaPopover
         {...props}
         placement={props.placement as Placement}
-        triggerRef={activatorRef}
         offset={offset}
         crossOffset={crossOffset}
         className={composeRenderProps(className, (className, renderProps) =>

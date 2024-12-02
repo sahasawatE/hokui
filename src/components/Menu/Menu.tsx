@@ -22,12 +22,6 @@ type MenuContext = {
   color?: Color;
 };
 
-type BtnOptions = {
-  props: any;
-  ref: any;
-  defaultClassName: string;
-};
-
 export interface MenuProps<T>
   extends Omit<AriaMenuProps<T>, "onAction" | "onSelectionChange">,
     MenuContext {
@@ -35,7 +29,7 @@ export interface MenuProps<T>
   elementType?: React.JSXElementConstructor<any> | React.ElementType;
   label?: string;
   isOpen?: boolean;
-  activator?: (btnProps: BtnOptions) => React.ReactNode;
+  activator: React.ReactNode;
   onSelect?: (e: string) => void;
   onSelectionChange?: (e: string[]) => void;
 }

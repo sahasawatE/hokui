@@ -3,7 +3,6 @@ import React from "react";
 import {
   Select as AriaSelect,
   SelectProps as AriaSelectProps,
-  Button,
   ListBoxItemProps,
   SelectValue,
   ValidationResult,
@@ -167,59 +166,48 @@ export function Select<
           )}
           <Popover
             elementType={props.elementType}
-            activator={(btnProps) => (
-              <div ref={btnProps.ref}>
-                <Button
-                  {...btnProps.props}
-                  className={(renderBtnProps) =>
-                    buttonStyles({
-                      ...renderBtnProps,
-                      isInvalid: renderProps.isInvalid,
-                      rounded: props.rounded,
-                      color: props.color,
-                      variant: props.variant,
-                      isFocusWithin:
-                        renderBtnProps.isFocused ||
-                        renderProps.isFocused ||
-                        renderProps.isOpen,
-                    })
-                  }
-                >
-                  <SelectValue className="flex-1 text-sm placeholder-shown:text-gray-400" />
-                  <ChevronDown
-                    aria-hidden
-                    className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
-                  />
-                  {/* underlined style */}
-                  {props.variant === "underlined" && (
-                    <motion.div
-                      animate={
-                        renderProps.isFocused
-                          ? {
-                              width: "100%",
-                              opacity: 1,
-                            }
-                          : {
-                              width: "0",
-                              transitionEnd: {
-                                opacity: 0,
-                              },
-                            }
-                      }
-                      transition={{
-                        type: "tween",
-                        ease: "circInOut",
-                      }}
-                      className={underlinedStyle({
-                        color: props.isInvalid ? "danger" : props.color,
-                      })}
-                    ></motion.div>
-                  )}
-                </Button>
-                {description && <Description>{description}</Description>}
-                <FieldError>{errorMessage}</FieldError>
+            activator={
+              <div
+                className={buttonStyles({
+                  isInvalid: renderProps.isInvalid,
+                  rounded: props.rounded,
+                  color: props.color,
+                  variant: props.variant,
+                  isFocusWithin: renderProps.isFocused || renderProps.isOpen,
+                })}
+              >
+                <SelectValue className="flex-1 text-sm placeholder-shown:text-gray-400" />
+                <ChevronDown
+                  aria-hidden
+                  className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
+                />
+                {/* underlined style */}
+                {props.variant === "underlined" && (
+                  <motion.div
+                    animate={
+                      renderProps.isFocused
+                        ? {
+                            width: "100%",
+                            opacity: 1,
+                          }
+                        : {
+                            width: "0",
+                            transitionEnd: {
+                              opacity: 0,
+                            },
+                          }
+                    }
+                    transition={{
+                      type: "tween",
+                      ease: "circInOut",
+                    }}
+                    className={underlinedStyle({
+                      color: props.isInvalid ? "danger" : props.color,
+                    })}
+                  ></motion.div>
+                )}
               </div>
-            )}
+            }
             className="min-w-[--trigger-width]"
           >
             <ListBox
@@ -233,6 +221,8 @@ export function Select<
                 : (e) => <SelectItem key={e.key}>{e.title}</SelectItem>}
             </ListBox>
           </Popover>
+          {description && <Description>{description}</Description>}
+          <FieldError>{errorMessage}</FieldError>
         </>
       )}
     </AriaSelect>
