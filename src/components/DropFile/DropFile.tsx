@@ -183,7 +183,7 @@ export function DropFile(props: DropFileProps) {
               </FileTrigger>
             </div>
           )}
-        {dropped && props.value.length > 0 ? (
+        {dropped || props.value.length > 0 ? (
           <div className="flex flex-col gap-2">
             {props.value.map((f, i) => (
               <div
