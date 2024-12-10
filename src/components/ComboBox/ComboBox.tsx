@@ -29,7 +29,7 @@ export interface ComboBoxProps<
   elementType?: React.JSXElementConstructor<any> | React.ElementType;
   variant?: InputVariant;
   children?: (item: T) => React.ReactNode;
-  onSelectionChange?: (key: string) => void;
+  onSelectionChange?: (key: string | null) => void;
 }
 
 export function ComboBox<
@@ -73,7 +73,11 @@ export function ComboBox<
           <Input name={props.name} placeholder={props.placeholder} />
           <Popover
             elementType={props.elementType}
-            activator={<ChevronDown aria-hidden className="w-4 h-4" />}
+            activator={
+              <div className="pr-2">
+                <ChevronDown aria-hidden className="w-4 h-4" />
+              </div>
+            }
             className="w-56"
           >
             <ListBox

@@ -107,7 +107,10 @@ export function Modal(props: ModalProps) {
       };
     }
 
-    return null;
+    return {
+      w: "100%",
+      h: "100%",
+    };
   }, [containerRef]);
 
   const handleCLickCancel = () => {
