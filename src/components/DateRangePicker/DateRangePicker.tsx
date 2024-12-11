@@ -47,6 +47,8 @@ export function DateRangePicker<T extends DateValue>({
         </Label>
       )}
       <FieldGroup
+        isDisabled={props.isDisabled}
+        isInvalid={props.isInvalid}
         color={props.color}
         rounded={props.rounded}
         variant={props.variant}

@@ -45,6 +45,8 @@ interface TableProp<T extends { [key: string]: any; key: string }>
   hideScrollbar?: boolean;
   pagination?: React.ReactNode;
   perPageOption?: { key: string; title: string }[];
+  showRowNumber?: boolean;
+  rowNumberTitle?: string;
   onPagechange?: (paging: DataTablePaginationProps) => void;
 }
 
@@ -158,7 +160,11 @@ export function Table<T extends { [key: string]: any; key: string }>(
             return undefined;
           }}
         >
-          <TableHeader color={props.color}>
+          <TableHeader
+            color={props.color}
+            showRowNumber={props.showRowNumber}
+            rowNumberTitle={props.rowNumberTitle}
+          >
             {props.header.map((h, i) => (
               <Column
                 key={i}
@@ -177,6 +183,10 @@ export function Table<T extends { [key: string]: any; key: string }>(
             {(item) => (
               <Row
                 id={item.key}
+                showRowNumber={props.showRowNumber}
+                number={props.items.findIndex((e) => e.key === item.key)}
+                page={props.paging.page}
+                perPage={props.paging.perPage}
                 color={props.color}
                 isDisabled={Boolean(item["disabled"])}
               >
@@ -369,6 +379,8 @@ function Column(props: ColumnProps & CustomColumnProps) {
 
 type CustomTableHeaderprops = {
   color?: Color;
+  showRowNumber?: boolean;
+  rowNumberTitle?: string;
 };
 
 function TableHeader<T extends object>(
@@ -392,6 +404,13 @@ function TableHeader<T extends object>(
             {selectionMode === "multiple" && (
               <Checkbox slot="selection" color={props.color} />
             )}
+          </div>
+        </AriaColumn>
+      )}
+      {props.showRowNumber && (
+        <AriaColumn className="text-center text-sm font-semibold cursor-default h-12 w-12 px-2">
+          <div className="max-w-10 flex flex-row justify-center items-center">
+            {props.rowNumberTitle ?? "No."}
           </div>
         </AriaColumn>
       )}
@@ -422,6 +441,10 @@ const rowStyles = tv({
 type CustomRowProps = {
   color?: Color;
   isDisabled?: boolean;
+  showRowNumber?: boolean;
+  number?: number;
+  page: number;
+  perPage: number;
 };
 
 function Row<T extends object>({
@@ -452,6 +475,18 @@ function Row<T extends object>({
               color={otherProps.color}
               isDisabled={otherProps.isDisabled}
             />
+          </div>
+        </Cell>
+      )}
+      {otherProps.showRowNumber && (
+        <Cell>
+          <div className="flex flex-row justify-center max-w-10">
+            {String(
+              otherProps.number !== undefined && otherProps.number !== -1
+                ? (otherProps.page - 1) * otherProps.perPage +
+                    (otherProps.number + 1)
+                : "",
+            )}
           </div>
         </Cell>
       )}

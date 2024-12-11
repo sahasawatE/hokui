@@ -40,8 +40,14 @@ export function DatePicker<T extends DateValue>({
         "group flex flex-col gap-1",
       )}
     >
-      {label && <Label>{label}</Label>}
+      {label && (
+        <Label>
+          {label} {props.isRequired && <span className="text-danger">*</span>}
+        </Label>
+      )}
       <FieldGroup
+        isDisabled={props.isDisabled}
+        isInvalid={props.isInvalid}
         color={props.color}
         rounded={props.rounded}
         variant={props.variant}

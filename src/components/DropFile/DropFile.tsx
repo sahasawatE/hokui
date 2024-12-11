@@ -116,7 +116,6 @@ const defaultAccept = [
 ];
 
 export function DropFile(props: DropFileProps) {
-  const [dropped, setDropped] = React.useState(false);
   const [dropEnter, setDropEnter] = React.useState(false);
 
   return (
@@ -151,7 +150,6 @@ export function DropFile(props: DropFileProps) {
           const file = (await Promise.all(
             items.map((e: any) => e.getFile()),
           )) as File[];
-          setDropped(true);
           if (props.onChange) {
             if (props.maxLength && file.length <= props.maxLength) {
               props.onChange(file);
@@ -170,7 +168,6 @@ export function DropFile(props: DropFileProps) {
                   if (e && props.onChange) {
                     const files = Array.from(e);
                     props.onChange(files);
-                    setDropped(true);
                   }
                 }}
               >
@@ -183,7 +180,7 @@ export function DropFile(props: DropFileProps) {
               </FileTrigger>
             </div>
           )}
-        {dropped || props.value.length > 0 ? (
+        {props.value.length > 0 ? (
           <div className="flex flex-col gap-2">
             {props.value.map((f, i) => (
               <div
@@ -205,9 +202,6 @@ export function DropFile(props: DropFileProps) {
                     onPress={() => {
                       if (props.onClickDelete) {
                         props.onClickDelete(f, i);
-                        if (!props.value.length) {
-                          setDropped(false);
-                        }
                       }
                     }}
                   >
