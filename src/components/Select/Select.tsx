@@ -1,5 +1,5 @@
-import { ChevronDown } from "lucide-react";
-import React from "react";
+import React, { useRef, useState } from "react";
+import { ChevronDown, X } from "lucide-react";
 import {
   Select as AriaSelect,
   SelectProps as AriaSelectProps,
@@ -8,7 +8,7 @@ import {
   ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Description, fieldBorderStyles, FieldError, Label } from "../Field";
+import { Description, FieldError, FieldGroup, Label } from "../Field";
 import {
   DropdownItem,
   DropdownSection,
@@ -18,105 +18,15 @@ import {
 import { Popover } from "../Popover";
 import { focusRing } from "../utils";
 import type { Color, InputVariant, Rounded } from "../types/prop.type";
-import { motion } from "framer-motion";
+import { Button } from "../Button";
 
 type customProps<T> = {
   rounded?: Rounded;
   color?: Color;
   variant?: InputVariant;
   onSelect?: (value: T) => void;
+  onClear?: (defaultKey: string | null) => void;
 };
-
-const buttonStyles = tv({
-  extend: focusRing,
-  base: "relative flex items-center h-9 text-start gap-4 px-2 w-full min-w-10 cursor-default border border-0 bg-transparent",
-  variants: {
-    ...fieldBorderStyles.variants,
-    isDisabled: {
-      false: "text-gray-800",
-      true: "text-gray-200 forced-colors:text-gray-200 forced-colors:border-gray-200",
-    },
-  },
-  defaultVariants: {
-    variant: "bordered",
-    rounded: "md",
-    color: "default",
-  },
-  compoundVariants: [
-    {
-      isInvalid: true,
-      variant: "flat",
-      color: [
-        "danger",
-        "default",
-        "info",
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-      ],
-      className: "bg-red-200",
-    },
-    {
-      isInvalid: false,
-      variant: "flat",
-      color: [
-        "danger",
-        "default",
-        "info",
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-      ],
-      className: "bg-[--bgColorFlat]",
-    },
-    {
-      isInvalid: true,
-      rounded: ["full", "lg", "md", "none", "sm", "xl"],
-      variant: "underlined",
-      isFocusWithin: [true, false],
-      color: [
-        "danger",
-        "default",
-        "info",
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-      ],
-      className: "rounded-none border-red-300 forced-colors:border-red-300",
-    },
-    {
-      isInvalid: false,
-      rounded: ["full", "lg", "md", "none", "sm", "xl"],
-      variant: "underlined",
-      isFocusWithin: [true, false],
-      color: [
-        "danger",
-        "default",
-        "info",
-        "primary",
-        "secondary",
-        "success",
-        "warning",
-      ],
-      className:
-        "rounded-none border-[--borderColor] forced-colors:border-[--borderColor]",
-    },
-  ],
-});
-
-const underlinedStyle = tv({
-  extend: focusRing,
-  base: "absolute w-[0px] h-[2px] rounded-full -bottom-[2px] right-1/2 translate-x-1/2 [--lineColor:hsl(var(--c1))] bg-[--lineColor]",
-  variants: {
-    color: buttonStyles.variants.color,
-  },
-  defaultVariants: {
-    color: "default",
-  },
-});
 
 const selectStyles = tv({
   extend: focusRing,
@@ -132,6 +42,7 @@ export interface SelectProps<T extends { [k: string]: any; key: string }>
   errorMessage?: string | ((validation: ValidationResult) => string);
   items: Iterable<T>;
   children?: (item: T) => React.ReactNode;
+  onSelectionChange?: (key: string | null) => void;
 }
 
 export function Select<
@@ -144,88 +55,105 @@ export function Select<
   items,
   ...props
 }: SelectProps<T>) {
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+
   return (
-    <AriaSelect
-      {...props}
-      onSelectionChange={(e) => {
-        const i = items as T[];
-        const f = i.findLast((j) => j.key === e);
-        if (props.onSelect && f) {
-          props.onSelect(f);
-        }
-      }}
-      className={(renderProps) => selectStyles({ ...renderProps })}
-    >
-      {(renderProps) => (
-        <>
-          {label && (
-            <Label>
-              {label}
-              {props.isRequired && <span className="text-danger">*</span>}
-            </Label>
-          )}
-          <Popover
-            elementType={props.elementType}
-            activator={
-              <div
-                className={buttonStyles({
-                  isInvalid: renderProps.isInvalid,
-                  rounded: props.rounded,
-                  color: props.color,
-                  variant: props.variant,
-                  isFocusWithin: renderProps.isFocused || renderProps.isOpen,
-                })}
+    <div ref={triggerRef}>
+      <AriaSelect
+        {...props}
+        onSelectionChange={(e) => {
+          const i = items as T[];
+          const f = i.findLast((j) => j.key === e);
+          if (props.onSelect && f) {
+            props.onSelect(f);
+          }
+
+          if (props.onSelectionChange) {
+            props.onSelectionChange(f?.key ?? null);
+          }
+
+          setOpen(false);
+        }}
+        className={(renderProps) => selectStyles({ ...renderProps })}
+      >
+        {label && (
+          <Label>
+            {label}
+            {props.isRequired && <span className="text-danger">*</span>}
+          </Label>
+        )}
+        <FieldGroup
+          isDisabled={props.isDisabled}
+          isInvalid={props.isInvalid}
+          color={props.color}
+          variant={props.variant}
+          rounded={props.rounded}
+        >
+          {(fieldProps) => (
+            <div className="flex flex-row  justify-between px-2 gap-4">
+              <Popover
+                isOpen={open}
+                triggerRef={triggerRef}
+                elementType={props.elementType}
+                activator={
+                  <div onClick={() => setOpen((prev) => !prev)}>
+                    <SelectValue className="flex-1 text-sm placeholder-shown:text-gray-400" />
+                  </div>
+                }
+                className="min-w-[--trigger-width]"
+                onOpenChange={setOpen}
               >
-                <SelectValue className="flex-1 text-sm placeholder-shown:text-gray-400" />
+                <ListBox
+                  items={items}
+                  color={props.color}
+                  selectionMode="single"
+                  className="border-0 max-h-60 overflow-y-scroll overflow-x-visible no-scrollbar"
+                >
+                  {children
+                    ? children
+                    : (e) => <SelectItem key={e.key}>{e.title}</SelectItem>}
+                </ListBox>
+              </Popover>
+              <div className="flex flex-row items-center gap-1">
+                {!!props.onClear && (
+                  <>
+                    {(fieldProps.isFocusWithin || props.selectedKey) && (
+                      <Button
+                        variant="icon"
+                        size="sm"
+                        rounded="full"
+                        color={props.color}
+                        onPress={() => {
+                          const k =
+                            props.defaultSelectedKey !== undefined
+                              ? String(props.defaultSelectedKey)
+                              : null;
+                          props.onClear!(k);
+                        }}
+                      >
+                        <X
+                          size={14}
+                          style={{ color: `hsl(var(--hok-${props.color}))` }}
+                        />
+                      </Button>
+                    )}
+                  </>
+                )}
                 <ChevronDown
                   aria-hidden
-                  className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
+                  className="w-4 h-4 text-gray-600 group-disabled:text-gray-200 cursor-pointer"
+                  onClick={() => setOpen((prev) => !prev)}
                 />
-                {/* underlined style */}
-                {props.variant === "underlined" && (
-                  <motion.div
-                    animate={
-                      renderProps.isFocused
-                        ? {
-                            width: "100%",
-                            opacity: 1,
-                          }
-                        : {
-                            width: "0",
-                            transitionEnd: {
-                              opacity: 0,
-                            },
-                          }
-                    }
-                    transition={{
-                      type: "tween",
-                      ease: "circInOut",
-                    }}
-                    className={underlinedStyle({
-                      color: props.isInvalid ? "danger" : props.color,
-                    })}
-                  ></motion.div>
-                )}
               </div>
-            }
-            className="min-w-[--trigger-width]"
-          >
-            <ListBox
-              items={items}
-              color={props.color}
-              selectionMode="single"
-              className="border-0 max-h-60 overflow-y-scroll overflow-x-visible no-scrollbar"
-            >
-              {children
-                ? children
-                : (e) => <SelectItem key={e.key}>{e.title}</SelectItem>}
-            </ListBox>
-          </Popover>
-          {description && <Description>{description}</Description>}
-          <FieldError>{errorMessage}</FieldError>
-        </>
-      )}
-    </AriaSelect>
+            </div>
+          )}
+        </FieldGroup>
+
+        {description && <Description>{description}</Description>}
+        <FieldError>{errorMessage}</FieldError>
+      </AriaSelect>
+    </div>
   );
 }
 
