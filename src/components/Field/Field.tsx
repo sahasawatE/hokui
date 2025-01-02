@@ -261,7 +261,7 @@ export function Input(props: InputProps) {
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        "bg-transparent outline-0 px-2 py-1.5 flex-1 min-w-10 text-sm text-gray-800 disabled:text-gray-200",
+        "bg-transparent outline-0 px-2 py-1.5 flex-1 min-w-10 text-sm text-default-800 disabled:text-default-400",
       )}
     />
   );

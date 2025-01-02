@@ -8,14 +8,12 @@ import {
   ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import { Description, FieldError, Label, fieldGroupStyles } from "../Field";
+import { fieldGroupStyles } from "../Field";
 import { composeTailwindRenderProps } from "../utils";
-import type { Color, InputVariant, Rounded } from "../types/prop.type";
+import type { Color } from "../types/prop.type";
 
 type CustomProps = {
-  variant?: InputVariant;
   color?: Color;
-  rounded?: Rounded;
 };
 
 export interface DateFieldProps<T extends DateValue>
@@ -40,14 +38,7 @@ export function DateField<T extends DateValue>({
         "flex flex-col gap-1",
       )}
     >
-      {label && <Label>{label}</Label>}
-      <DateInput
-        color={props.color}
-        variant={props.variant}
-        rounded={props.rounded}
-      />
-      {description && <Description>{description}</Description>}
-      <FieldError>{errorMessage}</FieldError>
+      <DateInput color={props.color} />
     </AriaDateField>
   );
 }
@@ -59,7 +50,7 @@ const segmentStyles = tv({
       true: "text-gray-600 italic",
     },
     isDisabled: {
-      true: "text-gray-200 forced-colors:text-[GrayText]",
+      true: "text-default-400 forced-colors:text-[GrayText]",
     },
     isFocused: {
       true: "bg-[--textColor] text-white forced-colors:bg-[Highlight] forced-colors:text-[HighlightText]",
@@ -90,9 +81,7 @@ export function DateInput(props: DateInputProps) {
         fieldGroupStyles({
           ...renderProps,
           class: "flex min-w-[150px] px-2 py-1.5 text-sm",
-          rounded: props.rounded,
           color: props.color,
-          variant: props.variant,
         })
       }
       {...props}

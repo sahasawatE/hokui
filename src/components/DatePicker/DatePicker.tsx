@@ -59,9 +59,10 @@ export function DatePicker<T extends DateValue>({
         />
         <Dialog
           activator={
-            <div className="pr-2">
-              <CalendarIcon aria-hidden className="w-4 h-4" />
-            </div>
+            <CalendarIcon
+              aria-hidden
+              className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
+            />
           }
         >
           <Calendar color={props.color} />

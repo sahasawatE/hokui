@@ -97,6 +97,7 @@ export function ComboBox<
                         size="sm"
                         rounded="full"
                         color={props.color}
+                        isDisabled={props.isDisabled}
                         onPress={() => {
                           const k =
                             props.defaultSelectedKey !== undefined
@@ -113,12 +114,14 @@ export function ComboBox<
                     )}
                   </>
                 )}
-
                 <Popover
                   elementType={props.elementType}
                   activator={
                     <div className="pr-2">
-                      <ChevronDown aria-hidden className="w-4 h-4" />
+                      <ChevronDown
+                        aria-hidden
+                        className="w-4 h-4 text-gray-600 group-disabled:text-gray-200 cursor-pointer"
+                      />
                     </div>
                   }
                   className="w-56"

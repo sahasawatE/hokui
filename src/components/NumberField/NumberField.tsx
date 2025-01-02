@@ -57,30 +57,25 @@ export function NumberField({
         {(renderProps) => (
           <>
             <Input name={props.name} placeholder={props.placeholder} />
-            {!!!props.hideSpinButton && (
+            {!props.hideSpinButton && (
               <div
                 className={fieldBorderStyles({
                   ...renderProps,
-                  class: "flex flex-col border-s-2",
-                  rounded: "none",
-                  variant: "underlined",
+                  class: "flex flex-col",
                   color: props.color,
                 })}
               >
                 <StepperButton slot="increment">
-                  <ChevronUp aria-hidden className="w-4 h-4" />
+                  <ChevronUp
+                    aria-hidden
+                    className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
+                  />
                 </StepperButton>
-                <div
-                  className={fieldBorderStyles({
-                    ...renderProps,
-                    class: "border-b-2",
-                    rounded: "none",
-                    variant: "underlined",
-                    color: props.color,
-                  })}
-                />
                 <StepperButton slot="decrement">
-                  <ChevronDown aria-hidden className="w-4 h-4" />
+                  <ChevronDown
+                    aria-hidden
+                    className="w-4 h-4 text-gray-600 forced-colors:text-[ButtonText] group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
+                  />
                 </StepperButton>
               </div>
             )}
@@ -97,7 +92,7 @@ function StepperButton(props: ButtonProps) {
   return (
     <Button
       {...props}
-      className="px-0.5 cursor-default text-gray-500 pressed:bg-gray-100 group-disabled:text-gray-200 forced-colors:group-disabled:text-[GrayText]"
+      className="px-0.5 cursor-default text-default pressed:bg-default-100 group-disabled:text-default-200 forced-colors:group-disabled:text-default"
     />
   );
 }

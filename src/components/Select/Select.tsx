@@ -33,6 +33,19 @@ const selectStyles = tv({
   base: "group flex flex-col gap-1 min-w-10",
 });
 
+const textStyle = tv({
+  base: "flex-1 text-sm",
+  variants: {
+    isDisabled: {
+      false: "placeholder-shown:text-gray-400",
+      true: "text-default-400",
+    },
+  },
+  defaultVariants: {
+    isDisabled: false,
+  },
+});
+
 export interface SelectProps<T extends { [k: string]: any; key: string }>
   extends Omit<AriaSelectProps<T>, "children" | "onSelectionChange">,
     customProps<T> {
@@ -98,7 +111,11 @@ export function Select<
                 elementType={props.elementType}
                 activator={
                   <div onClick={() => setOpen((prev) => !prev)}>
-                    <SelectValue className="flex-1 text-sm placeholder-shown:text-gray-400" />
+                    <SelectValue
+                      className={textStyle({
+                        isDisabled: props.isDisabled,
+                      })}
+                    />
                   </div>
                 }
                 className="min-w-[--trigger-width]"
@@ -124,6 +141,7 @@ export function Select<
                         size="sm"
                         rounded="full"
                         color={props.color}
+                        isDisabled={props.isDisabled}
                         onPress={() => {
                           const k =
                             props.defaultSelectedKey !== undefined
@@ -143,7 +161,11 @@ export function Select<
                 <ChevronDown
                   aria-hidden
                   className="w-4 h-4 text-gray-600 group-disabled:text-gray-200 cursor-pointer"
-                  onClick={() => setOpen((prev) => !prev)}
+                  onClick={() => {
+                    if (!props.isDisabled) {
+                      setOpen((prev) => !prev);
+                    }
+                  }}
                 />
               </div>
             </div>
