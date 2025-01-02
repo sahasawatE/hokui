@@ -91,7 +91,7 @@ export function Select<
           rounded={props.rounded}
         >
           {(fieldProps) => (
-            <div className="flex flex-row  justify-between px-2 gap-4">
+            <div className="flex flex-row w-full justify-between px-2 gap-4">
               <Popover
                 isOpen={open}
                 triggerRef={triggerRef}
