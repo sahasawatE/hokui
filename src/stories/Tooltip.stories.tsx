@@ -50,5 +50,6 @@ export const Default: Story = {
   args: {
     placement: "top",
     children: "This is a Tooltip",
+    activator: "this is custome button",
   },
 };

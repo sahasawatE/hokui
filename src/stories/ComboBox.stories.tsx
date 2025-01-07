@@ -44,7 +44,11 @@ export const Default: Story = {
       <ComboBox
         selectedKey={selected}
         items={list}
-        onSelectionChange={(e) => setSelected(e)}
+        onSelectionChange={(e) => {
+          if (e) {
+            setSelected(e);
+          }
+        }}
         {...props}
       ></ComboBox>
     );

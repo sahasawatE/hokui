@@ -1,1 +1,3 @@
-export { DatePicker, type DatePickerProps } from "./DatePicker";
+export { DatePicker } from "./components/DatePicker";
+
+export type { DatePickerProps } from "./props";

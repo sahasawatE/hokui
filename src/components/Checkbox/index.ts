@@ -1,6 +1,4 @@
-export {
-  Checkbox,
-  CheckboxGroup,
-  type CheckboxGroupProps,
-  type cbProps as CheckboxProps,
-} from "./Checkbox";
+export { Checkbox } from "./components/Checkbox";
+export { CheckboxGroup } from "./components/Group";
+
+export type { CheckboxGroupProps, CheckboxProps } from "./props";

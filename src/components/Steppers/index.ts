@@ -1,1 +1,3 @@
-export { Steppers, type StepsObjectOption } from "./Steppers";
+export { Steppers } from "./components/Steppers";
+
+export type { StepsObjectOption } from "./props";

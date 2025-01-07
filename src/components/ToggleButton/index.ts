@@ -1,1 +1,3 @@
-export { ToggleButton, type ToggleButtonProp } from "./ToggleButton";
+export { ToggleButton } from "./components/ToggleButton";
+
+export type { ToggleButtonProp } from "./props";

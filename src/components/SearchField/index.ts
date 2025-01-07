@@ -1,1 +1,3 @@
-export { SearchField, type SearchFieldProps } from "./SearchField";
+export { SearchField } from "./components/SearchField";
+
+export type { SearchFieldProps } from "./props";

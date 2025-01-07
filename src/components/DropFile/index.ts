@@ -1,1 +1,3 @@
-export { DropFile, type DropFileProps } from "./DropFile";
+export { DropFile } from "./components/DropFile";
+
+export type { DropFileProps } from "./props";

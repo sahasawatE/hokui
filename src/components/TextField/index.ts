@@ -1,1 +1,3 @@
-export { TextField, type TextFieldProps } from "./TextField";
+export { TextField } from "./components/TextField";
+
+export type { TextFieldProps } from "./props";

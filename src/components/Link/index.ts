@@ -1,1 +1,3 @@
-export { Link, type LinkProps } from "./Link";
+export { Link } from "./components/Link";
+
+export type { LinkProps } from "./props";

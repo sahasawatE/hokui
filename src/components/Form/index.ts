@@ -1,1 +1,3 @@
-export { Form, type FormProps } from "./Form";
+export { Form } from "./components/Form";
+
+export type { FormProps } from "./props";

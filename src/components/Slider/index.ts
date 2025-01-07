@@ -1,1 +1,3 @@
-export { Slider, type SliderProps } from "./Slider";
+export { Slider } from "./components/Slider";
+
+export type { SliderProps } from "./props";

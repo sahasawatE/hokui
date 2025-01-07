@@ -1,1 +1,3 @@
-export { DateRangePicker, type DateRangePickerProps } from "./DateRangePicker";
+export { DateRangePicker } from "./components/DateRangePicker";
+
+export type { DateRangePickerProps } from "./props";

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Menu } from "../components/Menu";
-import { Button } from "../components/Button";
 
 const list = [
   {
@@ -73,16 +72,7 @@ export const Default: Story = {
   },
   args: {
     placement: "bottom",
-  },
-};
-
-export const CustomActivatorElement: Story = {
-  args: {
-    activator: () => (
-      <Button variant="flat" color="info">
-        this is custome button
-      </Button>
-    ),
+    activator: "this is custome button",
   },
 };
 
@@ -90,5 +80,6 @@ export const PopoverPlacement: Story = {
   args: {
     placement: "top",
     label: "Open menu",
+    activator: "this is custome button",
   },
 };

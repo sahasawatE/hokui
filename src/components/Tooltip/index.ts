@@ -1,1 +1,3 @@
-export { Tooltip, type TooltipProps } from "./Tooltip";
+export { Tooltip } from "./components/Tooltip";
+
+export type { TooltipProps } from "./props";

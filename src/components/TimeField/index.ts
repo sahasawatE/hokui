@@ -1,1 +1,3 @@
-export { TimeField, type TimeFieldProps } from "./TimeField";
+export { TimeField } from "./components/TimeField";
+
+export type { TimeFieldProps } from "./props";

@@ -1,1 +1,3 @@
-export { Dialog, type DialogProps } from "./Dialog";
+export { Dialog } from "./components/Dialog";
+
+export type { DialogProps } from "./props";
