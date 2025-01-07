@@ -98,7 +98,7 @@ export function ComboBox<
                         />
                       </div>
                     }
-                    className="w-56"
+                    className="min-w-[--trigger-width]"
                   >
                     <ListBox
                       items={items}
