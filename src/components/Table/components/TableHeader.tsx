@@ -5,9 +5,10 @@ import {
   Collection,
 } from "react-aria-components";
 import { composeTailwindRenderProps } from "../../utils";
-import type { TableHeaderProps } from "../props";
 import { TableHeaderStyles } from "../style";
 import { Checkbox } from "../../Checkbox";
+import { Column } from "./Column";
+import type { TableHeaderProps } from "../props";
 
 export function TableHeader<T extends object>(props: TableHeaderProps<T>) {
   let { selectionBehavior, selectionMode } = useTableOptions();
@@ -32,11 +33,7 @@ export function TableHeader<T extends object>(props: TableHeaderProps<T>) {
         </AriaColumn>
       )}
       {props.showRowNumber && (
-        <AriaColumn className="text-center text-sm font-semibold cursor-default h-12 w-12 px-2">
-          <div className="max-w-10 flex flex-row justify-center items-center">
-            {props.rowNumberTitle ?? "No."}
-          </div>
-        </AriaColumn>
+        <Column className="w-20">{props.rowNumberTitle ?? "No."}</Column>
       )}
       <Collection items={props.columns}>{props.children}</Collection>
     </AriaTableHeader>

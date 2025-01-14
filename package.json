@@ -1,6 +1,6 @@
 {
   "name": "hokui",
-  "version": "0.2.34",
+  "version": "0.2.35",
   "author": "Sahasawat Uengwanitchphan",
   "description": "A UI Library created by Hok.",
   "license": "MIT",
@@ -91,8 +91,8 @@
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "react": "^18.3.1 || ^19",
-    "react-dom": "^18.3.1 || ^19"
+    "react": ">=18 || >=19.0.0-rc.0",
+    "react-dom": ">=18 || >=19.0.0-rc.0"
   },
   "dependencies": {
     "framer-motion": "^11.11.1",

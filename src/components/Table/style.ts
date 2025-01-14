@@ -48,7 +48,7 @@ export const TableLoadingOverlayStyle = tv({
 
 export const columnStyles = tv({
   extend: focusRing,
-  base: "px-2 h-5 flex-1 flex gap-1 items-center overflow-hidden",
+  base: "px-2 h-fit flex-1 flex gap-1 items-center overflow-hidden",
 });
 
 export const ColumnDecoration = tv({
