@@ -1,6 +1,6 @@
 {
   "name": "hokui",
-  "version": "0.2.32",
+  "version": "0.2.33",
   "author": "Sahasawat Uengwanitchphan",
   "description": "A UI Library created by Hok.",
   "license": "MIT",
@@ -81,6 +81,7 @@
     "rollup": "^3.29.4",
     "rollup-plugin-dts": "^6.0.2",
     "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
     "storybook": "^8.3.6",
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7",
@@ -89,8 +90,8 @@
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^18.3.1 || ^19",
+    "react-dom": "^18.3.1 || ^19"
   },
   "dependencies": {
     "framer-motion": "^11.11.1",
@@ -99,7 +100,6 @@
     "react-aria-components": "^1.4.1",
     "react-stately": "^3.33.0",
     "react-use-slots": "^0.2.5",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
     "tailwind-merge": "^2.5.2",
     "tailwind-variants": "^0.2.1",
     "tw-colors": "^3.3.2"
